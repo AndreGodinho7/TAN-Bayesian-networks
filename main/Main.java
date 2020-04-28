@@ -1,7 +1,7 @@
 package main;
 
 //import project.DataReader;
-import project.DataReader.ArrayData;
+import project.ArrayData;
 
 public class Main {
 
