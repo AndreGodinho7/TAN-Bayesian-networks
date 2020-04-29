@@ -9,10 +9,27 @@ public class ArrayData implements DataReader {
 
 	int[][] featureMatrix;
 	int[] classArray;
-	String[] features; 
-	
+	int num_class;
+	String[] features;
+
 	Scanner inputStream, scanFileSize;
-	
+
+	public int getNum_class() {
+		return num_class;
+	}
+
+	public int[][] getFeatureMatrix() {
+		return featureMatrix;
+	}
+
+	public String[] getFeatures() {
+		return features;
+	}
+
+	public int[] getClassArray() {
+		return classArray;
+	}
+
 	/**
 	 * Open file
 	 * @param filename: name of file to open
@@ -21,14 +38,14 @@ public class ArrayData implements DataReader {
 		try {
 			scanFileSize = new Scanner(new File(filename));
 			inputStream = new Scanner(new File(filename));
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Read the input file	
+	 * Read the input file
 	 */
 	public void readFile() {
 
@@ -37,7 +54,7 @@ public class ArrayData implements DataReader {
 		nCols = headerOfFile.length;
 		this.features = Arrays.copyOfRange(headerOfFile, 0, headerOfFile.length - 1);
 		scanFileSize.next();
-		
+
 		//sweep file to count number of rows
 		while (scanFileSize.hasNext()) {
 			scanFileSize.next();
@@ -45,10 +62,10 @@ public class ArrayData implements DataReader {
 		}
 		scanFileSize.close();
 		System.out.println("nr. of rows: "+nRows+"\nnr. of columns: "+nCols+"\n");
-		
+
 		this.featureMatrix = new int[nRows][nCols];
 		this.classArray = new int[nRows];
-					
+
 		// sweep file again, now to save the data
 		while (inputStream.hasNext()) {
 			String line = inputStream.next();
@@ -57,12 +74,14 @@ public class ArrayData implements DataReader {
 			this.classArray[fileRow] = values[values.length - 1];
 			fileRow++;
 		}
+		this.num_class = Arrays.stream(classArray).max().getAsInt()+1;
+
 		inputStream.close();
 	}
-	
+
 	public void printData() {
 		System.out.println("Features: " + Arrays.deepToString(this.features) + "\n");
-		
+
 		for (int row = 0; row < this.featureMatrix.length; row++) {
 			for (int col = 0; col < this.featureMatrix[row].length; col++) {
 				System.out.print(this.featureMatrix[row][col] + " ");
@@ -70,6 +89,7 @@ public class ArrayData implements DataReader {
 			System.out.print("  " + this.classArray[row]);
 			System.out.println();
 		}
+		System.out.println("# classes: "+this.num_class);
 	}
 }
 
