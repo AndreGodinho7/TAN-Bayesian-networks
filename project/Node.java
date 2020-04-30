@@ -16,16 +16,26 @@ public class Node {
     private HashMap<String, Integer> q;
     private int r;
 
-    public Node(String feature_name, HashMap<String, int[][][]> nijkc, int r) {
+    private static int[] r_arr;
+
+    public Node(String feature_name, int r) {
         this.feature_name = feature_name;
-        this.Nijkc = nijkc;
         this.r = r;
     }
 
-    private static int[] r_arr;
+    public void setNijkc(int keys, String[] features, int[]r_values, int classes){
+        HashMap<String, int[][][]> map = new HashMap<String, int[][][]>();
+        map.put(features[keys], new int[1][r_values[keys]][classes]);
 
-    public static int[] getR_arr() {
-        return r_arr;
+        for (int i=keys+1; i<features.length;i++){
+            map.put(features[i], new int[r_values[keys]][r_values[i]][classes]);
+        }
+        System.out.println("Hashmap of feature:"+features[keys]);
+        map.entrySet().forEach(entry->{
+            System.out.println("key:"+entry.getKey() + " value:" + "int["+entry.getValue().length+"]"+"["+entry.getValue()[0].length+"]"+"["+entry.getValue()[0][0].length+"]");
+        });
+        System.out.println();
+        this.Nijkc = map;
     }
 
     public void inc_Nijkc(String key, int first, int second, int third){
