@@ -13,22 +13,12 @@ public class ArrayData implements DataReader {
 	String[] features;
 
 	Scanner inputStream, scanFileSize;
-
-	public int getNum_class() {
-		return num_class;
-	}
-
-	public int[][] getFeatureMatrix() {
-		return featureMatrix;
-	}
-
-	public String[] getFeatures() {
-		return features;
-	}
-
-	public int[] getClassArray() {
-		return classArray;
-	}
+	
+	// Getter methods:
+	public int getNum_class() {return num_class;}
+	public int[][] getFeatureMatrix() {return featureMatrix;}
+	public String[] getFeatures() {return features;}
+	public int[] getClassArray() {return classArray;}
 
 	/**
 	 * Open file
@@ -61,7 +51,7 @@ public class ArrayData implements DataReader {
 			nRows++;
 		}
 		scanFileSize.close();
-		System.out.println("nr. of rows: "+nRows+"\nnr. of columns: "+nCols+"\n");
+		//System.out.println("nr. of rows: "+nRows+"\nnr. of columns: "+nCols+"\n");
 
 		this.featureMatrix = new int[nRows][nCols];
 		this.classArray = new int[nRows];
@@ -92,4 +82,3 @@ public class ArrayData implements DataReader {
 		System.out.println("# classes: "+this.num_class);
 	}
 }
-
