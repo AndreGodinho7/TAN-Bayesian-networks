@@ -7,7 +7,9 @@ public class MyGraph implements Graph{
     private float[][] adjMatrix;
     private int numNodes;
 
-    public MyGraph() {
+    public MyGraph(int numNodes) {
+        this.adjMatrix = new float[numNodes][numNodes];
+        this.numNodes = numNodes;
         this.nodes = new LinkedList<Node>();
     }
 
@@ -21,11 +23,6 @@ public class MyGraph implements Graph{
 
     public void setNumNodes(int numNodes) {
         this.numNodes = numNodes;
-    }
-
-    @Override
-    public void addNode() {
-
     }
 
     @Override

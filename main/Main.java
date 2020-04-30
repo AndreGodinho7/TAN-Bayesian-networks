@@ -47,11 +47,13 @@ public class Main {
 		System.out.println(Arrays.toString(r_values));
 		System.out.println(num_class);
 
-		MyGraph graph = new MyGraph();
+		MyGraph graph = new MyGraph(features.length);
 
 		for (int i = 0; i < features.length; i++) {
 			Node n = new Node(features[i], r_values[i]);
 			n.setNijkc(i, features, r_values, num_class);
+			n.setNJikc(i, features, r_values, num_class);
+			n.setNKijc(i, features, r_values, num_class);
 			graph.insertInList(n);
 		}
 
@@ -89,6 +91,8 @@ public class Main {
 			n.computeNJikc();
 		}
 
+
+
 		// TODO: delete this when not needed anymore
 		for (Node n : ns) {
 			System.out.println("Node father: " + n.getFeature_name());
@@ -102,6 +106,8 @@ public class Main {
 				n.print_NKijc(key);
 			}
 		}
+
+
 
 
 	}
