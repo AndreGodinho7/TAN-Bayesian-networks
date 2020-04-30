@@ -11,8 +11,8 @@ public class Node {
 
     private String feature_name;
     private HashMap<String, int[][][]> Nijkc;
-    private HashMap<String, int[][]> NKijc; //TODO: extend constructor to initialize this one
-    private HashMap<String, int[][]> NJikc; //TODO: extend constructor to initialize this one
+    private HashMap<String, int[][]> NKijc;
+    private HashMap<String, int[][]> NJikc;
     private HashMap<String, Integer> q;
     private int r;
 
@@ -38,36 +38,7 @@ public class Node {
         this.Nijkc = map;
     }
 
-    public void inc_Nijkc(String key, int first, int second, int third){
-        int[][][] aux = this.Nijkc.get(key);
-        aux[first][second][third]++;
-        this.Nijkc.put(key, aux);
-    }
-
-    public void print_Nijkc(String key) {
-        int[][][] aux = this.Nijkc.get(key);
-        for (int z = 0; z < aux[0][0].length; z++) {
-            for (int x = 0; x < aux.length; x++) {
-                for (int y = 0; y < aux[0].length; y++) {
-                    System.out.print(aux[x][y][z] + " ");
-                }
-                System.out.print("  ");
-            }
-            System.out.println();
-        }
-    }
-
-    public HashMap<String, int[][][]> getNijkc() {
-        return Nijkc;
-    }
-
-    public String getFeature_name() {
-        return feature_name;
-    }
-
-    
     // Getter methods:
-    public static int[] getR_values() {return r_values;}
     public String getFeature_name() {return feature_name;}
     public HashMap<String, int[][][]> getNijkc() {return Nijkc;}
 
@@ -83,12 +54,7 @@ public class Node {
         aux[j][k][c]++;
         this.Nijkc.put(key, aux);
     }
-    /**
-     * Compute NKijc counts from Nijkc
-     * @param key
-     * @param j
-     * @param c
-     */
+
     
     public void computeNKijc() {  	
     	for (String _key : this.Nijkc.keySet()) {
@@ -103,12 +69,7 @@ public class Node {
 		}
     }
     
-	/**
-     * Compute NJikc counts from Nijkc
-     * @param key
-     * @param k
-     * @param c
-     */
+
     public void computeNJikc() {
     	for (String _key : this.Nijkc.keySet()) {
     		int[][][] aux_Nijkc = this.Nijkc.get(_key);
@@ -156,11 +117,4 @@ public class Node {
         }
         System.out.println();
     }
-    
-
-
-
-
-
-
 }

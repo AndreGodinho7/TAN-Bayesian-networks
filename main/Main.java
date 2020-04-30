@@ -26,22 +26,22 @@ public class Main {
 		features = readTrainFile.readline().split(",");
 		features = Arrays.copyOfRange(features, 0, features.length - 1);
 		r_values = new int[features.length];
-		for (int i=0; i < r_values.length;i++) r_values[i] = -1;
+		for (int i = 0; i < r_values.length; i++) r_values[i] = -1;
 
 		// get r values
-		while(true){
+		while (true) {
 			String line = readTrainFile.readline();
 			if (line == null) break;
 			values = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
 
-			for (int i=0; i < values.length-1; i++){
+			for (int i = 0; i < values.length - 1; i++) {
 				if (values[i] > r_values[i]) r_values[i] = values[i];
 			}
 
-			aux_class = values[values.length-1];
+			aux_class = values[values.length - 1];
 			if (aux_class > num_class) num_class = aux_class;
 		}
-		for (int i=0; i < r_values.length;i++) r_values[i]++;
+		for (int i = 0; i < r_values.length; i++) r_values[i]++;
 		num_class++;
 
 		System.out.println(Arrays.toString(r_values));
@@ -49,7 +49,7 @@ public class Main {
 
 		MyGraph graph = new MyGraph();
 
-		for (int i=0; i<features.length;i++){
+		for (int i = 0; i < features.length; i++) {
 			Node n = new Node(features[i], r_values[i]);
 			n.setNijkc(i, features, r_values, num_class);
 			graph.insertInList(n);
@@ -60,23 +60,22 @@ public class Main {
 		readTrainFile.passline(); // do not read features strings
 
 		// increment counters of Nijkc
-		while(true){
+		while (true) {
 			String line = readTrainFile.readline();
 			if (line == null) break;
 			values = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
 
-			for (int i=0; i < values.length-1; i++) {
+			for (int i = 0; i < values.length - 1; i++) {
 				aux_map.put(features[i], values[i]);
 			}
-			aux_class = values[values.length-1];
+			aux_class = values[values.length - 1];
 
 			LinkedList<Node> ns = graph.getListNodes();
-			for(Node n : ns){
-				for (String key : n.getNijkc().keySet()){
-					if (n.getFeature_name().equals(key)){
+			for (Node n : ns) {
+				for (String key : n.getNijkc().keySet()) {
+					if (n.getFeature_name().equals(key)) {
 						n.inc_Nijkc(key, 0, aux_map.get(key), aux_class);
-					}
-					else {
+					} else {
 						n.inc_Nijkc(key, aux_map.get(n.getFeature_name()), aux_map.get(key), aux_class);
 					}
 				}
@@ -84,18 +83,26 @@ public class Main {
 
 		}
 
-		// TODO: delete this when not needed anymore
 		LinkedList<Node> ns = graph.getListNodes();
-		for (Node n: ns){
-			System.out.println("Node father: "+n.getFeature_name());
-			for (String key : n.getNijkc().keySet()){
-				System.out.println("Node son: "+key);
-				n.print_Nijkc(key);
-			}
-		for(Node n : ns){
+		for (Node n : ns) {
 			n.computeNKijc();
 			n.computeNJikc();
 		}
-		printNodeStructure(nodes);
+
+		// TODO: delete this when not needed anymore
+		for (Node n : ns) {
+			System.out.println("Node father: " + n.getFeature_name());
+			for (String key : n.getNijkc().keySet()) {
+				System.out.println("Node son: " + key);
+				System.out.println("Nijkc:");
+				n.print_Nijkc(key);
+				System.out.println("NJjkc:");
+				n.print_NJikc(key);
+				System.out.println("NKjkc:");
+				n.print_NKijc(key);
+			}
+		}
+
+
 	}
 }
