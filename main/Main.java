@@ -1,73 +1,92 @@
 package main;
 
-//import project.DataReader;
-import project.ArrayData;
+import project.GraphData;
+import project.MyGraph;
 import project.Node;
 
 import java.util.*;
 
 public class Main {
 
-	// TODO: create an util class for this method
-	private static HashMap<String, int[][][]> createHash(int keys, String[] features, int[]r_values, int classes){
-		HashMap<String, int[][][]> map = new HashMap<String, int[][][]>();
-		map.put(features[keys], new int[1][r_values[keys]][classes]);
-
-		for (int i=keys+1; i<features.length;i++){
-			map.put(features[i], new int[r_values[keys]][r_values[i]][classes]);
-		}
-		System.out.println("Hashmap of feature:"+features[keys]);
-		map.entrySet().forEach(entry->{
-			System.out.println("key:"+entry.getKey() + " value:" + "int["+entry.getValue().length+"]"+"["+entry.getValue()[0].length+"]"+"["+entry.getValue()[0][0].length+"]");
-		});
-		System.out.println();
-
-		return map;
-	}
-
 	public static void main(String[] args) {
 
 		String trainFilename = "train-enunciado.csv";
-		// testFilename = "bias-test.csv";
-		
-		//ReadToArray readTrainFile = new ReadToArray();
-		ArrayData readTestFile = new ArrayData();
-		
-		readTestFile.openFile(trainFilename);
-		readTestFile.readFile();
-		readTestFile.printData();
+		int[] r_values;
+		String[] features;
+		int[] values;
+		int num_class = -1;
+		int aux_class;
+		HashMap<String, Integer> aux_map = new HashMap<String, Integer>();
 
-		Node.init_r(readTestFile.getFeatureMatrix());
+		GraphData readTrainFile = new GraphData();
+		readTrainFile.openFile(trainFilename);
 
+		// first sweep
+		// get feature names
+		features = readTrainFile.readline().split(",");
+		features = Arrays.copyOfRange(features, 0, features.length - 1);
+		r_values = new int[features.length];
+		for (int i=0; i < r_values.length;i++) r_values[i] = -1;
 
-		LinkedList<Node> nodes = new LinkedList<>();
-		for (int i=0; i<readTestFile.getFeatures().length;i++){
-			HashMap<String, int[][][]> map = createHash(i, readTestFile.getFeatures(), Node.getR_arr(), readTestFile.getNum_class());
-			Node n = new Node(readTestFile.getFeatures()[i], map, Node.getR_arr()[i]);
-			nodes.add(n);
+		// get r values
+		while(true){
+			String line = readTrainFile.readline();
+			if (line == null) break;
+			values = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
+
+			for (int i=0; i < values.length-1; i++){
+				if (values[i] > r_values[i]) r_values[i] = values[i];
+			}
+
+			aux_class = values[values.length-1];
+			if (aux_class > num_class) num_class = aux_class;
+		}
+		for (int i=0; i < r_values.length;i++) r_values[i]++;
+		num_class++;
+
+		System.out.println(Arrays.toString(r_values));
+		System.out.println(num_class);
+
+		MyGraph graph = new MyGraph();
+
+		for (int i=0; i<features.length;i++){
+			Node n = new Node(features[i], r_values[i]);
+			n.setNijkc(i, features, r_values, num_class);
+			graph.insertInList(n);
 		}
 
-		int[][] dataset = readTestFile.getFeatureMatrix();
-		HashMap<String, Integer> aux_map = new HashMap<String, Integer>();
-		for (int row = 0; row < dataset.length; row++) {
-			for (int col = 0; col <dataset[0].length;col++){
-				aux_map.put(readTestFile.getFeatures()[col], dataset[row][col]);
-			}
-			aux_map.put("class", readTestFile.getClassArray()[row]);
+		// second sweep
+		readTrainFile.openFile(trainFilename);
+		readTrainFile.passline(); // do not read features strings
 
-			for(Node n : nodes){
-				int num_keys = n.getNijkc().size();
+		// increment counters of Nijkc
+		while(true){
+			String line = readTrainFile.readline();
+			if (line == null) break;
+			values = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
+
+			for (int i=0; i < values.length-1; i++) {
+				aux_map.put(features[i], values[i]);
+			}
+			aux_class = values[values.length-1];
+
+			LinkedList<Node> ns = graph.getListNodes();
+			for(Node n : ns){
 				for (String key : n.getNijkc().keySet()){
 					if (n.getFeature_name().equals(key)){
-						n.inc_Nijkc(key, 0, aux_map.get(key), aux_map.get("class"));
+						n.inc_Nijkc(key, 0, aux_map.get(key), aux_class);
 					}
 					else {
-						n.inc_Nijkc(key, aux_map.get(n.getFeature_name()), aux_map.get(key), aux_map.get("class"));
+						n.inc_Nijkc(key, aux_map.get(n.getFeature_name()), aux_map.get(key), aux_class);
 					}
 				}
 			}
+
 		}
-		for (Node n: nodes){
+
+		// TODO: delete this when not needed anymore
+		LinkedList<Node> ns = graph.getListNodes();
+		for (Node n: ns){
 			System.out.println("Node father: "+n.getFeature_name());
 			for (String key : n.getNijkc().keySet()){
 				System.out.println("Node son: "+key);
