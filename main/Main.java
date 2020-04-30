@@ -92,7 +92,7 @@ public class Main {
 				System.out.println("Node son: "+key);
 				n.print_Nijkc(key);
 			}
-		for(Node n : nodes){
+		for(Node n : ns){
 			n.computeNKijc();
 			n.computeNJikc();
 		}
