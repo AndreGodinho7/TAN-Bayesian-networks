@@ -92,6 +92,10 @@ public class Main {
 				System.out.println("Node son: "+key);
 				n.print_Nijkc(key);
 			}
+		for(Node n : nodes){
+			n.computeNKijc();
+			n.computeNJikc();
 		}
+		printNodeStructure(nodes);
 	}
 }
