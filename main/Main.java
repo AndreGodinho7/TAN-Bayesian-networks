@@ -1,8 +1,6 @@
 package main;
 
-import project.GraphData;
-import project.MyGraph;
-import project.Node;
+import project.*;
 
 import java.util.*;
 
@@ -16,9 +14,9 @@ public class Main {
 		int[] values;
 		int num_class = -1;
 		int aux_class;
-		HashMap<String, Integer> aux_map = new HashMap<String, Integer>();
+		Map<String, Integer> aux_map = new HashMap<String, Integer>();
 
-		GraphData readTrainFile = new GraphData();
+		DataReader readTrainFile = new GraphData();
 		readTrainFile.openFile(trainFilename);
 
 		// first sweep
@@ -47,21 +45,14 @@ public class Main {
 		System.out.println(Arrays.toString(r_values));
 		System.out.println(num_class);
 
-		MyGraph graph = new MyGraph(features.length);
-
-		for (int i = 0; i < features.length; i++) {
-			Node n = new Node(features[i], r_values[i]);
-			n.setNijkc(i, features, r_values, num_class);
-			n.setNJikc(i, features, r_values, num_class);
-			n.setNKijc(i, features, r_values, num_class);
-			graph.insertInList(n);
-		}
+		Graph graph = new MyGraph(features.length);
+		graph.setNodes(features, r_values, num_class);
 
 		// second sweep
 		readTrainFile.openFile(trainFilename);
 		readTrainFile.passline(); // do not read features strings
 
-		// increment counters of Nijkc
+		// update nodes
 		while (true) {
 			String line = readTrainFile.readline();
 			if (line == null) break;
@@ -71,44 +62,11 @@ public class Main {
 				aux_map.put(features[i], values[i]);
 			}
 			aux_class = values[values.length - 1];
-
-			LinkedList<Node> ns = graph.getListNodes();
-			for (Node n : ns) {
-				for (String key : n.getNijkc().keySet()) {
-					if (n.getFeature_name().equals(key)) {
-						n.inc_Nijkc(key, 0, aux_map.get(key), aux_class);
-					} else {
-						n.inc_Nijkc(key, aux_map.get(n.getFeature_name()), aux_map.get(key), aux_class);
-					}
-				}
-			}
-
+			graph.updateNodes(aux_map, aux_class);
 		}
-
-		LinkedList<Node> ns = graph.getListNodes();
-		for (Node n : ns) {
-			n.computeNKijc();
-			n.computeNJikc();
-		}
-
-
 
 		// TODO: delete this when not needed anymore
-		for (Node n : ns) {
-			System.out.println("Node father: " + n.getFeature_name());
-			for (String key : n.getNijkc().keySet()) {
-				System.out.println("Node son: " + key);
-				System.out.println("Nijkc:");
-				n.print_Nijkc(key);
-				System.out.println("NJjkc:");
-				n.print_NJikc(key);
-				System.out.println("NKjkc:");
-				n.print_NKijc(key);
-			}
-		}
-
-
-
+		graph.printNodes();
 
 	}
 }

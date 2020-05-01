@@ -1,7 +1,5 @@
 package project;
 
 public interface Score {
-	
-	void score();
-	float getScore();
+	public void score(Node node);
 }

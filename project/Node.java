@@ -5,15 +5,16 @@ import org.w3c.dom.CDATASection;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Node {
     private static int[] Nc;
 
     private String feature_name;
-    private HashMap<String, int[][][]> Nijkc;
-    private HashMap<String, int[][]> NKijc;
-    private HashMap<String, int[][]> NJikc;
-    private HashMap<String, Integer> q;
+    private Map<String, int[][][]> Nijkc;
+    private Map<String, int[][]> NKijc;
+    private Map<String, int[][]> NJikc;
+    private Map<String, Integer> q;
     private int r;
 
     private static int[] r_arr;
@@ -24,7 +25,7 @@ public class Node {
     }
 
     public void setNijkc(int keys, String[] features, int[]r_values, int classes){
-        HashMap<String, int[][][]> map = new HashMap<String, int[][][]>();
+        Map<String, int[][][]> map = new HashMap<String, int[][][]>();
         map.put(features[keys], new int[1][r_values[keys]][classes]);
 
         for (int i=keys+1; i<features.length;i++){
@@ -39,7 +40,7 @@ public class Node {
     }
 
     public void setNKijc(int keys, String[] features, int[]r_values, int classes){
-        HashMap<String, int[][]> map = new HashMap<String, int[][]>();
+        Map<String, int[][]> map = new HashMap<String, int[][]>();
         map.put(features[keys], new int[1][classes]);
         for (int i=keys+1; i<features.length;i++){
             map.put(features[i], new int[r_values[keys]][classes]);
@@ -52,7 +53,7 @@ public class Node {
     }
 
     public void setNJikc(int keys, String[] features, int[]r_values, int classes){
-        HashMap<String, int[][]> map = new HashMap<String, int[][]>();
+        Map<String, int[][]> map = new HashMap<String, int[][]>();
         map.put(features[keys], new int[r_values[keys]][classes]);
         for (int i=keys+1; i<features.length;i++){
             map.put(features[i], new int[r_values[i]][classes]);
@@ -64,54 +65,42 @@ public class Node {
         this.NJikc = map;
     }
 
+    public void setQ(int keys, String[] features, int r){
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put(features[keys], 1); // empty configuration
+        for (int i=keys+1; i<features.length;i++){
+            map.put(features[i], r);
+        }
+        System.out.println("q Hashmap of feature "+features[keys]);
+        map.entrySet().forEach(entry->{System.out.println("key:" + entry.getKey() + " value:"
+                +entry.getValue());});
+        this.q = map;
+    }
+
+    public void setR(int r) {
+        this.r = r;
+    }
+
     // Getter methods:
     public String getFeature_name() {return feature_name;}
-    public HashMap<String, int[][][]> getNijkc() {return Nijkc;}
+    public Map<String, int[][][]> getNijkc() {return Nijkc;}
 
-    /**
-     * Increment counts of Nijkc as file lines are read
-     * @param key
-     * @param j
-     * @param k
-     * @param c
-     */
     public void inc_Nijkc(String key, int j, int k, int c){
         int[][][] aux = this.Nijkc.get(key);
         aux[j][k][c]++;
         this.Nijkc.put(key, aux);
     }
 
-    public void computeNKijc() {
-        for (String _key : this.Nijkc.keySet()) {
-            int[][][] aux_Nijkc = this.Nijkc.get(_key);
-            int[][] aux_NKijc = this.NKijc.get(_key);
-
-            for (int j = 0; j < aux_Nijkc.length; j++) {
-                for (int c = 0; c < aux_Nijkc[0][0].length; c++) {
-                    for (int k = 0; k < aux_Nijkc[0].length; k++) {
-                        aux_NKijc[j][c] += aux_Nijkc[j][k][c];
-                        this.NKijc.put(_key, aux_NKijc);
-                    }
-                }
-            }
-        }
+    public void inc_NKijc(String key, int j, int c) {
+        int[][] aux = this.NKijc.get(key);
+        aux[j][c]++;
+        this.NKijc.put(key, aux);
     }
 
-
-    public void computeNJikc() {
-        for (String _key : this.Nijkc.keySet()) {
-            int[][][] aux_Nijkc = this.Nijkc.get(_key);
-            int[][] aux_NJikc = this.NJikc.get(_key);
-
-            for (int k = 0; k < aux_Nijkc[0].length; k++) {
-                for (int c = 0; c < aux_Nijkc[0][0].length; c++) {
-                    for (int j = 0; j < aux_Nijkc.length; j++) {
-                        aux_NJikc[k][c] += aux_Nijkc[j][k][c];
-                        this.NJikc.put(_key, aux_NJikc);
-                    }
-                }
-            }
-        }
+    public void inc_NJikc(String key, int k, int c) {
+        int[][] aux = this.NJikc.get(key);
+        aux[k][c]++;
+        this.NJikc.put(key, aux);
     }
     
     public void print_Nijkc(String key) {
