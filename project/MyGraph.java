@@ -1,18 +1,23 @@
 package project;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MyGraph implements Graph{
-    private ArrayList<Node> nodes;
+    private List<Node> nodes;
     private float[][] adjMatrix;
     private int numNodes;
+    FileData file;
 
-    public MyGraph(int numNodes) {
-        this.adjMatrix = new float[numNodes][numNodes];
-        this.numNodes = numNodes;
-        this.nodes = new ArrayList<Node>();
+
+    public MyGraph(FileData graphData) {
+        this.file = graphData;
+        this.adjMatrix = new float[graphData.getFeatures().length][graphData.getFeatures().length];
+        this.numNodes = graphData.getFeatures().length;
+        this.nodes = new ArrayList<Node>(graphData.getFeatures().length);
     }
 
     public void insertInList(Node n){
@@ -22,10 +27,11 @@ public class MyGraph implements Graph{
     public void setNumNodes(int numNodes) {
         this.numNodes = numNodes;
     }
-
     @Override
-    public void setNodes(String[] features, int[] r_values, int num_class) {
-        this.nodes = new ArrayList<Node>(features.length);
+    public void setNodes() {
+        String[] features = this.file.getFeatures();
+        int[] r_values = this.file.getR_values();
+        int num_class = this.file.getNum_classes();
         for (int i = 0; i < this.numNodes; i++) {
             Node n = new Node(features[i], r_values[i]);
             n.setNijkc(i, features, r_values, num_class);
@@ -38,7 +44,15 @@ public class MyGraph implements Graph{
     }
 
     @Override
-    public void updateNodes(Map<String, Integer> aux_map, int aux_class) {
+    public void updateNodes(int[] values) {
+        String[] features = this.file.getFeatures();
+        int aux_class;
+        Map<String, Integer> aux_map = new HashMap<String, Integer>();
+        for (int i = 0; i < values.length - 1; i++) {
+            aux_map.put(features[i], values[i]);
+        }
+        aux_class = values[values.length - 1];
+
         List<Node> ns = this.nodes;
         for (Node n : ns) {
             for (String key : n.getNijkc().keySet()) {
@@ -73,7 +87,19 @@ public class MyGraph implements Graph{
     }
 
     @Override
-    public void addEdge(int node1, int node2, float value) {
-        this.adjMatrix[node1][node2] = value;
+    public int numNodes() {
+        return this.numNodes;
     }
+
+    @Override
+    public void createEdges() {
+        for (int i=0; i < this.numNodes; i++){
+
+            for (int j=i+1; j < this.numNodes;j++){
+
+            }
+        }
+    }
+
+
 }

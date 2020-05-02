@@ -3,8 +3,16 @@ package project;
 import java.util.Map;
 
 public interface Graph {
-    public void addEdge(int node1, int node2, float value);
-    public void updateNodes(Map<String, Integer> map, int class_value);
-    public void setNodes(String []features, int[]r_values, int num_classes);
+    public void updateNodes(int[] row);
+    public void setNodes();
     public void printNodes();
+    public int numNodes();
+    public void createEdges();
+
+    //public int getNumNodes();
+    //public int setNode(int index);
+    // mudar o nome GraphData -> FileData
+    // criar associaçao graphdata -> MyGraph
+    // mudar nome updateNodes -> updateNodeWeights
+
 }
