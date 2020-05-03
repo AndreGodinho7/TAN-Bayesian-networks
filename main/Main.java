@@ -44,7 +44,6 @@ public class Main {
 		// TODO: delete this when not needed anymore
 		graph.printNodes();
 
-        ((MyGraph)graph).printadjMatrix();
 		for (int i=0; i < graph.numNodes(); i++){
 			for (int j=i+1; j < graph.numNodes();j++){
 			    graph.createEdge(i,j);

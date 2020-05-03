@@ -20,6 +20,7 @@ public class MDLScore implements Score{
 		for(int c=0; c < Nijkc[0][0].length; c++){
 			for (int j=0; j < Nijkc.length; j++){
 				for (int k=0; k < Nijkc[0].length ;k++){
+					if (Nijkc[j][k][c] == 0 || NJikc[k][c] == 0 || NKijc[j][c] == 0) continue;
 					weight += ((Nijkc[j][k][c])/(N)) * log2((Nijkc[j][k][c]*Nc[c])/(NJikc[k][c]*NKijc[j][c]));
 				}
 			}
