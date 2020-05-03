@@ -45,7 +45,8 @@ public class Main {
 		graph.printNodes();
 
 		for (int i=0; i < graph.numNodes(); i++){
-			for (int j=i+1; j < graph.numNodes();j++){
+			for (int j=0; j < graph.numNodes();j++){
+				if (i==j) continue;
 			    graph.createEdge(i,j);
 			}
 		}

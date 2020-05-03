@@ -21,11 +21,16 @@ public class Node {
 
     public void setNijkc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][][]> map = new HashMap<String, int[][][]>();
-        map.put(features[keys], new int[1][r_values[keys]][classes]);
 
-        for (int i=keys+1; i<features.length;i++){
-            map.put(features[i], new int[r_values[keys]][r_values[i]][classes]);
+        for (int i=0; i < features.length; i++){
+            if (i == keys) {
+                map.put(features[keys], new int[1][r_values[keys]][classes]);
+            }
+            else{
+                map.put(features[i], new int[r_values[keys]][r_values[i]][classes]);
+            }
         }
+
         System.out.println("Hashmap of feature:"+features[keys]);
         map.entrySet().forEach(entry->{
             System.out.println("key:"+entry.getKey() + " value:" + "int["+entry.getValue().length+"]"+"["+entry.getValue()[0].length+"]"+"["+entry.getValue()[0][0].length+"]");
@@ -36,10 +41,18 @@ public class Node {
 
     public void setNKijc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][]> map = new HashMap<String, int[][]>();
-        map.put(features[keys], new int[1][classes]);
-        for (int i=keys+1; i<features.length;i++){
-            map.put(features[i], new int[r_values[keys]][classes]);
+
+        for (int i=0; i < features.length; i++){
+            if (i == keys) {
+                map.put(features[keys], new int[1][classes]);
+            }
+            else{
+                map.put(features[i], new int[r_values[keys]][classes]);
+            }
         }
+
+
+
         System.out.println("NKijc Hashmap of feature "+features[keys]);
         map.entrySet().forEach(entry->{System.out.println("key:" + entry.getKey() + " value:"
                 + "int["+ entry.getValue().length + "]"
@@ -49,10 +62,16 @@ public class Node {
 
     public void setNJikc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][]> map = new HashMap<String, int[][]>();
-        map.put(features[keys], new int[r_values[keys]][classes]);
-        for (int i=keys+1; i<features.length;i++){
-            map.put(features[i], new int[r_values[i]][classes]);
+
+        for (int i=0; i < features.length; i++){
+            if (i == keys) {
+                map.put(features[keys], new int[r_values[keys]][classes]);
+            }
+            else{
+                map.put(features[i], new int[r_values[i]][classes]);
+            }
         }
+
         System.out.println("NJikc Hashmap of feature "+features[keys]);
         map.entrySet().forEach(entry->{System.out.println("key:" + entry.getKey() + " value:"
                 + "int[" + entry.getValue().length + "]"
@@ -62,10 +81,15 @@ public class Node {
 
     public void setQ(int keys, String[] features, int r){
         Map<String, Integer> map = new HashMap<String, Integer>();
-        map.put(features[keys], 1); // empty configuration
-        for (int i=keys+1; i<features.length;i++){
-            map.put(features[i], r);
+        for (int i=0; i < features.length; i++){
+            if (i == keys) {
+                map.put(features[keys], 1); // empty configuration
+            }
+            else{
+                map.put(features[i], r);
+            }
         }
+
         System.out.println("q Hashmap of feature "+features[keys]);
         map.entrySet().forEach(entry->{System.out.println("key:" + entry.getKey() + " value:"
                 +entry.getValue());});
