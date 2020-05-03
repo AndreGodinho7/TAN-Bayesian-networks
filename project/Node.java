@@ -1,14 +1,11 @@
 package project;
 
-import org.w3c.dom.CDATASection;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Node {
-    private static int[] Nc;
+    private static double[] Nc;
+    private static double N;
 
     private String feature_name;
     private Map<String, int[][][]> Nijkc;
@@ -16,8 +13,6 @@ public class Node {
     private Map<String, int[][]> NJikc;
     private Map<String, Integer> q;
     private int r;
-
-    private static int[] r_arr;
 
     public Node(String feature_name, int r) {
         this.feature_name = feature_name;
@@ -81,9 +76,44 @@ public class Node {
         this.r = r;
     }
 
+    public static void setNc(double[] nc) { Nc = nc; }
+
+    public static void setN(double n) { N = n; }
+
     // Getter methods:
     public String getFeature_name() {return feature_name;}
-    public Map<String, int[][][]> getNijkc() {return Nijkc;}
+
+    public Map<String, int[][][]> getNijkcMap(){
+        return this.Nijkc;
+    }
+
+    public int[][][] getNijkc(String key){
+        return this.Nijkc.get(key);
+    }
+
+    public int[][] getNJikc(String key){
+        return this.NJikc.get(key);
+    }
+
+    public int[][] getNKijc(String key){
+        return this.NKijc.get(key);
+    }
+
+    public int getQ(String key) {
+        return q.get(key);
+    }
+
+    public static double[] getNc() {
+        return Nc;
+    }
+
+    public static double getN() {
+        return N;
+    }
+
+    public int getR() {
+        return r;
+    }
 
     public void inc_Nijkc(String key, int j, int k, int c){
         int[][][] aux = this.Nijkc.get(key);

@@ -2,14 +2,15 @@ package project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileData implements DataReader {
 
     private String[] features;
     private int[] r_values;
-    private int num_class;
+    private double N;
+    private int num_classes;
+    private double[] Nc;
     Scanner inputStream;
 
     public String[] getFeatures() {
@@ -20,8 +21,25 @@ public class FileData implements DataReader {
         return r_values;
     }
 
-    public int getNum_classes() {
-        return num_class;
+    public double getN() { return N; }
+
+    public double[] getNc() { return Nc; }
+
+    public int getNum_classes() { return num_classes; }
+
+    @Override
+    public String toString() {
+        return "FileData{" +
+                "features=" + Arrays.toString(features) +
+                ", r_values=" + Arrays.toString(r_values) +
+                ", N=" + N +
+                ", num_classes=" + num_classes +
+                ", Nc=" + Arrays.toString(Nc) +
+                '}';
+    }
+
+    public void print(){
+        System.out.println(this.toString());
     }
 
     @Override
@@ -61,13 +79,15 @@ public class FileData implements DataReader {
         for (int i = 0; i < this.r_values.length; i++) this.r_values[i] = -1;
     }
 
-    public void setR_Class(){
+    public void setData(){
         int aux_class = 0;
         int[] values;
-        this.num_class = -1;
+        int instances=0;
+        Map<Integer, Double> nc = new HashMap<>();
         while (true) {
             String line = this.readline();
             if (line == null) break;
+            instances++;
             values = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
 
             for (int i = 0; i < values.length - 1; i++) {
@@ -75,10 +95,20 @@ public class FileData implements DataReader {
             }
 
             aux_class = values[values.length - 1];
-            if (aux_class > this.num_class) this.num_class = aux_class;
+            Double counter = nc.get(aux_class);
+            if (counter == null){
+                nc.put(aux_class, 1.0);
+            }
+            else {
+                counter = nc.get(aux_class);
+                counter++;
+                nc.put(aux_class, counter);
+            }
         }
         for (int i = 0; i < r_values.length; i++) r_values[i]++;
-        this.num_class++;
+        this.Nc = new double[nc.size()];
+        for (int j = 0; j < nc.size(); j++){ this.Nc[j] = nc.get(j); }
+        this.N = instances;
+        this.num_classes = nc.size();
     }
-
 }

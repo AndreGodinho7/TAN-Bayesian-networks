@@ -7,7 +7,7 @@ public interface Graph {
     public void setNodes();
     public void printNodes();
     public int numNodes();
-    public void createEdges();
+    public void createEdge(int node1, int node2);
 
     //public int getNumNodes();
     //public int setNode(int index);

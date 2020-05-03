@@ -10,6 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		String trainFilename = "train-enunciado.csv";
+		String score = "LL";
 		int[] values;
 
 		DataReader readTrainFile = new FileData();
@@ -21,12 +22,11 @@ public class Main {
 		((FileData)readTrainFile).initr_values();
 
 		// get r values
-		((FileData)readTrainFile).setR_Class();
+		((FileData)readTrainFile).setData();
 
-		System.out.println(Arrays.toString(((FileData) readTrainFile).getR_values()));
-		System.out.println(((FileData) readTrainFile).getNum_classes());
+		((FileData)readTrainFile).print(); // TODO: delete when not needed
 
-		Graph graph = new MyGraph((FileData)readTrainFile);
+		Graph graph = new MyGraph((FileData)readTrainFile, score);
 		graph.setNodes(); // TODO: or for loop setNodes(i) ?
 
 		// second sweep
@@ -43,8 +43,15 @@ public class Main {
 
 		// TODO: delete this when not needed anymore
 		graph.printNodes();
-		//Score s = new LLScore();
 
+        ((MyGraph)graph).printadjMatrix();
+		for (int i=0; i < graph.numNodes(); i++){
+			for (int j=i+1; j < graph.numNodes();j++){
+			    graph.createEdge(i,j);
+			}
+		}
 
-	}
+		// TODO: delete this when not needed anymore
+        ((MyGraph)graph).printadjMatrix();
+    }
 }
