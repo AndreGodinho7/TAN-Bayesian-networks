@@ -1,29 +1,20 @@
 package project;
 
-import java.util.*;
 import java.lang.*;
-import java.io.*;
-import project.Node;
+import java.util.Arrays;
 
 public class PrimAlgorithm  implements MaxSpanningTree{
     private String[][] edges;
-    //private Node mst;
     private int numNodes; // Number of nodes in the graph
 
     // Constructor
     public PrimAlgorithm(int _nrNodes) {
         this.numNodes = _nrNodes;
         this.edges = new String[_nrNodes - 1][2];
-        //this.mst = new ArrayList<Node>();
     }
 
     // Getter methods:
     public String[][] getEdges() {return this.edges;}
-
-    /*
-    public Tree<TreeNode> buildTree() {
-
-    }*/
 
     /**
      * Find the node with max key value, from the set of nodes not yet in the MST
@@ -49,6 +40,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
      * @param adjMatrix : graph's adjacency matrix
      */
     public void computeMST(float[][] adjMatrix, String[] featureLabels) {
+
         int[] parent = new int[this.numNodes];         // Nodes added to MST
         float[] key = new float[this.numNodes];        // Key values used to pick max weight edge
         Boolean[] mstSet = new Boolean[this.numNodes];
@@ -69,11 +61,21 @@ public class PrimAlgorithm  implements MaxSpanningTree{
                 if ((adjMatrix[u][v] != 0) && !mstSet[v] && (adjMatrix[u][v] > key[v])) {
                     parent[v] = u;
                     key[v] = adjMatrix[u][v];
+                    
+                    String edgeParent = featureLabels[u];
+                    String edgeChild = featureLabels[v];
+                    if (v < parent[v]) {
+                        edgeParent = featureLabels[v];
+                        edgeChild = featureLabels[u];
+                    }
+                    String[] edge = {edgeParent, edgeChild};
+                    this.edges[v - 1] = edge;
                 }
             }
         }
+        //-------------------------------------------------------------------------------
         // Save Edges of the MST in such manner: [[Parent, Child], ... , [Parent, Child]]
-        for (int i = 1; i < this.numNodes; i++) {
+        /*for (int i = 1; i < this.numNodes; i++) {
             String edgeParent = featureLabels[parent[i]];
             String edgeChild = featureLabels[i];
             if (i < parent[i]) {
@@ -82,7 +84,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             }
             String[] edge = {edgeParent, edgeChild};
             this.edges[i - 1] = edge;
-        }
+        }*/
         // TODO: remove print methods afterwards
         printMST(parent, adjMatrix);
     }
@@ -95,7 +97,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     }
 
     // TODO: Remove this main method (for testing purposes only)
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         String[] features = {"A1", "A2", "A3", "A4"};
         float[][] adjMatrix = new float[][]{
                 {0   , 4.1f, 5   ,    0},
@@ -107,5 +109,5 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         t.computeMST(adjMatrix, features);
         e = t.getEdges();
         System.out.print(Arrays.deepToString(e));
-    }*/
+    }
 }
