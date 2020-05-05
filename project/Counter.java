@@ -10,17 +10,18 @@ public interface Counter {
     public void setR(int r);
 
     public Map<String, int[][][]> getNijkcMap();
+    public Map<String, int[][]> getNKijcMap();
     public int[][][] getNijkc(String key);
     public int[][] getNJikc(String key);
     public int[][] getNKijc(String key);
     public int getQ(String key);
     public String getFeature_name();
-
     public int getR();
+
+    public void removeKeyNijkc(String key);
+    public void removeKeyNKijc(String key);
+
     public void inc_Nijkc(String key, int j, int k, int c);
     public void inc_NKijc(String key, int j, int c);
     public void inc_NJikc(String key, int k, int c);
-
-
-
 }

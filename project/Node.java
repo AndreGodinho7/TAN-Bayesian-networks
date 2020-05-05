@@ -116,6 +116,8 @@ public class Node implements Counter{
         return this.Nijkc;
     }
     @Override
+    public Map<String, int[][]> getNKijcMap() { return this.NKijc; }
+    @Override
     public int[][][] getNijkc(String key){
         return this.Nijkc.get(key);
     }
@@ -143,6 +145,14 @@ public class Node implements Counter{
     public int getR() {
         return r;
     }
+
+
+    @Override
+    public void removeKeyNijkc(String key) { this.Nijkc.remove(key); }
+    @Override
+    public void removeKeyNKijc(String key) { this.NKijc.remove(key); }
+
+
     @Override
     public void inc_Nijkc(String key, int j, int k, int c){
         int[][][] aux = this.Nijkc.get(key);
@@ -162,6 +172,7 @@ public class Node implements Counter{
         this.NJikc.put(key, aux);
     }
 
+
     public void print_Nijkc(String key) {
         int[][][] aux = this.Nijkc.get(key);
         for (int z = 0; z < aux[0][0].length; z++) {
@@ -174,12 +185,12 @@ public class Node implements Counter{
             System.out.println();
         }
     }
-    
+
     public void print_NKijc(String key) {
         int[][] aux = this.NKijc.get(key);
         for (int c = 0; c < aux[0].length; c++) {
             for (int j = 0; j < aux.length; j++) {
-            	System.out.print(aux[j][c] + " ");
+                System.out.print(aux[j][c] + " ");
             }
             System.out.println();
         }
@@ -189,7 +200,7 @@ public class Node implements Counter{
         int[][] aux = this.NJikc.get(key);
         for (int c = 0; c < aux[0].length; c++) {
             for (int k = 0; k < aux.length; k++) {
-            	System.out.print(aux[k][c] + " ");
+                System.out.print(aux[k][c] + " ");
             }
             System.out.println();
         }
