@@ -3,19 +3,18 @@ package project;
 import java.io.File;
 import java.util.*;
 
-public class MyGraph implements Graph{
-    private List<Node> nodes;
+public class MyGraph implements WeightedGraph{
+    private List<Counter> nodes;
     private double[][] adjMatrix;
     private int numNodes;
     FileData file;
     Score score;
 
-
     public MyGraph(FileData graphData, String score_flag) {
         this.file = graphData;
         this.adjMatrix = new double[graphData.getFeatures().length][graphData.getFeatures().length];
         this.numNodes = graphData.getFeatures().length;
-        this.nodes = new ArrayList<Node>(graphData.getFeatures().length);
+        this.nodes = new ArrayList<Counter>(graphData.getFeatures().length);
 
         if (score_flag.equals("LL")){
             this.score = new LLScore();
@@ -62,8 +61,8 @@ public class MyGraph implements Graph{
         }
         aux_class = values[values.length - 1];
 
-        List<Node> ns = this.nodes;
-        for (Node n : ns) {
+        List<Counter> ns = this.nodes;
+        for (Counter n : ns) {
             for (String key : n.getNijkcMap().keySet()) {
                 if (n.getFeature_name().equals(key)) {
                     n.inc_Nijkc(key, 0, aux_map.get(key), aux_class);
@@ -91,17 +90,17 @@ public class MyGraph implements Graph{
 
     @Override
     public void printNodes() {
-        List<Node> ns = this.nodes;
-        for (Node n : ns) {
+        List<Counter> ns = this.nodes;
+        for (Counter n : ns) {
             System.out.println("Node father: " + n.getFeature_name());
             for (String key : n.getNijkcMap().keySet()) {
                 System.out.println("Node son: " + key);
                 System.out.println("Nijkc:");
-                n.print_Nijkc(key);
+                ((Node)n).print_Nijkc(key);
                 System.out.println("NJjkc:");
-                n.print_NJikc(key);
+                ((Node) n).print_NJikc(key);
                 System.out.println("NKjkc:");
-                n.print_NKijc(key);
+                ((Node) n).print_NKijc(key);
             }
         }
     }

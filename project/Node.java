@@ -3,7 +3,7 @@ package project;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Node {
+public class Node implements Counter{
     private static double[] Nc;
     private static double N;
 
@@ -19,6 +19,7 @@ public class Node {
         this.r = r;
     }
 
+    @Override
     public void setNijkc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][][]> map = new HashMap<String, int[][][]>();
 
@@ -38,7 +39,7 @@ public class Node {
         System.out.println();
         this.Nijkc = map;
     }
-
+    @Override
     public void setNKijc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][]> map = new HashMap<String, int[][]>();
 
@@ -60,6 +61,7 @@ public class Node {
         this.NKijc = map;
     }
 
+    @Override
     public void setNJikc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][]> map = new HashMap<String, int[][]>();
 
@@ -79,6 +81,7 @@ public class Node {
         this.NJikc = map;
     }
 
+    @Override
     public void setQ(int keys, String[] features, int r){
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (int i=0; i < features.length; i++){
@@ -96,6 +99,7 @@ public class Node {
         this.q = map;
     }
 
+    @Override
     public void setR(int r) {
         this.r = r;
     }
@@ -105,24 +109,25 @@ public class Node {
     public static void setN(double n) { N = n; }
 
     // Getter methods:
+    @Override
     public String getFeature_name() {return feature_name;}
-
+    @Override
     public Map<String, int[][][]> getNijkcMap(){
         return this.Nijkc;
     }
-
+    @Override
     public int[][][] getNijkc(String key){
         return this.Nijkc.get(key);
     }
-
+    @Override
     public int[][] getNJikc(String key){
         return this.NJikc.get(key);
     }
-
+    @Override
     public int[][] getNKijc(String key){
         return this.NKijc.get(key);
     }
-
+    @Override
     public int getQ(String key) {
         return q.get(key);
     }
@@ -134,29 +139,29 @@ public class Node {
     public static double getN() {
         return N;
     }
-
+    @Override
     public int getR() {
         return r;
     }
-
+    @Override
     public void inc_Nijkc(String key, int j, int k, int c){
         int[][][] aux = this.Nijkc.get(key);
         aux[j][k][c]++;
         this.Nijkc.put(key, aux);
     }
-
+    @Override
     public void inc_NKijc(String key, int j, int c) {
         int[][] aux = this.NKijc.get(key);
         aux[j][c]++;
         this.NKijc.put(key, aux);
     }
-
+    @Override
     public void inc_NJikc(String key, int k, int c) {
         int[][] aux = this.NJikc.get(key);
         aux[k][c]++;
         this.NJikc.put(key, aux);
     }
-    
+
     public void print_Nijkc(String key) {
         int[][][] aux = this.Nijkc.get(key);
         for (int z = 0; z < aux[0][0].length; z++) {

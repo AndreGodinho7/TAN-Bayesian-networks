@@ -1,8 +1,7 @@
 package project;
 
-import java.util.Map;
-
-public interface Graph {
+public interface WeightedGraph extends Graph {
+    public void updateNodes(int[] row);
     public void setNodes();
     public void printNodes();
     public int numNodes();

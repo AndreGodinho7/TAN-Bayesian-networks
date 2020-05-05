@@ -7,7 +7,7 @@ public class MDLScore implements Score{
 	}
 
 	@Override
-	public double calculate_score(Node father, Node son) {
+	public double calculate_score(Counter father, Counter son) {
 		// father is i' ; son is i
 		double weight = 0;
 		String key_son = son.getFeature_name();

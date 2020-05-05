@@ -8,7 +8,7 @@ public class LLScore implements Score {
     }
 
     @Override
-    public double calculate_score(Node father, Node son) {
+    public double calculate_score(Counter father, Counter son) {
         // father is i' ; son is i
         float weight = 0;
         String key_son = son.getFeature_name();

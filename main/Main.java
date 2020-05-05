@@ -26,7 +26,7 @@ public class Main {
 
 		((FileData)readTrainFile).print(); // TODO: delete when not needed
 
-		Graph graph = new MyGraph((FileData)readTrainFile, score);
+		WeightedGraph graph = new MyGraph((FileData)readTrainFile, score);
 		graph.setNodes(); // TODO: or for loop setNodes(i) ?
 
 		// second sweep
