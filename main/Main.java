@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String trainFilename = "train-enunciado.csv";
+        String trainFilename = "bias-train.csv";
         String score = "LL";
         int[] values;
 
