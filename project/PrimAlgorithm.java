@@ -98,12 +98,11 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         key[this.rootIndex] = Double.MAX_VALUE; // Make key MAX so that this node is picked as first node
         parent[this.rootIndex] = -1;            // Root node does not have a parent
 
-        // apenas percorre matriz triangular superior
-        for (int count = this.rootIndex; count < this.graph.numNodes() - 1; count++) {
+        for (int count = 0; count < this.graph.numNodes() - 1; count++) {
             int u = maxKey(key, mstSet);
             mstSet[u] = true;
 
-            for (int v = this.rootIndex + 1; v < this.graph.numNodes(); v++) {
+            for (int v = 0; v < this.graph.numNodes(); v++) {
                 if ((this.graph.getAdjMatrix()[u][v] != 0) && !mstSet[v] && (this.graph.getAdjMatrix()[u][v] > key[v])) {
                     parent[v] = u;
                     key[v] = this.graph.getAdjMatrix()[u][v];
