@@ -1,6 +1,8 @@
 package project;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TreeNode {
@@ -17,11 +19,13 @@ public class TreeNode {
 
     private Map<String, double[][][]> theta_ijkc;
     private double[] theta_c;
-    private String[] children;
+    //private String[] children;
+    private List<String> children;
 
     // Constructor:
     public TreeNode(Node _n) {
         this.n = _n;
+        this.children = new ArrayList<String>();
     }
 
     /*public TreeNode(String _feature_name, int _r) {
@@ -30,6 +34,8 @@ public class TreeNode {
         this.Nc = Node.getNc();
         this.N = Node.getN();
     }*/
+    public void addChildName(String nodeName) { this.children.add(nodeName); }
+
 
     /**
      * Get Nijkc from Node and remove all extra edges.
@@ -100,9 +106,13 @@ public class TreeNode {
         this.theta_c = aux;
     }
 
-
     //--------------------------------------------------------------------
     // print methods:
+    public void printChildren() {
+        List<String> ns = this.children;
+        System.out.println("Father: " + this.n.getFeature_name());
+        for (String name : ns) { System.out.print(name + " "); }
+    }
 
     public void printTheta_ijkc(String key) {
         double[][][] aux = this.theta_ijkc.get(key);

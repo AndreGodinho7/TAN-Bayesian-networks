@@ -1,20 +1,20 @@
 package project;
 
-import java.io.File;
 import java.util.*;
 
-public class MyGraph implements WeightedGraph{
-    private List<Counter> nodes;
+public class MyGraph implements Graph {
+    private List<Node> nodes;
     private double[][] adjMatrix;
     private int numNodes;
     FileData file;
     Score score;
 
+
     public MyGraph(FileData graphData, String score_flag) {
         this.file = graphData;
         this.adjMatrix = new double[graphData.getFeatures().length][graphData.getFeatures().length];
         this.numNodes = graphData.getFeatures().length;
-        this.nodes = new ArrayList<Counter>(graphData.getFeatures().length);
+        this.nodes = new ArrayList<Node>(graphData.getFeatures().length);
 
         if (score_flag.equals("LL")){
             this.score = new LLScore();
@@ -31,6 +31,10 @@ public class MyGraph implements WeightedGraph{
     private void insertInList(Node n){
         nodes.add(n);
     }
+
+    public List<Node> getNodes() {return nodes;}
+
+    public double[][] getAdjMatrix() {return adjMatrix;}
 
     @Override
     public void setNodes() {
@@ -61,8 +65,8 @@ public class MyGraph implements WeightedGraph{
         }
         aux_class = values[values.length - 1];
 
-        List<Counter> ns = this.nodes;
-        for (Counter n : ns) {
+        List<Node> ns = this.nodes;
+        for (Node n : ns) {
             for (String key : n.getNijkcMap().keySet()) {
                 if (n.getFeature_name().equals(key)) {
                     n.inc_Nijkc(key, 0, aux_map.get(key), aux_class);
@@ -86,21 +90,22 @@ public class MyGraph implements WeightedGraph{
     public void createEdge(int node1, int node2) {
         double weight = this.score.calculate_score(this.nodes.get(node1), this.nodes.get(node2));
         this.adjMatrix[node1][node2] = weight;
+        this.adjMatrix[node2][node1] = weight;
     }
 
     @Override
     public void printNodes() {
-        List<Counter> ns = this.nodes;
-        for (Counter n : ns) {
+        List<Node> ns = this.nodes;
+        for (Node n : ns) {
             System.out.println("Node father: " + n.getFeature_name());
             for (String key : n.getNijkcMap().keySet()) {
                 System.out.println("Node son: " + key);
                 System.out.println("Nijkc:");
-                ((Node)n).print_Nijkc(key);
+                n.print_Nijkc(key);
                 System.out.println("NJjkc:");
-                ((Node) n).print_NJikc(key);
+                n.print_NJikc(key);
                 System.out.println("NKjkc:");
-                ((Node) n).print_NKijc(key);
+                n.print_NKijc(key);
             }
         }
     }
@@ -109,7 +114,7 @@ public class MyGraph implements WeightedGraph{
         System.out.println("graph Adjacency matrix");
         for (int i = 0; i < this.adjMatrix.length; i++) {
             for (int j = 0; j < this.adjMatrix.length; j++) {
-                System.out.print(this.adjMatrix[i][j] + " ");
+                System.out.print(this.adjMatrix[i][j] + "\t\t\t");
             }
             System.out.println();
         }
