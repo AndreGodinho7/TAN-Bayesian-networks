@@ -6,7 +6,7 @@ public class MyGraph implements Graph {
     private List<Node> nodes;
     private double[][] adjMatrix;
     private int numNodes;
-    FileData file;
+    private FileData file;
     Score score;
 
 
@@ -35,6 +35,8 @@ public class MyGraph implements Graph {
     public List<Node> getNodes() {return nodes;}
 
     public double[][] getAdjMatrix() {return adjMatrix;}
+
+    public FileData getFile() { return file; }
 
     @Override
     public void setNodes() {
