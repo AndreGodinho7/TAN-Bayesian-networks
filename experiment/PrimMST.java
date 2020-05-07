@@ -42,7 +42,7 @@ public class PrimMST {
                 this.rootIndex++;
             }
         }
-        System.out.println("\nRoot Node index: " + this.rootIndex);
+        System.out.println("\nRoot Node: " + this.featureNames[this.rootIndex]);
     }
 
     // create MyTreeNodes
@@ -90,11 +90,11 @@ public class PrimMST {
         key[this.rootIndex] = Double.MAX_VALUE; // Make key MAX so that this node is picked as first node
         parent[this.rootIndex] = -1;            // Root node does not have a parent
 
-        for (int count = 0; count < this.numNodes - 1; count++) {
+        for (int count = this.rootIndex; count < this.numNodes - 1; count++) {
             int u = maxKey(key, mstSet);
             mstSet[u] = true;
 
-            for (int v = 0; v < this.numNodes; v++) {
+            for (int v = this.rootIndex; v < this.numNodes; v++) {
                 if ((this.adjMatrix[u][v] != 0) && !mstSet[v] && (this.adjMatrix[u][v] > key[v])) {
                     parent[v] = u;
                     key[v] = this.adjMatrix[u][v];
@@ -105,7 +105,7 @@ public class PrimMST {
            pai
          */
         for (int i = this.rootIndex + 1; i < this.numNodes; i++) {
-            if (parent[i] != -1) {
+            if (parent[i] != -1 && this.adjMatrix[i][parent[i]] > 0) {
                 this.featureNodes.get(parent[i])._addChildName(this.featureNames[i]);
             }
         }
@@ -126,7 +126,7 @@ public class PrimMST {
 
         System.out.println("Edge \tWeight");
         for (int i = this.rootIndex + 1; i < this.numNodes; i++) {
-            if (parent[i] != -1) {
+            if (parent[i] != -1 && this.adjMatrix[i][parent[i]] > 0) {
                 System.out.println(parent[i] + 1 + " - " + (i + 1) + "\t" + this.adjMatrix[i][parent[i]]);
             }
         }
@@ -139,11 +139,11 @@ public class PrimMST {
 
         String[] features = {"A1", "A2", "A3", "A4", "A5"};
         double[][] adjMatrix = new double[][]{
-                {0  , 4.1,   0, 1.5,   2 },
-                {4.1,   0,   0,   0, 3.5 },
                 {0  ,   0,   0,   0,   0 },
-                {1.5,   0,   0,   0,   1 },
-                {2  , 3.5,   0,   1,   0 }};
+                {0  ,   0,   0,   0,   0 },
+                {0  ,   0,   0,   1,   6 },
+                {0  ,   0,   1,   0,   6 },
+                {0  ,   0,   6,   6,   0 }};
 
         PrimMST t = new PrimMST(features, adjMatrix);
         t.computeMST();

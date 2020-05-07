@@ -1,5 +1,6 @@
 package experiment;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class FeatureNode {
     public void printChildren() {
         List<String> ns = this.children;
         System.out.println("Father: " + this.name);
+        System.out.print("Children: ");
         for (String child : ns) { System.out.print(child + " "); }
+        System.out.println();
     }
 }
