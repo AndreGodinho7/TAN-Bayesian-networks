@@ -114,7 +114,9 @@ public class MyTreeNode implements TreeNode {
     public void printChildren() {
         List<String> ns = this.children;
         System.out.println("Father: " + this.n.getFeature_name());
+        System.out.print("Children: ");
         for (String name : ns) { System.out.print(name + " "); }
+        System.out.println();
     }
 
     public void printTheta_ijkc(String key) {

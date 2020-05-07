@@ -7,18 +7,18 @@ import java.util.List;
 
 public class PrimAlgorithm  implements MaxSpanningTree{
 
-    private Tree<TreeNode> directedTree;
-    TreeNode root;
-    private List<TreeNode> treeNodes;
+    private Tree<MyTreeNode> directedTree;
+    MyTreeNode root;
+    private List<MyTreeNode> treeNodes;
 
     private MyGraph graph;
     private boolean[] isRoot;
-    int rootIndex = 0;
+    private int rootIndex = 0;
 
     // Constructor
     public PrimAlgorithm(MyGraph _graph) {
         this.graph = _graph;
-        this.treeNodes = new ArrayList<TreeNode>(_graph.file.getFeatures().length);
+        this.treeNodes = new ArrayList<MyTreeNode>(_graph.file.getFeatures().length);
     }
 
     /* decide where to put this code (previously inside constructor):
@@ -27,9 +27,9 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     this.isRoot = new boolean[this.graph.numNodes()];
     Arrays.fill(isRoot, false);
     isRoot[0] = true;
-    //create first TreeNode and add it to the directed tree
-    root = new TreeNode(this.graph.getNodes().get(0));
-    directedTree = new Tree<TreeNode>(root);
+    //create first MyTreeNode and add it to the directed tree
+    root = new MyTreeNode(this.graph.getNodes().get(0));
+    directedTree = new Tree<MyTreeNode>(root);
      */
 
     // The graph is assumed to be undirected -- symmetric adjacency matrix
@@ -49,13 +49,13 @@ public class PrimAlgorithm  implements MaxSpanningTree{
                 this.rootIndex++;
             }
         }
-        System.out.println("\nRoot Node index: " + this.rootIndex);
+        System.out.println("\nRoot Node: " + graph.file.getFeatures()[this.rootIndex]);
     }
 
-    // create TreeNodes
+    // create MyTreeNodes
     private void setTreeNodes() {
         for (int i = 0; i < this.graph.numNodes(); i++) {
-            TreeNode tn = new TreeNode(this.graph.getNodes().get(i));
+            MyTreeNode tn = new MyTreeNode(this.graph.getNodes().get(i));
             this.treeNodes.add(tn);
         }
     }
@@ -98,11 +98,11 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         key[this.rootIndex] = Double.MAX_VALUE; // Make key MAX so that this node is picked as first node
         parent[this.rootIndex] = -1;            // Root node does not have a parent
 
-        for (int count = 0; count < this.graph.numNodes() - 1; count++) {
+        for (int count = this.rootIndex; count < this.graph.numNodes() - 1; count++) {
             int u = maxKey(key, mstSet);
             mstSet[u] = true;
 
-            for (int v = 0; v < this.graph.numNodes(); v++) {
+            for (int v = this.rootIndex; v < this.graph.numNodes(); v++) {
                 if ((this.graph.getAdjMatrix()[u][v] != 0) && !mstSet[v] && (this.graph.getAdjMatrix()[u][v] > key[v])) {
                     parent[v] = u;
                     key[v] = this.graph.getAdjMatrix()[u][v];
@@ -113,7 +113,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
            pai
          */
         for (int i = this.rootIndex + 1; i < this.graph.numNodes(); i++) {
-            if (parent[i] != -1) {
+            if (parent[i] != -1 && this.graph.getAdjMatrix()[i][parent[i]] > 0) {
                 this.treeNodes.get(parent[i]).addChildName(this.graph.file.getFeatures()[i]);
             }
         }
@@ -122,8 +122,8 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         printMST(parent);
 
         // Print children of each node after running Prim algorithm
-        List<TreeNode> aux = this.treeNodes;
-        for (TreeNode tn : aux) {
+        List<MyTreeNode> aux = this.treeNodes;
+        for (MyTreeNode tn : aux) {
             tn.printChildren();
             System.out.println();
         }
@@ -134,7 +134,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
 
         System.out.println("Edge \tWeight");
         for (int i = this.rootIndex + 1; i < this.graph.numNodes(); i++) {
-            if (parent[i] != -1) {
+            if (parent[i] != -1 && this.graph.getAdjMatrix()[i][parent[i]] > 0) {
                 System.out.println(parent[i] + 1 + " - " + (i + 1) + "\t" + this.graph.getAdjMatrix()[i][parent[i]]);
             }
         }
