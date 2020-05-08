@@ -65,10 +65,15 @@ public class Main {
             node.setData();
         }
 
+        System.out.println("Father (root): "+root.getIdentifier());
+        System.out.println("Child (root): "+root.getIdentifier());
+        ((MyTreeNode)root).printTheta_ijkc(root.getIdentifier());
         for(TreeNode node : tree){
             System.out.println("Father: "+node.getIdentifier());
             List<TreeNode> children = node.getChildren();
+            if (children.size() == 0) break; // leaf node
             for(TreeNode child : children){
+                System.out.println("Child: "+child.getIdentifier());
                 ((MyTreeNode)node).printTheta_ijkc(child.getIdentifier());
             }
         }

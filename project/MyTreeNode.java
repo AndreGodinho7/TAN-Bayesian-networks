@@ -17,6 +17,8 @@ public class MyTreeNode extends TreeNode {
     // Getter methods:
     public String getTreeNodeName() { return this.n.getFeature_name(); }
 
+    public Node getN() { return n; }
+
     /**
      * Remove Nijkc counts from Node to all nodes that are not children.
      */
@@ -25,6 +27,11 @@ public class MyTreeNode extends TreeNode {
 
         List<String> not_children = new LinkedList<String>();
         List<String> children = new LinkedList<String>();
+
+        if(this.parent == null) {
+            // is root
+            children.add(this.n.getFeature_name());
+        }
 
         for (TreeNode child : this.children){
             children.add(child.getIdentifier());
@@ -46,6 +53,11 @@ public class MyTreeNode extends TreeNode {
         List<String> not_children = new LinkedList<String>();
         List<String> children = new LinkedList<String>();
 
+        if(this.parent == null) {
+            // is root
+            children.add(this.n.getFeature_name());
+        }
+
         for (TreeNode child : this.children){
             children.add(child.getIdentifier());
         }
@@ -62,18 +74,26 @@ public class MyTreeNode extends TreeNode {
      */
     public void setTheta_ijkc() {
         Map<String, double[][][]> map = new HashMap<>();
+        int child_r = 0;
+
+        if (this.getParent() == null) child_r = this.getN().getR();
 
         for (String key : this.n.getNijkcMap().keySet()) {
             int[][][] Nijkc = this.n.getNijkc(key);
             int[][] NKijc = this.n.getNKijc(key);
             double [][][] theta_ijkc = new double[Nijkc.length][Nijkc[0].length][Nijkc[0][0].length];
 
+            for (TreeNode child : this.children){
+                if (child.getIdentifier().equals(key)){
+                    child_r = ((MyTreeNode)child).getN().getR();
+                    break;
+                };
+            }
+
             for (int j=0; j < Nijkc.length; j++){
                 for (int k=0; k < Nijkc[0].length ;k++){
                     for(int c=0; c < Nijkc[0][0].length; c++){
-                        //System.out.println("Nijkc: "+Nijkc[j][k][c]);
-                        //System.out.println("NKijc: "+NKijc[j][c]);
-                        theta_ijkc[j][k][c] = (Nijkc[j][k][c] + 0.5)/(NKijc[j][c] + this.n.getR() * 0.5);
+                        theta_ijkc[j][k][c] = (Nijkc[j][k][c] + 0.5)/(NKijc[j][c] + child_r * 0.5);
                         map.put(key, theta_ijkc);
                     }
                 }
@@ -108,13 +128,13 @@ public class MyTreeNode extends TreeNode {
     public void printTheta_ijkc(String key) {
         double[][][] aux = this.theta_ijkc.get(key);
         for (int c = 0; c < aux[0][0].length; c++) {
-            for (int k = 0; k < aux[0].length; k++) {
-                for (int j = 0; j < aux.length; j++) {
+            for (int j = 0; j < aux.length; j++) {
+                for (int k = 0; k < aux[0].length; k++) {
                     System.out.print(aux[j][k][c] + " ");
                 }
-                System.out.print("  ");
+                System.out.println();
             }
-            System.out.println();
+            System.out.print("  ");
         }
     }
 

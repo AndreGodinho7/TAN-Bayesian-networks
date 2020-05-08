@@ -16,6 +16,8 @@ public abstract class TreeNode {
 
     public String getIdentifier() { return this.identifier; }
 
+    public TreeNode getParent() { return parent; }
+
     public void addChild(TreeNode child) { this.children.add(child); }
 
     public void setParent(TreeNode p) { this.parent = p; }
