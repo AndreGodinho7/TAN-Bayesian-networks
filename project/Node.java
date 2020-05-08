@@ -25,10 +25,10 @@ public class Node implements Counter{
 
         for (int i=0; i < features.length; i++){
             if (i == keys) {
-                map.put(features[keys], new int[1][r_values[keys]][classes]);
+                map.put(features[keys], new int[1][this.r][classes]);
             }
             else{
-                map.put(features[i], new int[r_values[keys]][r_values[i]][classes]);
+                map.put(features[i], new int[r_values[i]][this.r][classes]);
             }
         }
 
@@ -48,7 +48,7 @@ public class Node implements Counter{
                 map.put(features[keys], new int[1][classes]);
             }
             else{
-                map.put(features[i], new int[r_values[keys]][classes]);
+                map.put(features[i], new int[r_values[i]][classes]);
             }
         }
 
@@ -67,10 +67,10 @@ public class Node implements Counter{
 
         for (int i=0; i < features.length; i++){
             if (i == keys) {
-                map.put(features[keys], new int[r_values[keys]][classes]);
+                map.put(features[keys], new int[this.r][classes]);
             }
             else{
-                map.put(features[i], new int[r_values[i]][classes]);
+                map.put(features[i], new int[this.r][classes]);
             }
         }
 

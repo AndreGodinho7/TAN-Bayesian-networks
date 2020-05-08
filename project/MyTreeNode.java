@@ -14,28 +14,25 @@ public class MyTreeNode extends TreeNode {
         this.n = n;
     }
 
-    // Getter methods:
-    public String getTreeNodeName() { return this.n.getFeature_name(); }
-
     /**
      * Remove Nijkc counts from Node to all nodes that are not children.
      */
     public void setNijkc() {
         Map<String, int[][][]> map = this.n.getNijkcMap();
+        List<String> not_parents = new LinkedList<String>();
+        String _parent;
 
-        List<String> not_children = new LinkedList<String>();
-        List<String> children = new LinkedList<String>();
-
-        for (TreeNode child : this.children){
-            children.add(child.getIdentifier());
+        if (this.isRoot) {
+            _parent = this.getIdentifier();
+        } else {
+            _parent = this.parent.getIdentifier();
         }
         for (String key : map.keySet()){
-            if (children.contains(key) == false)  not_children.add(key);
+            if (!(_parent.equals(key)))  not_parents.add(key);
         }
-        for (String not_child : not_children){
-            map.remove(not_child);
+        for (String not_parent : not_parents){
+            map.remove(not_parent);
         }
-
     }
 
     /**
@@ -43,17 +40,19 @@ public class MyTreeNode extends TreeNode {
      */
     public void setNKijc() {
         Map<String, int[][]> map = this.n.getNKijcMap();
-        List<String> not_children = new LinkedList<String>();
-        List<String> children = new LinkedList<String>();
+        List<String> not_parents = new LinkedList<String>();
+        String parent;
 
-        for (TreeNode child : this.children){
-            children.add(child.getIdentifier());
+        if (this.isRoot) {
+            parent = this.getIdentifier();
+        } else {
+            parent = this.parent.getIdentifier();
         }
         for (String key : map.keySet()){
-            if (children.contains(key) == false)  not_children.add(key);
+            if (!(parent.equals(key)))  not_parents.add(key);
         }
-        for (String not_child : not_children){
-            map.remove(not_child);
+        for (String not_parent : not_parents){
+            map.remove(not_parent);
         }
     }
 
@@ -108,11 +107,11 @@ public class MyTreeNode extends TreeNode {
     public void printTheta_ijkc(String key) {
         double[][][] aux = this.theta_ijkc.get(key);
         for (int c = 0; c < aux[0][0].length; c++) {
-            for (int k = 0; k < aux[0].length; k++) {
-                for (int j = 0; j < aux.length; j++) {
+            for (int j = 0; j < aux.length; j++) {
+                for (int k = 0; k < aux[0].length; k++) {
                     System.out.print(aux[j][k][c] + " ");
                 }
-                System.out.print("  ");
+                System.out.println();
             }
             System.out.println();
         }
