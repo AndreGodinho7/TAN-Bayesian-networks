@@ -71,13 +71,13 @@ public class MyGraph implements WeightedGraph {
         for (Node n : ns) {
             for (String key : n.getNijkcMap().keySet()) {
                 if (n.getFeature_name().equals(key)) {
-                    n.inc_Nijkc(key, 0, aux_map.get(key), aux_class);
+                    n.inc_Nijkc(key, 0, aux_map.get(n.getFeature_name()), aux_class);
                     n.inc_NKijc(key,0, aux_class);
-                    n.inc_NJikc(key, aux_map.get(key), aux_class);
+                    n.inc_NJikc(key, aux_map.get(n.getFeature_name()), aux_class);
                 } else {
-                    n.inc_Nijkc(key, aux_map.get(n.getFeature_name()), aux_map.get(key), aux_class);
-                    n.inc_NKijc(key,aux_map.get(n.getFeature_name()), aux_class);
-                    n.inc_NJikc(key, aux_map.get(key), aux_class);
+                    n.inc_Nijkc(key, aux_map.get(key), aux_map.get(n.getFeature_name()), aux_class);
+                    n.inc_NKijc(key, aux_map.get(key), aux_class);
+                    n.inc_NJikc(key, aux_map.get(n.getFeature_name()), aux_class);
                 }
             }
         }
@@ -99,9 +99,9 @@ public class MyGraph implements WeightedGraph {
     public void printNodes() {
         List<Node> ns = this.nodes;
         for (Node n : ns) {
-            System.out.println("Node father: " + n.getFeature_name());
+            System.out.println("Node son: " + n.getFeature_name());
             for (String key : n.getNijkcMap().keySet()) {
-                System.out.println("Node son: " + key);
+                System.out.println("Node father: " + key);
                 System.out.println("Nijkc:");
                 n.print_Nijkc(key);
                 System.out.println("NJjkc:");

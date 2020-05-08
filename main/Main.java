@@ -59,24 +59,18 @@ public class Main {
         List<TreeNode> tree = algorithm.computeMST();
         TreeNode root = algorithm.getRoot();
 
-        //TODO: fazer set para a root
-        root.setData();
+        //TODO: apagar nós que não estão na árvore (mas q estão na lista)
         for(TreeNode node : tree){
             node.setData();
         }
 
-        System.out.println("Father (root): "+root.getIdentifier());
-        System.out.println("Child (root): "+root.getIdentifier());
-        ((MyTreeNode)root).printTheta_ijkc(root.getIdentifier());
-        for(TreeNode node : tree){
-            System.out.println("Father: "+node.getIdentifier());
-            List<TreeNode> children = node.getChildren();
-            if (children.size() == 0) break; // leaf node
-            for(TreeNode child : children){
-                System.out.println("Child: "+child.getIdentifier());
-                ((MyTreeNode)node).printTheta_ijkc(child.getIdentifier());
+       for(TreeNode node : tree){
+            System.out.println("Node: " + node.getIdentifier());
+            if (node.equals(algorithm.getRoot())) {
+                ((MyTreeNode)node).printTheta_ijkc(node.getIdentifier());
+            } else {
+                ((MyTreeNode)node).printTheta_ijkc(node.getParent().getIdentifier());
             }
         }
-
     }
 }

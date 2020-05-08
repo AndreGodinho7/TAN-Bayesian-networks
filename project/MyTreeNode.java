@@ -14,35 +14,25 @@ public class MyTreeNode extends TreeNode {
         this.n = n;
     }
 
-    // Getter methods:
-    public String getTreeNodeName() { return this.n.getFeature_name(); }
-
-    public Node getN() { return n; }
-
     /**
      * Remove Nijkc counts from Node to all nodes that are not children.
      */
     public void setNijkc() {
         Map<String, int[][][]> map = this.n.getNijkcMap();
+        List<String> not_parents = new LinkedList<String>();
+        String _parent;
 
-        List<String> not_children = new LinkedList<String>();
-        List<String> children = new LinkedList<String>();
-
-        if(this.parent == null) {
-            // is root
-            children.add(this.n.getFeature_name());
-        }
-
-        for (TreeNode child : this.children){
-            children.add(child.getIdentifier());
+        if (this.isRoot) {
+            _parent = this.getIdentifier();
+        } else {
+            _parent = this.parent.getIdentifier();
         }
         for (String key : map.keySet()){
-            if (children.contains(key) == false)  not_children.add(key);
+            if (!(_parent.equals(key)))  not_parents.add(key);
         }
-        for (String not_child : not_children){
-            map.remove(not_child);
+        for (String not_parent : not_parents){
+            map.remove(not_parent);
         }
-
     }
 
     /**
@@ -50,22 +40,19 @@ public class MyTreeNode extends TreeNode {
      */
     public void setNKijc() {
         Map<String, int[][]> map = this.n.getNKijcMap();
-        List<String> not_children = new LinkedList<String>();
-        List<String> children = new LinkedList<String>();
+        List<String> not_parents = new LinkedList<String>();
+        String parent;
 
-        if(this.parent == null) {
-            // is root
-            children.add(this.n.getFeature_name());
-        }
-
-        for (TreeNode child : this.children){
-            children.add(child.getIdentifier());
+        if (this.isRoot) {
+            parent = this.getIdentifier();
+        } else {
+            parent = this.parent.getIdentifier();
         }
         for (String key : map.keySet()){
-            if (children.contains(key) == false)  not_children.add(key);
+            if (!(parent.equals(key)))  not_parents.add(key);
         }
-        for (String not_child : not_children){
-            map.remove(not_child);
+        for (String not_parent : not_parents){
+            map.remove(not_parent);
         }
     }
 

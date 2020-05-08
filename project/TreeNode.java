@@ -7,11 +7,15 @@ import java.util.Map;
 public abstract class TreeNode {
     protected List<TreeNode> children;
     protected TreeNode parent;
+    protected boolean isRoot;
     private String identifier;
 
     TreeNode() {
         this.children = new ArrayList<TreeNode>();
+        this.isRoot = false;
     }
+    public void setAsRoot() {  this.isRoot = true; }
+
     public void setIdentifier(String i) { this.identifier = i; }
 
     public String getIdentifier() { return this.identifier; }
@@ -21,6 +25,8 @@ public abstract class TreeNode {
     public void addChild(TreeNode child) { this.children.add(child); }
 
     public void setParent(TreeNode p) { this.parent = p; }
+
+    public TreeNode getParent() { return this.parent; }
 
     public List<TreeNode> getChildren() { return children; }
 

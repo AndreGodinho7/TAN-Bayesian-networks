@@ -14,7 +14,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     private List<TreeNode> treeNodes;
 
     private MyGraph graph;
-    private boolean[] isRoot;
+    //private boolean[] isRoot;
     private int rootIndex = 0;
 
     // Constructor
@@ -25,17 +25,6 @@ public class PrimAlgorithm  implements MaxSpanningTree{
 
     //Getter methods:
     public List<TreeNode> getTreeNodesList() { return this.treeNodes; }
-
-    /* decide where to put this code (previously inside constructor):
-
-    // Setting first node as root of the tree
-    this.isRoot = new boolean[this.graph.numNodes()];
-    Arrays.fill(isRoot, false);
-    isRoot[0] = true;
-    //create first MyTreeNode and add it to the directed tree
-    root = new MyTreeNode(this.graph.getNodes().get(0));
-    directedTree = new Tree<MyTreeNode>(root);
-     */
 
     /**
      * Verify if first node has any edges ( edge's weight > 0). If yes, define it as root, if not, repeat the process
@@ -63,8 +52,8 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         }
         System.out.println("\nRoot Node: " + graph.getFile().getFeatures()[this.rootIndex]);
         System.out.println(rootIndex);
+        this.treeNodes.get(rootIndex).setAsRoot();
         this.root = this.treeNodes.get(rootIndex);
-
     }
 
     /**
