@@ -1,5 +1,7 @@
 package project;
 
+import com.sun.source.tree.Tree;
+
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +9,7 @@ import java.util.List;
 
 public class PrimAlgorithm  implements MaxSpanningTree{
 
-    private Tree<TreeNode> directedTree;
+    //private Tree<TreeNode> directedTree;
     TreeNode root;
     private List<TreeNode> treeNodes;
 
@@ -60,6 +62,9 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             }
         }
         System.out.println("\nRoot Node: " + graph.getFile().getFeatures()[this.rootIndex]);
+        System.out.println(rootIndex);
+        this.root = this.treeNodes.get(rootIndex);
+
     }
 
     /**
@@ -91,23 +96,18 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         return max_index;
     }
 
-    private Tree createTree(List<MyTreeNode> _treeNodes){
-
-
-    }
-
     /**
      * Compute maximum spanning tree from the graph's adjacency matrix
      */
     @Override
-    public void computeMST() {
+    public List<TreeNode> computeMST() {
 
         int[] parent = new int[this.graph.numNodes()];         // Nodes added to MST
         double[] key = new double[this.graph.numNodes()];        // Key values used to pick max weight edge
         Boolean[] mstSet = new Boolean[this.graph.numNodes()];
 
-        defineRoot();
         setTreeNodes();
+        defineRoot();
 
         for (int i = 0; i < this.graph.numNodes(); i++) {
             key[i] = -1;
@@ -149,6 +149,12 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             System.out.println();
         }
 
+        return this.treeNodes;
+    }
+
+    @Override
+    public TreeNode getRoot() {
+        return this.root;
     }
 
     // TODO: remove this method after testing

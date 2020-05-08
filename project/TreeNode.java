@@ -20,6 +20,8 @@ public abstract class TreeNode {
 
     public void setParent(TreeNode p) { this.parent = p; }
 
+    public List<TreeNode> getChildren() { return children; }
+
     public abstract void setData();
 
     //TODO: remove print methods

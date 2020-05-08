@@ -1,5 +1,10 @@
 package project;
 
+import com.sun.source.tree.Tree;
+
+import java.util.List;
+
 public interface MaxSpanningTree {
-    void computeMST();
+    public List<TreeNode> computeMST();
+    public TreeNode getRoot();
 }

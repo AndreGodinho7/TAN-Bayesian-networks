@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String trainFilename = "bias-train.csv";
+        String trainFilename = "train-enunciado.csv";
         String score = "LL";
         int[] values;
 
@@ -26,7 +26,7 @@ public class Main {
 
         ((FileData)readTrainFile).print(); // TODO: delete when not needed
 
-        Graph graph = new MyGraph((FileData)readTrainFile, score);
+        WeightedGraph graph = new MyGraph((FileData)readTrainFile, score);
         graph.setNodes(); // TODO: or for loop setNodes(i) ?
 
         // second sweep
@@ -54,11 +54,24 @@ public class Main {
         // TODO: delete this when not needed anymore
         ((MyGraph)graph).printadjMatrix();
 
-
         // For testing Prim Algorithm
-        PrimAlgorithm t = new PrimAlgorithm((MyGraph)graph);
-        t.computeMST();
+        MaxSpanningTree algorithm = new PrimAlgorithm((MyGraph)graph);
+        List<TreeNode> tree = algorithm.computeMST();
+        TreeNode root = algorithm.getRoot();
 
+        //TODO: fazer set para a root
+        root.setData();
+        for(TreeNode node : tree){
+            node.setData();
+        }
+
+        for(TreeNode node : tree){
+            System.out.println("Father: "+node.getIdentifier());
+            List<TreeNode> children = node.getChildren();
+            for(TreeNode child : children){
+                ((MyTreeNode)node).printTheta_ijkc(child.getIdentifier());
+            }
+        }
 
     }
 }

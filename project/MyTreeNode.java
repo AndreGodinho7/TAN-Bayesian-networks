@@ -1,9 +1,6 @@
 package project;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MyTreeNode extends TreeNode {
 
@@ -25,17 +22,20 @@ public class MyTreeNode extends TreeNode {
      */
     public void setNijkc() {
         Map<String, int[][][]> map = this.n.getNijkcMap();
-        boolean isChild = false;
 
-        for (String key : map.keySet()) {
-            for (TreeNode child : this.children) {
-                if (child.getIdentifier().equals(key)) {
-                    isChild = true;
-                    break;
-                }
-            }
-            if (!isChild) {this.n.removeKeyNijkc(key);}
+        List<String> not_children = new LinkedList<String>();
+        List<String> children = new LinkedList<String>();
+
+        for (TreeNode child : this.children){
+            children.add(child.getIdentifier());
         }
+        for (String key : map.keySet()){
+            if (children.contains(key) == false)  not_children.add(key);
+        }
+        for (String not_child : not_children){
+            map.remove(not_child);
+        }
+
     }
 
     /**
@@ -43,16 +43,17 @@ public class MyTreeNode extends TreeNode {
      */
     public void setNKijc() {
         Map<String, int[][]> map = this.n.getNKijcMap();
-        boolean isChild = false;
+        List<String> not_children = new LinkedList<String>();
+        List<String> children = new LinkedList<String>();
 
-        for (String key : map.keySet()) {
-            for (TreeNode child : this.children) {
-                if (child.getIdentifier().equals(key)) {
-                    isChild = true;
-                    break;
-                }
-            }
-            if (!isChild) {this.n.removeKeyNKijc(key);}
+        for (TreeNode child : this.children){
+            children.add(child.getIdentifier());
+        }
+        for (String key : map.keySet()){
+            if (children.contains(key) == false)  not_children.add(key);
+        }
+        for (String not_child : not_children){
+            map.remove(not_child);
         }
     }
 
@@ -60,18 +61,20 @@ public class MyTreeNode extends TreeNode {
      * Calculate theta_ijkc
      */
     public void setTheta_ijkc() {
-        Map<String, double[][][]> map = new HashMap<String, double[][][]>();
+        Map<String, double[][][]> map = new HashMap<>();
 
         for (String key : this.n.getNijkcMap().keySet()) {
-            double[][][] aux = map.get(key);
-            int[][][] nijkc = this.n.getNijkcMap().get(key);
-            int[][] nkijc = this.n.getNKijcMap().get(key);
+            int[][][] Nijkc = this.n.getNijkc(key);
+            int[][] NKijc = this.n.getNKijc(key);
+            double [][][] theta_ijkc = new double[Nijkc.length][Nijkc[0].length][Nijkc[0][0].length];
 
-            for (int j=0; j < nijkc.length; j++){
-                for (int k=0; k < nijkc[0].length ;k++){
-                    for(int c=0; c < nijkc[0][0].length; c++){
-                        aux[j][k][c] = (nijkc[j][k][c] + 0.5)/(nkijc[j][c] + this.n.getR() * 0.5);
-                        map.put(key, aux);
+            for (int j=0; j < Nijkc.length; j++){
+                for (int k=0; k < Nijkc[0].length ;k++){
+                    for(int c=0; c < Nijkc[0][0].length; c++){
+                        //System.out.println("Nijkc: "+Nijkc[j][k][c]);
+                        //System.out.println("NKijc: "+NKijc[j][c]);
+                        theta_ijkc[j][k][c] = (Nijkc[j][k][c] + 0.5)/(NKijc[j][c] + this.n.getR() * 0.5);
+                        map.put(key, theta_ijkc);
                     }
                 }
             }
@@ -93,19 +96,20 @@ public class MyTreeNode extends TreeNode {
     /**
      * Calculate theta counts and remove extra Nijkc and NKijc counts
      */
+    @Override
     public void setData() {
         setNijkc();
         setNKijc();
         setTheta_ijkc();
-        setTheta_ijkc();
+        setTheta_c();
     }
 
     // TODO: remove print methods
     public void printTheta_ijkc(String key) {
         double[][][] aux = this.theta_ijkc.get(key);
         for (int c = 0; c < aux[0][0].length; c++) {
-            for (int k = 0; k < aux.length; k++) {
-                for (int j = 0; j < aux[0].length; j++) {
+            for (int k = 0; k < aux[0].length; k++) {
+                for (int j = 0; j < aux.length; j++) {
                     System.out.print(aux[j][k][c] + " ");
                 }
                 System.out.print("  ");
