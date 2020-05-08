@@ -61,26 +61,16 @@ public class MyTreeNode extends TreeNode {
      */
     public void setTheta_ijkc() {
         Map<String, double[][][]> map = new HashMap<>();
-        int child_r = 0;
-
-        if (this.getParent() == null) child_r = this.getN().getR();
 
         for (String key : this.n.getNijkcMap().keySet()) {
             int[][][] Nijkc = this.n.getNijkc(key);
             int[][] NKijc = this.n.getNKijc(key);
             double [][][] theta_ijkc = new double[Nijkc.length][Nijkc[0].length][Nijkc[0][0].length];
 
-            for (TreeNode child : this.children){
-                if (child.getIdentifier().equals(key)){
-                    child_r = ((MyTreeNode)child).getN().getR();
-                    break;
-                };
-            }
-
             for (int j=0; j < Nijkc.length; j++){
                 for (int k=0; k < Nijkc[0].length ;k++){
                     for(int c=0; c < Nijkc[0][0].length; c++){
-                        theta_ijkc[j][k][c] = (Nijkc[j][k][c] + 0.5)/(NKijc[j][c] + child_r * 0.5);
+                        theta_ijkc[j][k][c] = (Nijkc[j][k][c] + 0.5)/(NKijc[j][c] + this.n.getR() * 0.5);
                         map.put(key, theta_ijkc);
                     }
                 }
@@ -121,7 +111,7 @@ public class MyTreeNode extends TreeNode {
                 }
                 System.out.println();
             }
-            System.out.print("  ");
+            System.out.println();
         }
     }
 

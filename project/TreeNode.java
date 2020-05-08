@@ -26,8 +26,6 @@ public abstract class TreeNode {
 
     public void setParent(TreeNode p) { this.parent = p; }
 
-    public TreeNode getParent() { return this.parent; }
-
     public List<TreeNode> getChildren() { return children; }
 
     public abstract void setData();
