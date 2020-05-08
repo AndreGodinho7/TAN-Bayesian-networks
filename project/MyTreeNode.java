@@ -1,55 +1,35 @@
 package project;
 
-import com.sun.source.tree.Tree;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyTreeNode implements TreeNode {
+public class MyTreeNode extends TreeNode {
 
     private Node n;
-
-    /*private String feature_name;
-    private int r;
-    private double [] Nc;
-    private double N;
-    private final float N_prime = 0.5f;
-    private Map<String, int[][][]> Nijkc;
-    private Map<String, int[][]> NKijc;*/
-
     private Map<String, double[][][]> theta_ijkc;
     private double[] theta_c;
-    private List<String> children;
 
     // Constructor:
-    public MyTreeNode(Node _n) {
-        this.n = _n;
-        this.children = new ArrayList<String>();
+    public MyTreeNode(Node n) {
+        super();
+        this.n = n;
     }
 
-    /*public TreeNode(String _feature_name, int _r) {
-        this.feature_name = _feature_name;
-        this.r = _r;
-        this.Nc = Node.getNc();
-        this.N = Node.getN();
-    }*/
-    public void addChildName(String nodeName) { this.children.add(nodeName); }
+    // Getter methods:
+    public String getTreeNodeName() { return this.n.getFeature_name(); }
 
     /**
-     * Get Nijkc from Node and remove all extra edges.
-     * @param children : get child Node to remove all edges except edge to child
+     * Remove Nijkc counts from Node to all nodes that are not children.
      */
-    @Override
-    public void setNijkc(String[] children) {
-        Map<String, int[][][]> map = new HashMap<String, int[][][]>();
-        map = this.n.getNijkcMap();
+    public void setNijkc() {
+        Map<String, int[][][]> map = this.n.getNijkcMap();
         boolean isChild = false;
 
         for (String key : map.keySet()) {
-            for (String child : children) {
-                if (child.equals(key)) {
+            for (TreeNode child : this.children) {
+                if (child.getIdentifier().equals(key)) {
                     isChild = true;
                     break;
                 }
@@ -59,18 +39,15 @@ public class MyTreeNode implements TreeNode {
     }
 
     /**
-     * Get NKijc from Node and remove all extra edges.
-     * @param children : get child Node to remove all edges except edge to child
+     * Remove NKijc counts from Node to all nodes that are not children.
      */
-    @Override
-    public void setNKijc(String[] children) {
-        Map<String, int[][]> map = new HashMap<String, int[][]>();
-        map = this.n.getNKijcMap();
+    public void setNKijc() {
+        Map<String, int[][]> map = this.n.getNKijcMap();
         boolean isChild = false;
 
         for (String key : map.keySet()) {
-            for (String child : children) {
-                if (child.equals(key)) {
+            for (TreeNode child : this.children) {
+                if (child.getIdentifier().equals(key)) {
                     isChild = true;
                     break;
                 }
@@ -79,7 +56,9 @@ public class MyTreeNode implements TreeNode {
         }
     }
 
-    @Override
+    /**
+     * Calculate theta_ijkc
+     */
     public void setTheta_ijkc() {
         Map<String, double[][][]> map = new HashMap<String, double[][][]>();
 
@@ -99,7 +78,10 @@ public class MyTreeNode implements TreeNode {
         }
         this.theta_ijkc = map;
     }
-    @Override
+
+    /**
+     * Calculate theta_c
+     */
     public void setTheta_c() {
         double[] aux = new double[Node.getNc().length];
         for (int c = 0; c < Node.getNc().length; c++) {
@@ -108,16 +90,17 @@ public class MyTreeNode implements TreeNode {
         this.theta_c = aux;
     }
 
-    //--------------------------------------------------------------------
-    // print methods:
-    public void printChildren() {
-        List<String> ns = this.children;
-        System.out.println("Father: " + this.n.getFeature_name());
-        System.out.print("Children: ");
-        for (String name : ns) { System.out.print(name + " "); }
-        System.out.println();
+    /**
+     * Calculate theta counts and remove extra Nijkc and NKijc counts
+     */
+    public void setData() {
+        setNijkc();
+        setNKijc();
+        setTheta_ijkc();
+        setTheta_ijkc();
     }
 
+    // TODO: remove print methods
     public void printTheta_ijkc(String key) {
         double[][][] aux = this.theta_ijkc.get(key);
         for (int c = 0; c < aux[0][0].length; c++) {

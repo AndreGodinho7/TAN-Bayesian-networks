@@ -7,9 +7,9 @@ import java.util.List;
 
 public class PrimAlgorithm  implements MaxSpanningTree{
 
-    private Tree<MyTreeNode> directedTree;
-    MyTreeNode root;
-    private List<MyTreeNode> treeNodes;
+    private Tree<TreeNode> directedTree;
+    TreeNode root;
+    private List<TreeNode> treeNodes;
 
     private MyGraph graph;
     private boolean[] isRoot;
@@ -18,8 +18,11 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     // Constructor
     public PrimAlgorithm(MyGraph _graph) {
         this.graph = _graph;
-        this.treeNodes = new ArrayList<MyTreeNode>(_graph.file.getFeatures().length);
+        this.treeNodes = new ArrayList<TreeNode>(_graph.getFile().getFeatures().length);
     }
+
+    //Getter methods:
+    public List<TreeNode> getTreeNodesList() { return this.treeNodes; }
 
     /* decide where to put this code (previously inside constructor):
 
@@ -32,13 +35,16 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     directedTree = new Tree<MyTreeNode>(root);
      */
 
-    // The graph is assumed to be undirected -- symmetric adjacency matrix
+    /**
+     * Verify if first node has any edges ( edge's weight > 0). If yes, define it as root, if not, repeat the process
+     * for the second node, and so on.
+     */
     public void defineRoot() {
         boolean notConnected = true;
-        // apenas verifica matriz triangular superior
-        for (int line = 0; line < graph.numNodes() - 1; line++) {
-            for (int col = line + 1; col < graph.numNodes(); col++) {
-                if (graph.getAdjMatrix()[line][col] != 0) {
+        // The graph is assumed to be undirected -- symmetric adjacency matrix
+        for (int line = 0; line < this.graph.numNodes() - 1; line++) {
+            for (int col = line + 1; col < this.graph.numNodes(); col++) {
+                if (this.graph.getAdjMatrix()[line][col] != 0) {
                     notConnected = false;
                     break;
                 }
@@ -47,15 +53,22 @@ public class PrimAlgorithm  implements MaxSpanningTree{
                 break;
             } else {
                 this.rootIndex++;
+                if (this.rootIndex == this.graph.numNodes() - 1) {
+                    System.out.println("The graph does not have any edges!");
+                    System.exit(1);
+                }
             }
         }
-        System.out.println("\nRoot Node: " + graph.file.getFeatures()[this.rootIndex]);
+        System.out.println("\nRoot Node: " + graph.getFile().getFeatures()[this.rootIndex]);
     }
 
-    // create MyTreeNodes
+    /**
+     * Create each tree node inside the array list of TreeNodes
+     */
     private void setTreeNodes() {
         for (int i = 0; i < this.graph.numNodes(); i++) {
-            MyTreeNode tn = new MyTreeNode(this.graph.getNodes().get(i));
+            TreeNode tn = new MyTreeNode(this.graph.getNodes().get(i));
+            tn.setIdentifier(this.graph.getFile().getFeatures()[i]);
             this.treeNodes.add(tn);
         }
     }
@@ -115,11 +128,11 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             }
         }
         /* este ciclo guarda os filhos de cada nó no nó respectivo. Não precisa de percorrer a raíz porque esta não tem
-           pai
-         */
+           pai */
         for (int i = this.rootIndex + 1; i < this.graph.numNodes(); i++) {
             if (parent[i] != -1 && this.graph.getAdjMatrix()[i][parent[i]] > 0) {
-                this.treeNodes.get(parent[i]).addChildName(this.graph.file.getFeatures()[i]);
+                this.treeNodes.get(parent[i]).addChild(this.treeNodes.get(i));
+                this.treeNodes.get(i).setParent(this.treeNodes.get(parent[i]));
             }
         }
 
@@ -130,14 +143,15 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         printMST(parent);
 
         // Print children of each node after running Prim algorithm
-        List<MyTreeNode> aux = this.treeNodes;
-        for (MyTreeNode tn : aux) {
+        List<TreeNode> aux = this.treeNodes;
+        for (TreeNode tn : aux) {
             tn.printChildren();
             System.out.println();
         }
 
     }
 
+    // TODO: remove this method after testing
     void printMST(int[] parent) {
 
         System.out.println("Edge \tWeight");
@@ -148,20 +162,4 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         }
 
     }
-
-
-    // TODO: Remove this main method (for testing purposes only)
-    /*public static void main(String[] args) {
-        String[] features = {"A1", "A2", "A3", "A4"};
-        double[][] adjMatrix = new double[][]{
-                {0   , 4.1,  5  ,   0},
-                {4.1,    0,  3.8,   0},
-                {5   , 3.8,    0, 8.1},
-                {0   ,    0, 8.1,   0}};
-        String[][] e = new String[adjMatrix.length][2];
-        PrimAlgorithm t = new PrimAlgorithm(adjMatrix.length);
-        t.computeMST();
-        e = t.getEdges();
-        System.out.print(Arrays.deepToString(e));
-    }*/
 }
