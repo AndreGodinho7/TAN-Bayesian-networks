@@ -3,13 +3,13 @@ package project;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tree<T> {
-    private Node<T> root;
+public class Tree {
+    private TreeNode root;
 
     public static class Node<T> {
         private T data;
-        private Node<T> parent;
-        private List<Node<T>> children;
+        private Node parent;
+        private List<Node> children;
 
         Node(T d, Node<T> p) {
             this.data = d;
@@ -28,13 +28,13 @@ public class Tree<T> {
     }
 
     public Tree(T rootData) {
-        this.root = new Node<T>(rootData, null);
+        this.root = new Node(rootData, null);
         //this.root.data = rootData;
         //this.root.children = new ArrayList<Node<T>>();
     }
 
     public void addChild(T childData) {
-        Node<T> newChild = new Node<T>(childData, this.root);
+        Node newChild = new Node(childData, this.root);
         this.root.children.add(newChild);
     }
 }

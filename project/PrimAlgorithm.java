@@ -78,6 +78,11 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         return max_index;
     }
 
+    private Tree createTree(List<MyTreeNode> _treeNodes){
+
+
+    }
+
     /**
      * Compute maximum spanning tree from the graph's adjacency matrix
      */
@@ -117,6 +122,9 @@ public class PrimAlgorithm  implements MaxSpanningTree{
                 this.treeNodes.get(parent[i]).addChildName(this.graph.file.getFeatures()[i]);
             }
         }
+
+
+
         //-------------------------------------------------------------------------------------------------
         // TODO: remove print methods afterwards
         printMST(parent);

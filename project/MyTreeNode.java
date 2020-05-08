@@ -37,7 +37,6 @@ public class MyTreeNode implements TreeNode {
     }*/
     public void addChildName(String nodeName) { this.children.add(nodeName); }
 
-
     /**
      * Get Nijkc from Node and remove all extra edges.
      * @param children : get child Node to remove all edges except edge to child

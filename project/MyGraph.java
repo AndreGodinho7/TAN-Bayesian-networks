@@ -2,7 +2,7 @@ package project;
 
 import java.util.*;
 
-public class MyGraph implements Graph {
+public class MyGraph implements WeightedGraph {
     private List<Node> nodes;
     private double[][] adjMatrix;
     private int numNodes;
