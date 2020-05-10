@@ -15,7 +15,6 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     private List<TreeNode> treeNodes;
 
     private MyGraph graph;
-    //private boolean[] isRoot;
     private int rootIndex = 0;
 
     // Constructor
@@ -24,17 +23,15 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         this.treeNodes = new ArrayList<TreeNode>(_graph.getFile().getFeatures().length);
     }
 
-
     //Getter methods:
     public List<TreeNode> getTreeNodesList() { return this.treeNodes; }
-
     public int getRootIndex() { return rootIndex; }
 
     /**
      * Verify if first node has any edges ( edge's weight > 0). If yes, define it as root, if not, repeat the process
      * for the second node, and so on.
      */
-    public void defineRoot() {
+    /*public void defineRoot() {
         boolean notConnected = true;
         // The graph is assumed to be undirected -- symmetric adjacency matrix
         for (int line = 0; line < this.graph.numNodes() - 1; line++) {
@@ -58,7 +55,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         System.out.println(rootIndex);
         this.treeNodes.get(rootIndex).setAsRoot();
         this.root = this.treeNodes.get(rootIndex);
-    }
+    }*/
 
     /**
      * Create each tree node inside the array list of TreeNodes
@@ -78,7 +75,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
      * @return return index of node whose edge has the biggest weight
      */
     private int maxKey(double[] key, Boolean[] mstSet) {
-        double max = 0;
+        double max = -Double.MAX_VALUE;
         int max_index = -1;
 
         for (int node = this.rootIndex; node < this.graph.numNodes(); node++)
@@ -100,7 +97,8 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         Boolean[] mstSet = new Boolean[this.graph.numNodes()];
 
         setTreeNodes();
-        defineRoot();
+        //defineRoot();
+        this.treeNodes.get(rootIndex).setAsRoot();
 
         for (int i = 0; i < this.graph.numNodes(); i++) {
             key[i] = -1;
@@ -114,7 +112,8 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             mstSet[u] = true;
 
             for (int v = this.rootIndex; v < this.graph.numNodes(); v++) {
-                if ((this.graph.getAdjMatrix()[u][v] != 0) && !mstSet[v] && (this.graph.getAdjMatrix()[u][v] > key[v])) {
+                //if ((this.graph.getAdjMatrix()[u][v] != 0) && !mstSet[v] && (this.graph.getAdjMatrix()[u][v] > key[v])) {
+                if ((u != v) && !mstSet[v] && (this.graph.getAdjMatrix()[u][v] > key[v])) {
                     parent[v] = u;
                     key[v] = this.graph.getAdjMatrix()[u][v];
                 }
@@ -123,13 +122,13 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         /* este ciclo guarda os filhos de cada nó no nó respectivo. Não precisa de percorrer a raíz porque esta não tem
            pai */
         for (int i = this.rootIndex + 1; i < this.graph.numNodes(); i++) {
-            if (parent[i] != -1 && this.graph.getAdjMatrix()[i][parent[i]] > 0) {
+            if (parent[i] != -1) {
                 this.treeNodes.get(parent[i]).addChild(this.treeNodes.get(i));
                 this.treeNodes.get(i).setParent(this.treeNodes.get(parent[i]));
             }
         }
 
-        List<TreeNode> tree = this.treeNodes;
+        /*List<TreeNode> tree = this.treeNodes;
         Iterator i = tree.iterator();
         TreeNode tn;
         while (i.hasNext()) {
@@ -139,7 +138,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
                 System.out.println("\nThe element " + tn.getIdentifier() + " was removed");
                 break;
             }
-        }
+        }*/
 
 
         //-------------------------------------------------------------------------------------------------
@@ -166,7 +165,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
 
         System.out.println("Edge \tWeight");
         for (int i = this.rootIndex + 1; i < this.graph.numNodes(); i++) {
-            if (parent[i] != -1 && this.graph.getAdjMatrix()[i][parent[i]] > 0) {
+            if (parent[i] != -1) {
                 System.out.println(parent[i] + 1 + " - " + (i + 1) + "\t" + this.graph.getAdjMatrix()[i][parent[i]]);
             }
         }
