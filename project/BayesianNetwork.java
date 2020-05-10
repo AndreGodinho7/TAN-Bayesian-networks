@@ -142,7 +142,7 @@ public class BayesianNetwork implements ClassificationModel {
 
         for(TreeNode node : tree){
             System.out.println("Node: " + node.getIdentifier());
-            if (node.equals(algorithm.getRoot())) {
+            if (node.isRoot == true) {
                 ((MyTreeNode)node).printTheta_ijkc(node.getIdentifier());
             } else {
                 ((MyTreeNode)node).printTheta_ijkc(node.getParent().getIdentifier());
@@ -170,7 +170,7 @@ public class BayesianNetwork implements ClassificationModel {
             int chosen = classifyInstance(sample);
             predictions_truelabel[i][1] = chosen;
             System.out.println(String.format("True label: %d | Predicted label: %d",
-                                    predictions_truelabel[i][0], predictions_truelabel[i][1]));
+                    predictions_truelabel[i][0], predictions_truelabel[i][1]));
             i++;
         }
         return predictions_truelabel;
