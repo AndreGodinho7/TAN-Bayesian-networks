@@ -14,6 +14,14 @@ public class MyTreeNode extends TreeNode {
         this.n = n;
     }
 
+    public Node getN() { return n; }
+
+    public double[] getTheta_c() { return theta_c; }
+
+    public double[][][] getThetaijkc(String key){
+        return this.theta_ijkc.get(key);
+    }
+
     /**
      * Remove Nijkc counts from Node to all nodes that are not children.
      */

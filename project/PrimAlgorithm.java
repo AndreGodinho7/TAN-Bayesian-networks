@@ -5,6 +5,7 @@ import com.sun.source.tree.Tree;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class PrimAlgorithm  implements MaxSpanningTree{
@@ -23,8 +24,11 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         this.treeNodes = new ArrayList<TreeNode>(_graph.getFile().getFeatures().length);
     }
 
+
     //Getter methods:
     public List<TreeNode> getTreeNodesList() { return this.treeNodes; }
+
+    public int getRootIndex() { return rootIndex; }
 
     /**
      * Verify if first node has any edges ( edge's weight > 0). If yes, define it as root, if not, repeat the process
@@ -125,6 +129,17 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             }
         }
 
+        List<TreeNode> tree = this.treeNodes;
+        Iterator i = tree.iterator();
+        TreeNode tn;
+        while (i.hasNext()) {
+            tn = (TreeNode) i.next();
+            if ((tn.getParent() == null) && (tn.getChildren().isEmpty())) {
+                i.remove();
+                System.out.println("\nThe element " + tn.getIdentifier() + " was removed");
+                break;
+            }
+        }
 
 
         //-------------------------------------------------------------------------------------------------
@@ -133,8 +148,8 @@ public class PrimAlgorithm  implements MaxSpanningTree{
 
         // Print children of each node after running Prim algorithm
         List<TreeNode> aux = this.treeNodes;
-        for (TreeNode tn : aux) {
-            tn.printChildren();
+        for (TreeNode tna : aux) {
+            tna.printChildren();
             System.out.println();
         }
 

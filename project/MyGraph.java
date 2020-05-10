@@ -92,7 +92,6 @@ public class MyGraph implements WeightedGraph {
     public void createEdge(int node1, int node2) {
         double weight = this.score.calculate_score(this.nodes.get(node1), this.nodes.get(node2));
         this.adjMatrix[node1][node2] = weight;
-        this.adjMatrix[node2][node1] = weight;
     }
 
     @Override
