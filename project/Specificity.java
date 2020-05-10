@@ -1,28 +1,33 @@
 package project;
 
-public class Specificity implements ClassificationMetrics {
-    int data[][];
+public class Specificity extends ClassificationMetrics {
     private float specificity;
     private int trueClass;
     int tn;
     int fp;
 
-    public Specificity(int[][] _data) {
-        this.data = _data;
-        this.specificity = 0;
-
+    public Specificity(int[][] labels, int _trueClass) {
+        super(labels);
+        this.trueClass = _trueClass;
+        this.tn = 0;
+        this.fp = 0;
     }
 
-    public void setTrueClass(int _trueClass) { this.trueClass = _trueClass; }
+    public void setTN(int tn) { this.tn = tn; }
+
+    public void setFP(int fp) { this.fp = fp; }
+
     public void calcSpecificity() { this.specificity = (float) this.tn / (this.tn + this.fp); }
 
     @Override
-    public float metric() {
-        for (int[] instance : this.data) {
-            if ((instance[0] == instance[1]) && instance[0] != this.trueClass) {
-                this.tn++;
-            } else if ((instance[0] != instance[1]) && instance[1] == this.trueClass) {
-                this.fp++;
+    public float calculateMetric() {
+        if ((this.tn == 0) && this.fp == 0) {
+            for (int[] instance : this.labels) {
+                if ((instance[0] == instance[1]) && instance[0] != this.trueClass) {
+                    this.tn++;
+                } else if ((instance[0] != instance[1]) && instance[1] == this.trueClass) {
+                    this.fp++;
+                }
             }
         }
         calcSpecificity();

@@ -1,5 +1,9 @@
 package project;
 
-public interface ClassificationMetrics {
-    public float metric();
+public abstract class ClassificationMetrics implements ClassificationMetricCalculation{
+    int labels[][];
+
+    public ClassificationMetrics(int[][] labels) {
+        this.labels = labels;
+    }
 }

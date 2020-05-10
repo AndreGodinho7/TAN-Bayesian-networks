@@ -24,16 +24,7 @@ public class LLScore implements Score {
             for (int j=0; j < Nijkc.length; j++){
                 for (int k=0; k < Nijkc[0].length ;k++){
                     if (Nijkc[j][k][c] == 0 || NJikc[k][c] == 0 || NKijc[j][c] == 0) continue;
-
-                    double nijkcN = ((Nijkc[j][k][c])/(N));
-                    double a =Nijkc[j][k][c];
-                    double b= Nc[c];
-                    double e=NJikc[k][c];
-                    double f=NKijc[j][c];
-                    double log = log2((Nijkc[j][k][c]*Nc[c])/(NJikc[k][c]*NKijc[j][c]));
-                    if (log == 0.0) System.out.println(String.format("Father %s | Son %s igual 0", father.getFeature_name(), son.getFeature_name()));
-
-                    weight +=nijkcN*log;
+                    weight += ((Nijkc[j][k][c])/(N)) * log2((Nijkc[j][k][c]*Nc[c])/(NJikc[k][c]*NKijc[j][c]));
                 }
             }
         }
