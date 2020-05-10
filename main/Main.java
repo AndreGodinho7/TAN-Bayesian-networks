@@ -15,7 +15,25 @@ public class Main {
 
         ClassificationModel model = new BayesianNetwork();
         model.train(trainFilename, score);
-        model.predict(testFilename);
+        int[][] data2Measure = model.predict(testFilename);
+
+        // TODO: this is for testing, change later
+        Accuracy acc = new Accuracy(data2Measure);
+        float accuracy = acc.metric();
+        System.out.println("Accuracy: " + accuracy);
+
+        Specificity spec = new Specificity(data2Measure);
+        spec.setTrueClass(0);
+        float specificity1 = spec.metric();
+        spec.setTrueClass(1);
+        float specificity2 = spec.metric();
+
+        System.out.println("Specificity (Class 0): " + specificity1);
+        System.out.println("Specificity (Class 1): " + specificity2);
+
+
+
+
 
     }
 }
