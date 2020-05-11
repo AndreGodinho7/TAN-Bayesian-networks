@@ -2,6 +2,7 @@ package filehandler;
 
 import exceptions.IllegalNumberOfClassesException;
 import exceptions.IllegalNumberOfFeatureValuesException;
+import exceptions.MissingClassInSampleException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -82,7 +83,7 @@ public class TrainData implements DataReader {
         for (int i = 0; i < this.r_values.length; i++) this.r_values[i] = -1;
     }
 
-    public void setData() throws IllegalNumberOfFeatureValuesException, IllegalNumberOfClassesException {
+    public void setData() throws IllegalNumberOfClassesException, MissingClassInSampleException {
         int aux_class = 0;
         int[] values;
         int instances=0;
@@ -93,7 +94,7 @@ public class TrainData implements DataReader {
             instances++;
             values = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
 
-            if (values.length-1 != features.length) throw new IllegalNumberOfFeatureValuesException();
+            if (values.length-1 != features.length) throw new MissingClassInSampleException(instances);
 
             for (int i = 0; i < values.length - 1; i++) {
                 if (values[i] > this.r_values[i]) this.r_values[i] = values[i];

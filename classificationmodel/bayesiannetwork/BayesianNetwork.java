@@ -9,8 +9,8 @@ import classificationmodel.bayesiannetwork.tree.PrimAlgorithm;
 import classificationmodel.bayesiannetwork.tree.TreeNode;
 import classificationmodel.bayesiannetwork.graph.WeightedGraph;
 import exceptions.IllegalNumberOfClassesException;
-import exceptions.IllegalNumberOfFeatureValuesException;
 import exceptions.IllegalScoreException;
+import exceptions.MissingClassInSampleException;
 import filehandler.DataReader;
 import filehandler.TrainData;
 import filehandler.TestData;
@@ -102,10 +102,10 @@ public class BayesianNetwork implements ClassificationModel {
         // get r values
         try {
             ((TrainData)readTrainFile).setData();
-        } catch (IllegalNumberOfFeatureValuesException e) {
+        } catch (IllegalNumberOfClassesException e) {
             e.printStackTrace();
             System.exit(1);
-        } catch (IllegalNumberOfClassesException e) {
+        } catch (MissingClassInSampleException e) {
             e.printStackTrace();
             System.exit(1);
         }
