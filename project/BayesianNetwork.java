@@ -1,6 +1,5 @@
 package project;
 
-import com.sun.source.tree.Tree;
 
 import javax.print.attribute.standard.PrinterStateReasons;
 import java.util.*;
@@ -15,19 +14,18 @@ public class BayesianNetwork implements ClassificationModel {
 
     private List<TreeNode> DAG;
 
+
     // Getters
     public String[] getFeatures() { return features; }
     public int getRootIndex() { return rootIndex; }
     public int getNum_classes() { return num_classes; }
+    private TreeNode getDAGNode(int index){ return this.DAG.get(index); }
     // Setters
     private void setNum_classes(int num_classes) { this.num_classes = num_classes; }
     private void setDAG(List<TreeNode> DAG) { this.DAG = DAG; }
     public void setRootIndex(int rootIndex) { this.rootIndex = rootIndex; }
     public void setFeatures(String[] features) { this.features = features; }
 
-    private TreeNode getDAGNode(int index){
-        return this.DAG.get(index);
-    }
 
     private double[] calcJointProbability(MyTreeNode node, double[] jointprobabilities, Map <String, Integer> sample){
         if (node.isRoot == false){
@@ -78,6 +76,7 @@ public class BayesianNetwork implements ClassificationModel {
 
     @Override
     public void train(String trainFilePath, String hyperParameter) {
+
         int[] values;
 
         DataReader readTrainFile = new FileData();
@@ -125,7 +124,6 @@ public class BayesianNetwork implements ClassificationModel {
         MaxSpanningTree algorithm = new PrimAlgorithm((MyGraph)graph);
         List<TreeNode> tree = algorithm.computeMST();
 
-        //TODO: apagar nós que não estão na árvore (mas q estão na lista)
         for(TreeNode node : tree){
             node.setData();
         }
@@ -169,10 +167,27 @@ public class BayesianNetwork implements ClassificationModel {
             predictions_truelabel[i][0] = sample[sample.length-1];
             int chosen = classifyInstance(sample);
             predictions_truelabel[i][1] = chosen;
-            System.out.println(String.format("True label: %d | Predicted label: %d",
-                    predictions_truelabel[i][0], predictions_truelabel[i][1]));
+            System.out.println(String.format("True label: %d | Predicted label: %d", predictions_truelabel[i][0], predictions_truelabel[i][1]));
             i++;
         }
+
         return predictions_truelabel;
     }
+
+    public void printBayesianNodes() {
+        List<TreeNode> tree = this.DAG;
+        for (TreeNode tn : tree) {
+            if (tn.isRoot) {
+                System.out.println(String.format("Classifier:\t\t\t\t%s :  ", tn.getIdentifier()));
+            } else {
+                System.out.println(String.format("\t\t\t\t\t\t%s :  %s",
+                        tn.getIdentifier(), tn.getParent().getIdentifier()));
+            }
+
+        }
+    }
+
+
+
+
 }
