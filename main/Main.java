@@ -1,9 +1,8 @@
 package main;
 
-import project.*;
-
-import java.io.File;
-import java.util.*;
+import classificationmodel.bayesiannetwork.BayesianNetwork;
+import classificationmodel.ClassificationModel;
+import io.Output;
 
 public class Main {
 
