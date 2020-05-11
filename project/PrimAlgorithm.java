@@ -1,16 +1,12 @@
 package project;
 
-import com.sun.source.tree.Tree;
 
 import java.lang.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class PrimAlgorithm  implements MaxSpanningTree{
 
-    //private Tree<TreeNode> directedTree;
     TreeNode root;
     private List<TreeNode> treeNodes;
 
@@ -22,40 +18,6 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         this.graph = _graph;
         this.treeNodes = new ArrayList<TreeNode>(_graph.getFile().getFeatures().length);
     }
-
-    //Getter methods:
-    public List<TreeNode> getTreeNodesList() { return this.treeNodes; }
-    public int getRootIndex() { return rootIndex; }
-
-    /**
-     * Verify if first node has any edges ( edge's weight > 0). If yes, define it as root, if not, repeat the process
-     * for the second node, and so on.
-     */
-    /*public void defineRoot() {
-        boolean notConnected = true;
-        // The graph is assumed to be undirected -- symmetric adjacency matrix
-        for (int line = 0; line < this.graph.numNodes() - 1; line++) {
-            for (int col = line + 1; col < this.graph.numNodes(); col++) {
-                if (this.graph.getAdjMatrix()[line][col] != 0) {
-                    notConnected = false;
-                    break;
-                }
-            }
-            if (!notConnected) {
-                break;
-            } else {
-                this.rootIndex++;
-                if (this.rootIndex == this.graph.numNodes() - 1) {
-                    System.out.println("The graph does not have any edges!");
-                    System.exit(1);
-                }
-            }
-        }
-        System.out.println("\nRoot Node: " + graph.getFile().getFeatures()[this.rootIndex]);
-        System.out.println(rootIndex);
-        this.treeNodes.get(rootIndex).setAsRoot();
-        this.root = this.treeNodes.get(rootIndex);
-    }*/
 
     /**
      * Create each tree node inside the array list of TreeNodes
@@ -101,7 +63,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         this.treeNodes.get(rootIndex).setAsRoot();
 
         for (int i = 0; i < this.graph.numNodes(); i++) {
-            key[i] = -1;
+            key[i] = -Double.MAX_VALUE + Double.MIN_VALUE;//-1;
             mstSet[i] = false;
         }
         key[this.rootIndex] = Double.MAX_VALUE; // Make key MAX so that this node is picked as first node
@@ -128,19 +90,6 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             }
         }
 
-        /*List<TreeNode> tree = this.treeNodes;
-        Iterator i = tree.iterator();
-        TreeNode tn;
-        while (i.hasNext()) {
-            tn = (TreeNode) i.next();
-            if ((tn.getParent() == null) && (tn.getChildren().isEmpty())) {
-                i.remove();
-                System.out.println("\nThe element " + tn.getIdentifier() + " was removed");
-                break;
-            }
-        }*/
-
-
         //-------------------------------------------------------------------------------------------------
         // TODO: remove print methods afterwards
         printMST(parent);
@@ -159,6 +108,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     public TreeNode getRoot() {
         return this.root;
     }
+
 
     // TODO: remove this method after testing
     void printMST(int[] parent) {
