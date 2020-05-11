@@ -8,6 +8,9 @@ import classificationmodel.bayesiannetwork.tree.MyTreeNode;
 import classificationmodel.bayesiannetwork.tree.PrimAlgorithm;
 import classificationmodel.bayesiannetwork.tree.TreeNode;
 import classificationmodel.bayesiannetwork.graph.WeightedGraph;
+import exceptions.IllegalNumberOfClassesException;
+import exceptions.IllegalNumberOfFeatureValuesException;
+import exceptions.IllegalScoreException;
 import filehandler.DataReader;
 import filehandler.TrainData;
 import filehandler.TestData;
@@ -97,11 +100,25 @@ public class BayesianNetwork implements ClassificationModel {
         ((TrainData)readTrainFile).initr_values();
 
         // get r values
-        ((TrainData)readTrainFile).setData();
+        try {
+            ((TrainData)readTrainFile).setData();
+        } catch (IllegalNumberOfFeatureValuesException e) {
+            e.printStackTrace();
+            System.exit(1);
+        } catch (IllegalNumberOfClassesException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
         ((TrainData)readTrainFile).print(); // TODO: delete when not needed
 
-        WeightedGraph graph = new MyGraph((TrainData)readTrainFile, hyperParameter); //TODO: duvida, nao deveria ser Graph?
+        WeightedGraph graph = null; //TODO: duvida, nao deveria ser Graph?
+        try {
+            graph = new MyGraph((TrainData)readTrainFile, hyperParameter);
+        } catch (IllegalScoreException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         graph.setNodes();// TODO: or for loop setNodes(i) ?
 
         // second sweep

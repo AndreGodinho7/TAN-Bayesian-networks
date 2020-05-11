@@ -13,7 +13,7 @@ public class MyGraph implements WeightedGraph {
     Score score;
 
 
-    public MyGraph(TrainData graphData, String score_flag) {
+    public MyGraph(TrainData graphData, String score_flag) throws IllegalScoreException {
         this.file = graphData;
         this.adjMatrix = new double[graphData.getFeatures().length][graphData.getFeatures().length];
         this.numNodes = graphData.getFeatures().length;
@@ -26,12 +26,7 @@ public class MyGraph implements WeightedGraph {
             this.score = new MDLScore();
         }
         else {
-            try {
-                throw new IllegalScoreException();
-            } catch (IllegalScoreException e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
+            throw new IllegalScoreException();
         }
     }
 

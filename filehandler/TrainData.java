@@ -82,7 +82,7 @@ public class TrainData implements DataReader {
         for (int i = 0; i < this.r_values.length; i++) this.r_values[i] = -1;
     }
 
-    public void setData(){
+    public void setData() throws IllegalNumberOfFeatureValuesException, IllegalNumberOfClassesException {
         int aux_class = 0;
         int[] values;
         int instances=0;
@@ -93,12 +93,7 @@ public class TrainData implements DataReader {
             instances++;
             values = Arrays.stream(line.split(",")).mapToInt(Integer::parseInt).toArray();
 
-            if (values.length-1 != features.length) try {
-                throw new IllegalNumberOfFeatureValuesException();
-            } catch (IllegalNumberOfFeatureValuesException e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
+            if (values.length-1 != features.length) throw new IllegalNumberOfFeatureValuesException();
 
             for (int i = 0; i < values.length - 1; i++) {
                 if (values[i] > this.r_values[i]) this.r_values[i] = values[i];
@@ -121,18 +116,12 @@ public class TrainData implements DataReader {
         this.N = instances;
         this.num_classes = nc.size();
 
-        Map.Entry<Integer, Double> maxEntry = null;
-        for (Map.Entry<Integer, Double> entry : nc.entrySet()) {
-            if (maxEntry == null || entry.getValue()
-                    .compareTo(maxEntry.getValue()) > 0) {
-                maxEntry = entry;
+        int maxClass = 0;
+        for (int num_class : nc.keySet()) {
+            if (num_class > maxClass) {
+                maxClass = num_class;
             }
         }
-        if (maxEntry.getValue() != nc.size()-1) try {
-            throw new IllegalNumberOfClassesException();
-        } catch (IllegalNumberOfClassesException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+        if (maxClass != nc.size()-1) throw new IllegalNumberOfClassesException();
     }
 }
