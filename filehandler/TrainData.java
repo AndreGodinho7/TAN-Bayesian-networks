@@ -110,11 +110,6 @@ public class TrainData implements DataReader {
                 nc.put(aux_class, counter);
             }
         }
-        for (int i = 0; i < r_values.length; i++) r_values[i]++;
-        this.Nc = new double[nc.size()];
-        for (int j = 0; j < nc.size(); j++){ this.Nc[j] = nc.get(j); }
-        this.N = instances;
-        this.num_classes = nc.size();
 
         int maxClass = 0;
         for (int num_class : nc.keySet()) {
@@ -123,5 +118,12 @@ public class TrainData implements DataReader {
             }
         }
         if (maxClass != nc.size()-1) throw new IllegalNumberOfClassesException();
+
+        for (int i = 0; i < r_values.length; i++) r_values[i]++;
+
+        this.Nc = new double[nc.size()];
+        for (int j = 0; j < nc.size(); j++){ this.Nc[j] = nc.get(j); }
+        this.N = instances;
+        this.num_classes = nc.size();
     }
 }

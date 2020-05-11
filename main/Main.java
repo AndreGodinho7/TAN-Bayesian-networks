@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String trainFilename = "bias-train.csv";
+        String trainFilename = "train-enunciado.csv";
         String testFilename = "bias-test.csv";
         String score = "LL";
 
