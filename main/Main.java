@@ -14,11 +14,22 @@ public class Main {
         String score = "LL";
 
         ClassificationModel model = new BayesianNetwork();
+
+        double startTimeTrain = System.nanoTime();
         model.train(trainFilename, score);
+        double stopTimeTrain = System.nanoTime();
+
+        double startTimeTest = System.nanoTime();
         int[][] data2Measure = model.predict(testFilename);
+        double stopTimeTest = System.nanoTime();
+
+        double trainTime = stopTimeTrain - startTimeTrain;
+        double testTime = stopTimeTest - startTimeTest;
+
+        Output.print(model, data2Measure, trainTime, testTime);
 
         // TODO: this is for testing, change later
-        ClassificationMetrics accuracy = new Accuracy(data2Measure);
+        /*ClassificationMetrics accuracy = new Accuracy(data2Measure);
 
         ClassificationMetrics confmat0 = new MyConfusionMatrix(data2Measure, 0);
         ClassificationMetrics confmat1 = new MyConfusionMatrix(data2Measure, 1);
@@ -69,7 +80,7 @@ public class Main {
         System.out.println("Sensitivity (Class 0): " + sens0);
         System.out.println("Sensitivity (Class 1): " + sens1);
         System.out.println("F1-score (Class 0): " + f1s0);
-        System.out.println("F1-score (Class 1): " + f1s1);
+        System.out.println("F1-score (Class 1): " + f1s1);*/
 
     }
 }
