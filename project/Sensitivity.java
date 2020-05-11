@@ -2,13 +2,13 @@ package project;
 
 public class Sensitivity extends ClassificationMetrics {
     private float sensitivity;
-    private int trueClass;
+    private int positiveClass;
     int fn;
     int tp;
 
-    public Sensitivity(int[][] labels, int _trueClass) {
+    public Sensitivity(int[][] labels, int positiveClass) {
         super(labels);
-        this.trueClass = _trueClass;
+        this.positiveClass = positiveClass;
         this.fn = 0;
         this.tp = 0;
     }
@@ -25,10 +25,10 @@ public class Sensitivity extends ClassificationMetrics {
     public float calculateMetric() {
         if ((this.tp == 0) && this.fn == 0) {
             for (int[] instance : this.labels) {
-                if ((instance[0] != instance[1]) && instance[0] == this.trueClass) {
-                    this.fn++;
-                } else if ((instance[0] == instance[1]) && instance[0] == this.trueClass) {
-                    this.tp++;
+                if (instance[1] == this.positiveClass) {
+                    if (instance[0] == instance[1]) { this.tp++; }
+                } else {
+                    if (instance[0] != this.positiveClass && instance[0] != instance[1]) { this.fn++; }
                 }
             }
         }
