@@ -4,17 +4,17 @@ import java.util.*;
 
 public class MyTreeNode extends TreeNode {
 
-    private Node n;
+    private Counts n;
     private Map<String, double[][][]> theta_ijkc;
     private double[] theta_c;
 
     // Constructor:
-    public MyTreeNode(Node n) {
+    public MyTreeNode(Counts n) {
         super();
         this.n = n;
     }
 
-    public Node getN() { return n; }
+    public Counts getN() { return n; }
 
     public double[] getTheta_c() { return theta_c; }
 
@@ -26,7 +26,7 @@ public class MyTreeNode extends TreeNode {
      * Remove Nijkc counts from Node to all nodes that are not children.
      */
     public void setNijkc() {
-        Map<String, int[][][]> map = this.n.getNijkcMap();
+        Map<String, int[][][]> map = ((Node)this.n).getNijkcMap();
         List<String> not_parents = new LinkedList<String>();
         String _parent;
 
@@ -47,7 +47,7 @@ public class MyTreeNode extends TreeNode {
      * Remove NKijc counts from Node to all nodes that are not children.
      */
     public void setNKijc() {
-        Map<String, int[][]> map = this.n.getNKijcMap();
+        Map<String, int[][]> map = ((Node)this.n).getNKijcMap();
         List<String> not_parents = new LinkedList<String>();
         String parent;
 
@@ -70,15 +70,15 @@ public class MyTreeNode extends TreeNode {
     public void setTheta_ijkc() {
         Map<String, double[][][]> map = new HashMap<>();
 
-        for (String key : this.n.getNijkcMap().keySet()) {
-            int[][][] Nijkc = this.n.getNijkc(key);
-            int[][] NKijc = this.n.getNKijc(key);
+        for (String key : ((Node)this.n).getNijkcMap().keySet()) {
+            int[][][] Nijkc = ((Node)this.n).getNijkc(key);
+            int[][] NKijc = ((Node)this.n).getNKijc(key);
             double [][][] theta_ijkc = new double[Nijkc.length][Nijkc[0].length][Nijkc[0][0].length];
 
             for (int j=0; j < Nijkc.length; j++){
                 for (int k=0; k < Nijkc[0].length ;k++){
                     for(int c=0; c < Nijkc[0][0].length; c++){
-                        theta_ijkc[j][k][c] = (Nijkc[j][k][c] + 0.5)/(NKijc[j][c] + this.n.getR() * 0.5);
+                        theta_ijkc[j][k][c] = (Nijkc[j][k][c] + 0.5)/(NKijc[j][c] + ((Node)this.n).getR() * 0.5);
                         map.put(key, theta_ijkc);
                     }
                 }

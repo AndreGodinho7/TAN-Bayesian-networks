@@ -3,7 +3,7 @@ package project;
 import java.util.*;
 
 public class MyGraph implements WeightedGraph {
-    private List<Node> nodes;
+    private List<Counts> nodes;
     private double[][] adjMatrix;
     private int numNodes;
     private FileData file;
@@ -14,7 +14,7 @@ public class MyGraph implements WeightedGraph {
         this.file = graphData;
         this.adjMatrix = new double[graphData.getFeatures().length][graphData.getFeatures().length];
         this.numNodes = graphData.getFeatures().length;
-        this.nodes = new ArrayList<Node>(graphData.getFeatures().length);
+        this.nodes = new ArrayList<Counts>(graphData.getFeatures().length);
 
         if (score_flag.equals("LL")){
             this.score = new LLScore();
@@ -28,11 +28,11 @@ public class MyGraph implements WeightedGraph {
         }
     }
 
-    private void insertInList(Node n){
+    private void insertInList(Counts n){
         nodes.add(n);
     }
 
-    public List<Node> getNodes() {return nodes;}
+    public List<Counts> getNodes() {return nodes;}
 
     public double[][] getAdjMatrix() {return adjMatrix;}
 
@@ -40,46 +40,24 @@ public class MyGraph implements WeightedGraph {
 
     @Override
     public void setNodes() {
-        String[] features = this.file.getFeatures();
-        int[] r_values = this.file.getR_values();
-        int num_class = this.file.getNum_classes();
+        Node.setfeatures(this.file.getFeatures());
+        Node.setR_values(this.file.getR_values());
+        Node.setNum_class(this.file.getNum_classes());
         Node.setN(this.file.getN());
         Node.setNc(this.file.getNc());
 
         for (int i = 0; i < this.numNodes; i++) {
-            Node n = new Node(features[i], r_values[i]);
-            n.setNijkc(i, features, r_values, num_class);
-            n.setNJikc(i, features, r_values, num_class);
-            n.setNKijc(i, features, r_values, num_class);
-            n.setQ(i, features, r_values[i]);
-            n.setR(r_values[i]);
+            Counts n = new Node(Node.getFeatures()[i], Node.getR_values()[i], i);
+            n.setCounts();
             this.insertInList(n);
         }
     }
 
     @Override
     public void updateNodes(int[] values) {
-        String[] features = this.file.getFeatures();
-        int aux_class;
-        Map<String, Integer> aux_map = new HashMap<String, Integer>();
-        for (int i = 0; i < values.length - 1; i++) {
-            aux_map.put(features[i], values[i]);
-        }
-        aux_class = values[values.length - 1];
-
-        List<Node> ns = this.nodes;
-        for (Node n : ns) {
-            for (String key : n.getNijkcMap().keySet()) {
-                if (n.getFeature_name().equals(key)) {
-                    n.inc_Nijkc(key, 0, aux_map.get(n.getFeature_name()), aux_class);
-                    n.inc_NKijc(key,0, aux_class);
-                    n.inc_NJikc(key, aux_map.get(n.getFeature_name()), aux_class);
-                } else {
-                    n.inc_Nijkc(key, aux_map.get(key), aux_map.get(n.getFeature_name()), aux_class);
-                    n.inc_NKijc(key, aux_map.get(key), aux_class);
-                    n.inc_NJikc(key, aux_map.get(n.getFeature_name()), aux_class);
-                }
-            }
+        List<Counts> ns = this.nodes;
+        for (Counts n : ns) {
+            n.incrementCounts(values);
         }
     }
 
@@ -96,17 +74,17 @@ public class MyGraph implements WeightedGraph {
 
     @Override
     public void printNodes() {
-        List<Node> ns = this.nodes;
-        for (Node n : ns) {
-            System.out.println("Node son: " + n.getFeature_name());
-            for (String key : n.getNijkcMap().keySet()) {
+        List<Counts> ns = this.nodes;
+        for (Counts n : ns) {
+            System.out.println("Node son: " + ((Node)n).getFeature_name());
+            for (String key : ((Node)n).getNijkcMap().keySet()) {
                 System.out.println("Node father: " + key);
                 System.out.println("Nijkc:");
-                n.print_Nijkc(key);
+                ((Node)n).print_Nijkc(key);
                 System.out.println("NJjkc:");
-                n.print_NJikc(key);
+                ((Node)n).print_NJikc(key);
                 System.out.println("NKjkc:");
-                n.print_NKijc(key);
+                ((Node)n).print_NKijc(key);
             }
         }
     }

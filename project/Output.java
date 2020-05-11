@@ -31,10 +31,12 @@ public class Output {
             ClassificationMetrics specificity = new Specificity(target_predicted, positiveClass);
             ((Specificity)specificity).setTN(((MyConfusionMatrix)m).getTN());
             ((Specificity)specificity).setFP(((MyConfusionMatrix)m).getFP());
+            specificity.calculateMetric();
 
             ClassificationMetrics sensitivity = new Sensitivity(target_predicted, positiveClass);
             ((Sensitivity)sensitivity).setTP(((MyConfusionMatrix)m).getTP());
             ((Sensitivity)sensitivity).setFN(((MyConfusionMatrix)m).getFN());
+            sensitivity.calculateMetric();
 
             ClassificationMetrics precision = new Precision(target_predicted, positiveClass);
             ((Precision)precision).setFP(((MyConfusionMatrix)m).getFP());

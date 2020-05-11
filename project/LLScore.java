@@ -8,17 +8,15 @@ public class LLScore implements Score {
     }
 
     @Override
-    public double calculate_score(Counter father, Counter son) {
+    public double calculate_score(Counts father, Counts son) {
         // father is i' ; son is i
         float weight = 0;
-        String key_father = father.getFeature_name();
-        int[][][] Nijkc = son.getNijkc(key_father);
-        int[][] NJikc = son.getNJikc(key_father);
-        int[][] NKijc = son.getNKijc(key_father);
+        String key_father = ((Node)father).getFeature_name();
+        int[][][] Nijkc = ((Node)son).getNijkc(key_father);
+        int[][] NJikc = ((Node)son).getNJikc(key_father);
+        int[][] NKijc = ((Node)son).getNKijc(key_father);
         double [] Nc = Node.getNc();
         double N = Node.getN();
-        int w;
-
 
         for(int c=0; c < Nijkc[0][0].length; c++){
             for (int j=0; j < Nijkc.length; j++){

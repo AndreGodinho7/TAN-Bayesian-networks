@@ -1,6 +1,6 @@
 package project;
 
 public interface Score {
-	public double calculate_score(Counter father, Counter son);
+	public double calculate_score(Counts father, Counts son);
 
 }

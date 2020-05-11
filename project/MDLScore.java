@@ -7,14 +7,14 @@ public class MDLScore implements Score{
 	}
 
 	@Override
-	public double calculate_score(Counter father, Counter son) {
+	public double calculate_score(Counts father, Counts son) {
 		// father is i' ; son is i
 		double weight = 0;
 		//String key_son = son.getFeature_name();
-		String key_father = father.getFeature_name();
-		int[][][] Nijkc = son.getNijkc(key_father);
-		int[][] NJikc = son.getNJikc(key_father);
-		int[][] NKijc = son.getNKijc(key_father);
+		String key_father = ((Node)father).getFeature_name();
+		int[][][] Nijkc = ((Node)son).getNijkc(key_father);
+		int[][] NJikc = ((Node)son).getNJikc(key_father);
+		int[][] NKijc = ((Node)son).getNKijc(key_father);
 		double [] Nc = Node.getNc();
 		double N = Node.getN();
 
@@ -27,8 +27,7 @@ public class MDLScore implements Score{
 			}
 		}
 
-		// s = Nc.length i.e. number of classes
-		weight = weight - (Nc.length*0.5*(son.getR()-1)*(son.getQ(father.getFeature_name())-1) *Math.log(N));
+		weight = weight - (Nc.length*0.5*(((Node)son).getR()-1)*(((Node)son).getQ(((Node)father).getFeature_name())-1) *Math.log(N));
 		return weight;
 	}
 }
