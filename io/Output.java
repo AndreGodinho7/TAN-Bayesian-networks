@@ -2,12 +2,12 @@ package io;
 
 import classificationmodel.bayesiannetwork.BayesianNetwork;
 import classificationmodel.ClassificationModel;
-import classificationmodel.bayesiannetwork.graph.Node;
+import classificationmodel.ClassificationModelInterface;
 import metrics.*;
 
 public class Output {
 
-    public static void print(ClassificationModel model, int[][] target_predicted, double trainTime, double testTime) {
+    public static void print(ClassificationModelInterface model, int[][] target_predicted, double trainTime, double testTime) {
         int line = 1;
 
         System.out.println("\n\nFINAL OUTPUT (tirar esta string depois):");
@@ -24,7 +24,7 @@ public class Output {
         ClassificationMetrics accuracy = new Accuracy(target_predicted);
         System.out.println(String.format("Resume:\t\t\t\t\t%.4f", accuracy.calculateMetric()));
 
-        for (int positiveClass = 0; positiveClass < Node.getNc().length; positiveClass++) {
+        for (int positiveClass = 0; positiveClass < ((ClassificationModel)model).getNum_classes(); positiveClass++) {
             ConfusionMatrixDerivations m = new ConfusionMatrixDerivations(target_predicted, positiveClass);
             m.calculateDerivations();
 

@@ -10,7 +10,7 @@ public class MyGraph implements WeightedGraph {
     private double[][] adjMatrix;
     private int numNodes;
     private TrainData file;
-    Score score;
+    private Score score;
 
 
     public MyGraph(TrainData graphData, String score_flag) throws IllegalScoreException {

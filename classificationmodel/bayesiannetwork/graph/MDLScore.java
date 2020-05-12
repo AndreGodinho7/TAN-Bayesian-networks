@@ -1,7 +1,7 @@
 package classificationmodel.bayesiannetwork.graph;
 
 public class MDLScore implements Score {
-	public static double log2(double N) {
+	private static double log2(double N) {
 		double result = (double)(Math.log(N) / Math.log(2.0));
 		return result;
 	}

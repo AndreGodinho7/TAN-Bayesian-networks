@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TreeNode {
-    protected List<TreeNode> children;
-    protected TreeNode parent;
-    protected boolean isRoot;
+    private List<TreeNode> children;
+    private TreeNode parent;
+    private boolean isRoot;
     private String identifier;
 
-    TreeNode() {
+    public TreeNode() {
         this.children = new ArrayList<TreeNode>();
         this.isRoot = false;
     }
@@ -22,11 +22,10 @@ public abstract class TreeNode {
 
     // setters
     public abstract void setData();
-    public void setAsRoot() {  this.isRoot = true; }
-    public void setIdentifier(String i) { this.identifier = i; }
-    public void setParent(TreeNode p) { this.parent = p; }
-
-    public void addChild(TreeNode child) { this.children.add(child); }
+    protected void setAsRoot() {  this.isRoot = true; }
+    protected void setIdentifier(String i) { this.identifier = i; }
+    protected void setParent(TreeNode p) { this.parent = p; }
+    protected void addChild(TreeNode child) { this.children.add(child); }
 
     //TODO: remove print methods
     public void printChildren() {

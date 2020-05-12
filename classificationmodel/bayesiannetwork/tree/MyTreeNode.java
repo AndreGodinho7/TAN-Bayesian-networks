@@ -12,7 +12,7 @@ public class MyTreeNode extends TreeNode {
     private double[] theta_c;
 
     // Constructor:
-    public MyTreeNode(Counts n) {
+    protected MyTreeNode(Counts n) {
         super();
         this.n = n;
     }
@@ -28,15 +28,15 @@ public class MyTreeNode extends TreeNode {
     /**
      * Remove Nijkc counts from Node to all nodes that are not children.
      */
-    public void setNijkc() {
+    protected void setNijkc() {
         Map<String, int[][][]> map = ((Node)this.n).getNijkcMap();
         List<String> not_parents = new LinkedList<String>();
         String _parent;
 
-        if (this.isRoot) {
+        if (this.getisRoot()) {
             _parent = this.getIdentifier();
         } else {
-            _parent = this.parent.getIdentifier();
+            _parent = this.getParent().getIdentifier();
         }
         for (String key : map.keySet()){
             if (!(_parent.equals(key)))  not_parents.add(key);
@@ -49,15 +49,15 @@ public class MyTreeNode extends TreeNode {
     /**
      * Remove NKijc counts from Node to all nodes that are not children.
      */
-    public void setNKijc() {
+    protected void setNKijc() {
         Map<String, int[][]> map = ((Node)this.n).getNKijcMap();
         List<String> not_parents = new LinkedList<String>();
         String parent;
 
-        if (this.isRoot) {
+        if (this.getisRoot()) {
             parent = this.getIdentifier();
         } else {
-            parent = this.parent.getIdentifier();
+            parent = this.getParent().getIdentifier();
         }
         for (String key : map.keySet()){
             if (!(parent.equals(key)))  not_parents.add(key);
@@ -70,7 +70,7 @@ public class MyTreeNode extends TreeNode {
     /**
      * Calculate theta_ijkc
      */
-    public void setTheta_ijkc() {
+    protected void setTheta_ijkc() {
         Map<String, double[][][]> map = new HashMap<>();
 
         for (String key : ((Node)this.n).getNijkcMap().keySet()) {
@@ -93,7 +93,7 @@ public class MyTreeNode extends TreeNode {
     /**
      * Calculate theta_c
      */
-    public void setTheta_c() {
+    protected void setTheta_c() {
         double[] aux = new double[Node.getNc().length];
         for (int c = 0; c < Node.getNc().length; c++) {
             aux[c] = (Node.getNc()[c] + 0.5)/(Node.getN() + Node.getNc().length * 0.5);

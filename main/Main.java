@@ -1,18 +1,18 @@
 package main;
 
 import classificationmodel.bayesiannetwork.BayesianNetwork;
-import classificationmodel.ClassificationModel;
+import classificationmodel.ClassificationModelInterface;
 import io.Output;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        String trainFilename = "bias-train.csv";
-        String testFilename = "bias-test.csv";
+        String trainFilename = "/home/andregodinho06/Documents/IST/MECD0102/POO/TAN-Bayesian-networks/bias-train.csv";
+        String testFilename = "/home/andregodinho06/Documents/IST/MECD0102/POO/TAN-Bayesian-networks/bias-test.csv";
         String score = "LL";
 
-        ClassificationModel model = new BayesianNetwork();
+        ClassificationModelInterface model = new BayesianNetwork();
 
         double startTimeTrain = System.nanoTime();
         model.train(trainFilename, score);

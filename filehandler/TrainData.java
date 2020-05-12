@@ -1,7 +1,6 @@
 package filehandler;
 
 import exceptions.IllegalNumberOfClassesException;
-import exceptions.IllegalNumberOfFeatureValuesException;
 import exceptions.MissingClassInSampleException;
 
 import java.io.File;
@@ -15,7 +14,7 @@ public class TrainData implements DataReader {
     private double N;
     private int num_classes;
     private double[] Nc;
-    Scanner inputStream;
+    private Scanner inputStream;
 
     public String[] getFeatures() {
         return features;

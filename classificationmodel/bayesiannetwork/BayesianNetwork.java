@@ -17,26 +17,18 @@ import filehandler.TestData;
 
 import java.util.*;
 
-public class BayesianNetwork implements ClassificationModel {
-
-    private String[] features;
-
-    private int num_classes;
-
+public class BayesianNetwork extends ClassificationModel {
     private int rootIndex;
-
     private List<TreeNode> DAG;
 
     // Getters
-    public String[] getFeatures() { return features; }
-    public int getRootIndex() { return rootIndex; }
-    public int getNum_classes() { return num_classes; }
-    private TreeNode getDAGNode(int index){ return this.DAG.get(index); }
+//    protected String[] getFeatures() { return features; }
+    protected int getRootIndex() { return rootIndex; }
+//    public int getNum_classes() { return num_classes; }
+    protected TreeNode getDAGNode(int index){ return this.DAG.get(index); }
     // Setters
-    private void setNum_classes(int num_classes) { this.num_classes = num_classes; }
     private void setDAG(List<TreeNode> DAG) { this.DAG = DAG; }
-    public void setRootIndex(int rootIndex) { this.rootIndex = rootIndex; }
-    public void setFeatures(String[] features) { this.features = features; }
+    protected void setRootIndex(int rootIndex) { this.rootIndex = rootIndex; }
 
 
     private double[] calcJointProbability(MyTreeNode node, double[] jointprobabilities, Map <String, Integer> sample){
@@ -102,10 +94,7 @@ public class BayesianNetwork implements ClassificationModel {
         // get r values
         try {
             ((TrainData)readTrainFile).setData();
-        } catch (IllegalNumberOfClassesException e) {
-            e.printStackTrace();
-            System.exit(1);
-        } catch (MissingClassInSampleException e) {
+        } catch (IllegalNumberOfClassesException | MissingClassInSampleException e) {
             e.printStackTrace();
             System.exit(1);
         }
@@ -166,7 +155,7 @@ public class BayesianNetwork implements ClassificationModel {
 
         for(TreeNode node : tree){
             System.out.println("Node: " + node.getIdentifier());
-            if (((TreeNode)node).getisRoot() == true) {
+            if (((TreeNode) node).getisRoot()) {
                 ((MyTreeNode)node).printTheta_ijkc(node.getIdentifier());
             } else {
                 ((MyTreeNode)node).printTheta_ijkc(node.getParent().getIdentifier());
@@ -212,8 +201,4 @@ public class BayesianNetwork implements ClassificationModel {
 
         }
     }
-
-
-
-
 }
