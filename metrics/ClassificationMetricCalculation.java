@@ -6,7 +6,7 @@ package metrics;
 public interface ClassificationMetricCalculation {
     /**
      * method to calculate a classification metric
-     * @return
+     * @return  metric value as a float
      */
     public float calculateMetric();
 }

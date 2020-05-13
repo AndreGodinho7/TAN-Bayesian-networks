@@ -8,8 +8,8 @@ public abstract class ClassificationMetrics implements ClassificationMetricCalcu
     protected int[][] labels;
 
     /**
-     * method to calculate a classification metric
-     * @param labels
+     * method to calculate a classification metric.
+     * @param labels    True labels and predicted labels of the test set
      */
     public ClassificationMetrics(int[][] labels) {
         this.labels = labels;

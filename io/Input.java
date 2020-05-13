@@ -14,7 +14,8 @@ public class Input {
 
     /**
      * Saves input arguments from command line to specified strings.
-     * @param args  command line input arguments (array of strings)
+     * @param args                                command line input arguments (array of strings)
+     * @throws IllegalNumberOfParametersException Thrown exception
      */
     public Input(String[] args) throws IllegalNumberOfParametersException {
         this.trainFilename = args[0];
