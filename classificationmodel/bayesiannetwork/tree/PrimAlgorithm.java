@@ -1,6 +1,7 @@
 package classificationmodel.bayesiannetwork.tree;
 
 
+import classificationmodel.bayesiannetwork.graph.Graph;
 import classificationmodel.bayesiannetwork.graph.MyGraph;
 
 import java.lang.*;
@@ -15,7 +16,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     TreeNode root;
     private List<TreeNode> treeNodes;
 
-    private MyGraph graph;
+    private Graph graph;
     private int rootIndex = 0;
 
     // Constructor
@@ -35,8 +36,8 @@ public class PrimAlgorithm  implements MaxSpanningTree{
      */
     private void setTreeNodes() {
         for (int i = 0; i < this.graph.numNodes(); i++) {
-            TreeNode tn = new MyTreeNode(this.graph.getNodes().get(i));
-            tn.setIdentifier(this.graph.getFile().getFeatures()[i]);
+            TreeNode tn = new MyTreeNode(((MyGraph)this.graph).getNodes().get(i));
+            tn.setIdentifier(((MyGraph)this.graph).getFile().getFeatures()[i]);
             this.treeNodes.add(tn);
         }
     }
@@ -88,10 +89,9 @@ public class PrimAlgorithm  implements MaxSpanningTree{
             mstSet[u] = true;
 
             for (int v = this.rootIndex; v < this.graph.numNodes(); v++) {
-                //if ((this.graph.getAdjMatrix()[u][v] != 0) && !mstSet[v] && (this.graph.getAdjMatrix()[u][v] > key[v])) {
-                if ((u != v) && !mstSet[v] && (this.graph.getAdjMatrix()[u][v] > key[v])) {
+                if ((u != v) && !mstSet[v] && (this.graph.getEdge(u,v) > key[v])) {
                     parent[v] = u;
-                    key[v] = this.graph.getAdjMatrix()[u][v];
+                    key[v] = this.graph.getEdge(u,v);
                 }
             }
         }
@@ -102,18 +102,6 @@ public class PrimAlgorithm  implements MaxSpanningTree{
                 this.treeNodes.get(i).setParent(this.treeNodes.get(parent[i]));
             }
         }
-
-        //-------------------------------------------------------------------------------------------------
-        // TODO: remove print methods afterwards
-        printMST(parent);
-
-        // Print children of each node after running Prim algorithm
-        List<TreeNode> aux = this.treeNodes;
-        for (TreeNode tna : aux) {
-            tna.printChildren();
-            System.out.println();
-        }
-
         return this.treeNodes;
     }
 
@@ -124,18 +112,5 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     @Override
     public TreeNode getRoot() {
         return this.root;
-    }
-
-
-    // TODO: remove this method after testing
-    void printMST(int[] parent) {
-
-        System.out.println("Edge \tWeight");
-        for (int i = this.rootIndex + 1; i < this.graph.numNodes(); i++) {
-            if (parent[i] != -1) {
-                System.out.println(parent[i] + 1 + " - " + (i + 1) + "\t" + this.graph.getAdjMatrix()[i][parent[i]]);
-            }
-        }
-
     }
 }

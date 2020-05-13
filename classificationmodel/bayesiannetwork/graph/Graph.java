@@ -10,9 +10,6 @@ public interface Graph {
      */
     void setNodes();
 
-    //TODO: remove print method before submitting
-    void printNodes();
-
     /**
      * Returns the number of nodes in the graph.
      * @return  Number of nodes
@@ -25,4 +22,11 @@ public interface Graph {
      * @param node2 Index of node 2
      */
     void createEdge(int node1, int node2);
+
+    /**
+     * Returns an edge value linking two nodes (node 1 and node 2).
+     * @param node1 Index of node 1
+     * @param node2 Index of node 2
+     */
+    double getEdge(int node1, int node2);
 }

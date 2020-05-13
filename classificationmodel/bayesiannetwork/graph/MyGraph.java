@@ -56,13 +56,6 @@ public class MyGraph extends WeightedGraph {
     public List<Counts> getNodes() {return nodes;}
 
     /**
-     * Returns the adjacency matrix of the graph.
-     *
-     * @return  Adjacency matrix
-     */
-    public double[][] getAdjMatrix() {return adjMatrix;}
-
-    /**
      * Returns the input training file data.
      *
      * @return  Input training file data
@@ -122,32 +115,14 @@ public class MyGraph extends WeightedGraph {
         this.adjMatrix[node1][node2] = weight;
     }
 
-    //TODO: remove print method
+    /**
+     * Returns an edge value linking two nodes (node 1 and node 2).
+     *
+     * @param node1 Index of node 1
+     * @param node2 Index of node 2
+     */
     @Override
-    public void printNodes() {
-        List<Counts> ns = this.nodes;
-        for (Counts n : ns) {
-            System.out.println("Node son: " + ((Node)n).getFeature_name());
-            for (String key : ((Node)n).getNijkcMap().keySet()) {
-                System.out.println("Node father: " + key);
-                System.out.println("Nijkc:");
-                ((Node)n).print_Nijkc(key);
-                System.out.println("NJjkc:");
-                ((Node)n).print_NJikc(key);
-                System.out.println("NKjkc:");
-                ((Node)n).print_NKijc(key);
-            }
-        }
-    }
-
-    //TODO: remove print method
-    public void printadjMatrix(){
-        System.out.println("graph Adjacency matrix");
-        for (int i = 0; i < this.adjMatrix.length; i++) {
-            for (int j = 0; j < this.adjMatrix.length; j++) {
-                System.out.print(this.adjMatrix[i][j] + "\t\t\t");
-            }
-            System.out.println();
-        }
+    public double getEdge(int node1, int node2) {
+        return this.adjMatrix[node1][node2];
     }
 }

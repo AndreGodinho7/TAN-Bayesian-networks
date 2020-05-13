@@ -59,7 +59,10 @@ public class BayesianNetwork extends ClassificationModel {
     void setRootIndex(int rootIndex) { this.rootIndex = rootIndex; }
 
     /**
-     * //TODO: comment this method
+     * Recursive function that calculates the joint probability distributions recursively by iterating
+     * over the child tree nodes.
+     * If the tree node has no children, return
+     * The joint probability for the root is calculated outside this function
      *
      * @param node
      * @param jointprobabilities
@@ -145,16 +148,14 @@ public class BayesianNetwork extends ClassificationModel {
             System.exit(1);
         }
 
-        ((TrainData)readTrainFile).print(); // TODO: delete when not needed
-
-        WeightedGraph graph = null; //TODO: duvida, nao deveria ser Graph?
+        WeightedGraph graph = null;
         try {
             graph = new MyGraph((TrainData)readTrainFile, hyperParameter);
         } catch (IllegalScoreException e) {
             e.printStackTrace();
             System.exit(1);
         }
-        graph.setNodes();// TODO: or for loop setNodes(i) ?
+        graph.setNodes();
 
         // second sweep
         readTrainFile.openFile(trainFilePath);
@@ -168,18 +169,12 @@ public class BayesianNetwork extends ClassificationModel {
             graph.updateNodes(values);
         }
 
-        // TODO: delete this when not needed anymore
-        graph.printNodes();
-
         for (int i=0; i < graph.numNodes(); i++){
             for (int j=0; j < graph.numNodes();j++){
                 if (i==j) continue;
                 graph.createEdge(i,j);
             }
         }
-
-        // TODO: delete this when not needed anymore
-        ((MyGraph)graph).printadjMatrix();
 
         // For testing Prim Algorithm
         MaxSpanningTree algorithm = new PrimAlgorithm((MyGraph)graph);
