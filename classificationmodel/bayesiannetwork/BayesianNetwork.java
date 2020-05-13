@@ -3,11 +3,11 @@ package classificationmodel.bayesiannetwork;
 
 import classificationmodel.ClassificationModel;
 import classificationmodel.bayesiannetwork.graph.MyGraph;
+import classificationmodel.bayesiannetwork.graph.WeightedGraph;
 import classificationmodel.bayesiannetwork.tree.MaxSpanningTree;
 import classificationmodel.bayesiannetwork.tree.MyTreeNode;
 import classificationmodel.bayesiannetwork.tree.PrimAlgorithm;
 import classificationmodel.bayesiannetwork.tree.TreeNode;
-import classificationmodel.bayesiannetwork.graph.WeightedGraph;
 import exceptions.IllegalNumberOfClassesException;
 import exceptions.IllegalScoreException;
 import exceptions.MissingClassInSampleException;

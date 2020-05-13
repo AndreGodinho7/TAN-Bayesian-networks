@@ -1,9 +1,17 @@
 package classificationmodel.bayesiannetwork.graph;
 
-public interface WeightedGraph extends Graph {
-    public void updateNodes(int[] row);
-    public void setNodes();
-    public void printNodes();
-    public int numNodes();
-    public void createEdge(int node1, int node2);
+public abstract class WeightedGraph implements Graph{
+    private int numNodes;
+
+    public WeightedGraph(int numNodes) {
+        this.numNodes = numNodes;
+    }
+
+    public int getNumNodes() { return numNodes; }
+
+    public abstract void updateNodes(int[] row);
+    public abstract void setNodes();
+    public abstract void printNodes();
+    public abstract int numNodes();
+    public abstract void createEdge(int node1, int node2);
 }

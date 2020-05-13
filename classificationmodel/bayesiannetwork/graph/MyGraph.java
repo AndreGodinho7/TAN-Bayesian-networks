@@ -5,18 +5,17 @@ import exceptions.IllegalScoreException;
 
 import java.util.*;
 
-public class MyGraph implements WeightedGraph {
+public class MyGraph extends WeightedGraph {
     private List<Counts> nodes;
     private double[][] adjMatrix;
-    private int numNodes;
     private TrainData file;
     private Score score;
 
 
     public MyGraph(TrainData graphData, String score_flag) throws IllegalScoreException {
+        super(graphData.getFeatures().length);
         this.file = graphData;
         this.adjMatrix = new double[graphData.getFeatures().length][graphData.getFeatures().length];
-        this.numNodes = graphData.getFeatures().length;
         this.nodes = new ArrayList<Counts>(graphData.getFeatures().length);
 
         if (score_flag.equals("LL")){
@@ -48,7 +47,7 @@ public class MyGraph implements WeightedGraph {
         Node.setN(this.file.getN());
         Node.setNc(this.file.getNc());
 
-        for (int i = 0; i < this.numNodes; i++) {
+        for (int i = 0; i < this.getNumNodes(); i++) {
             Counts n = new Node(Node.getFeatures()[i], Node.getR_values()[i], i);
             n.setCounts();
             this.insertInList(n);
@@ -65,7 +64,7 @@ public class MyGraph implements WeightedGraph {
 
     @Override
     public int numNodes() {
-        return this.numNodes;
+        return this.getNumNodes();
     }
 
     @Override
