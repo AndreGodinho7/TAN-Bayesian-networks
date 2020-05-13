@@ -17,20 +17,55 @@ import filehandler.TestData;
 
 import java.util.*;
 
+/**
+ * Implements a Bayesian network classifier structure.
+ */
 public class BayesianNetwork extends ClassificationModel {
     private int rootIndex;
     private List<TreeNode> DAG;
 
     // Getters
 //    protected String[] getFeatures() { return features; }
+    
+    /**
+     * Returns the index (from the array of features) of the the feature defined as root in the tree structure.
+     *
+     * @return  Root index
+     */
     protected int getRootIndex() { return rootIndex; }
 //    public int getNum_classes() { return num_classes; }
+
+    /**
+     * Returns an element of type TreeNode of the directed acyclic graph (DAG), given its index in the DAG list.
+     *
+     * @param index Index in the DAG list
+     * @return      Element of type TreeNode from the DAG
+     */
     protected TreeNode getDAGNode(int index){ return this.DAG.get(index); }
     // Setters
+    
+    /**
+     * Set the directed acyclic graph (DAG) list.
+     *
+     * @param DAG   DAG list
+     */
     private void setDAG(List<TreeNode> DAG) { this.DAG = DAG; }
+
+    /**
+     * Sets the root index.
+     *
+     * @param rootIndex Root index
+     */
     protected void setRootIndex(int rootIndex) { this.rootIndex = rootIndex; }
 
-
+    /**
+     * //TODO: comment this method
+     *
+     * @param node
+     * @param jointprobabilities
+     * @param sample
+     * @return
+     */
     private double[] calcJointProbability(MyTreeNode node, double[] jointprobabilities, Map <String, Integer> sample){
         if (((TreeNode)node).getisRoot() == false){
             for (int i=0; i < jointprobabilities.length; i++){
@@ -49,6 +84,11 @@ public class BayesianNetwork extends ClassificationModel {
         }
     }
 
+    /**
+     * Classifies a given instance.
+     * @param instance  Instance to be classified
+     * @return          Chosen class
+     */
     private int classifyInstance(int[] instance){
         String[] features = getFeatures(); //TODO: need feature names
         Map<String, Integer> sample = new HashMap<String, Integer>();
@@ -78,6 +118,12 @@ public class BayesianNetwork extends ClassificationModel {
         return chosen;
     }
 
+    /**
+     * Trains the model, given the training data file name or path, and a hyperparameter.
+     *
+     * @param trainFilePath     Training data file name or path
+     * @param hyperParameter    Hyperparameter
+     */
     @Override
     public void train(String trainFilePath, String hyperParameter) {
 
@@ -163,6 +209,13 @@ public class BayesianNetwork extends ClassificationModel {
         }
     }
 
+    /**
+     * Tests the previously trained model given the test file name or path. Returns a 2-column matrix, where the first
+     * column corresponds to target classifications and the second column corresponds to predicted classifications.
+     *
+     * @param testFilePath  Test file name or path
+     * @return              2-column matrix with target classifications (1st column) and predictions (2nd column)
+     */
     @Override
     public int[][] predict(String testFilePath) {
 
@@ -189,6 +242,9 @@ public class BayesianNetwork extends ClassificationModel {
         return predictions_truelabel;
     }
 
+    /**
+     * Prints the network structure in the command line.
+     */
     public void printBayesianNodes() {
         List<TreeNode> tree = this.DAG;
         for (TreeNode tn : tree) {

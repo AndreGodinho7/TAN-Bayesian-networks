@@ -5,6 +5,9 @@ import exceptions.IllegalScoreException;
 
 import java.util.*;
 
+/**
+ * Implements methods to compute a weighted graph.
+ */
 public class MyGraph extends WeightedGraph {
     private List<Counts> nodes;
     private double[][] adjMatrix;
@@ -12,6 +15,13 @@ public class MyGraph extends WeightedGraph {
     private Score score;
 
 
+    /**
+     * Computes a weighted undirected graph given the input training file data and the score metric (LL or MDL).
+     *
+     * @param graphData                 Input training file data
+     * @param score_flag                Score metric (LL or MDL)
+     * @throws IllegalScoreException    Exception to be thrown in case the selected score is not LL or MDL
+     */
     public MyGraph(TrainData graphData, String score_flag) throws IllegalScoreException {
         super(graphData.getFeatures().length);
         this.file = graphData;
@@ -29,16 +39,39 @@ public class MyGraph extends WeightedGraph {
         }
     }
 
+    /**
+     * Inserts node in the list of nodes.
+     *
+     * @param n Node
+     */
     private void insertInList(Counts n){
         nodes.add(n);
     }
 
+    /**
+     * Returns the list of nodes
+     *
+     * @return  List of nodes
+     */
     public List<Counts> getNodes() {return nodes;}
 
+    /**
+     * Returns the adjacency matrix of the graph.
+     *
+     * @return  Adjacency matrix
+     */
     public double[][] getAdjMatrix() {return adjMatrix;}
 
+    /**
+     * Returns the input training file data.
+     *
+     * @return  Input training file data
+     */
     public TrainData getFile() { return file; }
 
+    /**
+     * Sets the nodes in the graph.
+     */
     @Override
     public void setNodes() {
         Node.setfeatures(this.file.getFeatures());
@@ -54,6 +87,11 @@ public class MyGraph extends WeightedGraph {
         }
     }
 
+    /**
+     * Updates the the counts stored in each node
+     *
+     * @param values    Array of integers corresponding to a new instance
+     */
     @Override
     public void updateNodes(int[] values) {
         List<Counts> ns = this.nodes;
@@ -62,17 +100,29 @@ public class MyGraph extends WeightedGraph {
         }
     }
 
+    /**
+     * Returns the number of nodes in the graph.
+     *
+     * @return  Number of nodes in the graph
+     */
     @Override
     public int numNodes() {
         return this.getNumNodes();
     }
 
+    /**
+     * Creates an edge linking two nodes (node 1 and node 2).
+     *
+     * @param node1 Index of node 1
+     * @param node2 Index of node 2
+     */
     @Override
     public void createEdge(int node1, int node2) {
         double weight = this.score.calculate_score(this.nodes.get(node1), this.nodes.get(node2));
         this.adjMatrix[node1][node2] = weight;
     }
 
+    //TODO: remove print method
     @Override
     public void printNodes() {
         List<Counts> ns = this.nodes;
@@ -90,6 +140,7 @@ public class MyGraph extends WeightedGraph {
         }
     }
 
+    //TODO: remove print method
     public void printadjMatrix(){
         System.out.println("graph Adjacency matrix");
         for (int i = 0; i < this.adjMatrix.length; i++) {
