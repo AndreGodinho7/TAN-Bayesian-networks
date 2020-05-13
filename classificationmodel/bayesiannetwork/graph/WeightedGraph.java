@@ -17,7 +17,7 @@ public abstract class WeightedGraph implements Graph{
 
     /**
      * Returns the number of nodes of the graph
-     * @return
+     * @return  Number of nodes in the graph
      */
     public int getNumNodes() { return numNodes; }
 

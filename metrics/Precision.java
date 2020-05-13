@@ -32,7 +32,7 @@ public class Precision extends ClassificationMetrics {
     /**
      * Sets number of true positive counts.
      *
-     * @param fp    Number of true positive counts
+     * @param tp    Number of true positive counts
      */
     public void setTP(int tp) { this.tp = tp; }
 

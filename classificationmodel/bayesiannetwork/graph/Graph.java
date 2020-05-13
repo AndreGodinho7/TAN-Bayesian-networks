@@ -25,8 +25,9 @@ public interface Graph {
 
     /**
      * Returns an edge value linking two nodes (node 1 and node 2).
-     * @param node1 Index of node 1
-     * @param node2 Index of node 2
+     * @param   node1 Index of node 1
+     * @param   node2 Index of node 2
+     * @return  Edge weight
      */
     double getEdge(int node1, int node2);
 }
