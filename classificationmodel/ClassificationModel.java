@@ -4,8 +4,8 @@ import classificationmodel.ClassificationModelInterface;
 
 
 public abstract class ClassificationModel implements ClassificationModelInterface {
-    protected String[] features;
-    protected int num_classes;
+    String[] features;
+    int num_classes;
 
     /**
      * Returns array of strings containing the names of the features.

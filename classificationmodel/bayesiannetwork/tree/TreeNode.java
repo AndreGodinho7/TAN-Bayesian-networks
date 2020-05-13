@@ -7,10 +7,10 @@ import java.util.List;
  * Implements the methods necessary to define and manipulate nodes in the tree (TreeNodes).
  */
 public abstract class TreeNode {
-    protected List<TreeNode> children;
-    protected TreeNode parent;
-    protected boolean isRoot;
-    protected String identifier;
+    List<TreeNode> children;
+    TreeNode parent;
+    boolean isRoot;
+    String identifier;
 
     /**
      * Initializes fields. Nodes are set as not being the root by default. The root is set inside the PrimAlgorithm
@@ -60,28 +60,28 @@ public abstract class TreeNode {
     /**
      * Sets the present node as root.
      */
-    protected void setAsRoot() {  this.isRoot = true; }
+    void setAsRoot() {  this.isRoot = true; }
 
     /**
      * Sets the identifier of the TreeNode given the name of the feature.
      *
      * @param i     Name of the feature
      */
-    protected void setIdentifier(String i) { this.identifier = i; }
+    void setIdentifier(String i) { this.identifier = i; }
 
     /**
      * Sets p as the parent of the present TreeNode.
      *
      * @param p     Parent
      */
-    protected void setParent(TreeNode p) { this.parent = p; }
+    void setParent(TreeNode p) { this.parent = p; }
 
     /**
      * Adds child to the List of children of the present TreeNode.
      *
      * @param child     Child to be added to the list
      */
-    protected void addChild(TreeNode child) { this.children.add(child); }
+    void addChild(TreeNode child) { this.children.add(child); }
 
     //TODO: remove print methods
     public void printChildren() {

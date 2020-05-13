@@ -56,7 +56,7 @@ public class BayesianNetwork extends ClassificationModel {
      *
      * @param rootIndex Root index
      */
-    protected void setRootIndex(int rootIndex) { this.rootIndex = rootIndex; }
+    void setRootIndex(int rootIndex) { this.rootIndex = rootIndex; }
 
     /**
      * //TODO: comment this method

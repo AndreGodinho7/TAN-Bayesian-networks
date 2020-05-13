@@ -11,7 +11,7 @@ public interface ClassificationModelInterface {
      * @param trainFilePath     Training data file name or path
      * @param hyperParameter    Hyperparameter
      */
-    public void train(String trainFilePath, String hyperParameter);
+    void train(String trainFilePath, String hyperParameter);
 
     /**
      * Tests a model previously trained given the test file name or path. Returns a 2-column matrix, where the first
@@ -20,5 +20,5 @@ public interface ClassificationModelInterface {
      * @param testFilePath  Test file name or path
      * @return              2-column matrix with target classifications (1st column) and predictions (2nd column)
      */
-    public int[][] predict (String testFilePath);
+    int[][] predict (String testFilePath);
 }
