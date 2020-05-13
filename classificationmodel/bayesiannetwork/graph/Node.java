@@ -32,7 +32,7 @@ public class Node implements Counts {
      * @param r             Number of values the corresponding feature may take
      * @param id            Feature index in the array of strings storing the feature names
      */
-    protected Node(String feature_name, int r, int id){
+    Node(String feature_name, int r, int id){
         this.feature_name = feature_name;
         this.r = r;
         this.nodeID = id;
@@ -45,35 +45,35 @@ public class Node implements Counts {
      *
      * @param nc    Array storing the number of occurrences of each class
      */
-    protected static void setNc(double[] nc) { Nc = nc; }
+    static void setNc(double[] nc) { Nc = nc; }
 
     /**
      * Sets the number of instances.
      *
      * @param n     Number of instances
      */
-    protected static void setN(double n) { N = n; }
+    static void setN(double n) { N = n; }
 
     /**
      * Sets the feature names.
      *
      * @param features  Array of strings storing the feature names
      */
-    protected static void setfeatures(String[] features) {Features = features; }
+    static void setfeatures(String[] features) {Features = features; }
 
     /**
      * Sets the number of different values each feature may take.
      *
      * @param r_values  Array of integers storing the number of values each feature may take
      */
-    protected static void setR_values(int[] r_values) {R_values = r_values; }
+    static void setR_values(int[] r_values) {R_values = r_values; }
 
     /**
      * Sets the total number of classes.
      *
      * @param num_class     Total number of classes
      */
-    protected static void setNum_class(int num_class) {Num_class = num_class; }
+    static void setNum_class(int num_class) {Num_class = num_class; }
 
     // Static getters
 
@@ -100,28 +100,28 @@ public class Node implements Counts {
      *
      * @return  Array of strings storing the names of features
      */
-    protected static String[] getFeatures() { return Features; }
+    static String[] getFeatures() { return Features; }
 
     /**
      * Returns an array of integers storing the number of values each feature may take.
      *
      * @return  Array of integers storing the number of values each feature may take
      */
-    protected static int[] getR_values() { return R_values; }
+    static int[] getR_values() { return R_values; }
 
     /**
      * Returns the total number of classes.
      *
      * @return  Total number of classes
      */
-    protected static int getNum_class() { return Num_class; }
+    static int getNum_class() { return Num_class; }
 
     /**
      * Returns the feature name.
      *
      * @return  Feature name
      */
-    protected String getFeature_name() {return feature_name;}
+    String getFeature_name() {return feature_name;}
 
     /**
      * Returns the Map storing Nijkc counts.
@@ -193,7 +193,7 @@ public class Node implements Counts {
      * @param r_values  Array of integers storing the number of different values each feature may take
      * @param classes   The class for which the count occurred
      */
-    protected void setNijkc(int keys, String[] features, int[]r_values, int classes){
+    void setNijkc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][][]> map = new HashMap<String, int[][][]>();
 
         for (int i=0; i < features.length; i++){
@@ -221,7 +221,7 @@ public class Node implements Counts {
      * @param r_values  Array of integers storing the number of different values each feature may take
      * @param classes   The class for which the count occurred
      */
-    protected void setNKijc(int keys, String[] features, int[]r_values, int classes){
+    void setNKijc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][]> map = new HashMap<String, int[][]>();
 
         for (int i=0; i < features.length; i++){
@@ -248,7 +248,7 @@ public class Node implements Counts {
      * @param r_values  Array of integers storing the number of different values each feature may take
      * @param classes   The class for which the count occurred
      */
-    protected void setNJikc(int keys, String[] features, int[]r_values, int classes){
+    void setNJikc(int keys, String[] features, int[]r_values, int classes){
         Map<String, int[][]> map = new HashMap<String, int[][]>();
 
         for (int i=0; i < features.length; i++){
@@ -274,7 +274,7 @@ public class Node implements Counts {
      * @param features  Array of strings storing feature names
      * @param r         Number of different values the feature may take
      */
-    protected void setQ(int keys, String[] features, int r){
+    void setQ(int keys, String[] features, int r){
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (int i=0; i < features.length; i++){
             if (i == keys) {
@@ -307,7 +307,7 @@ public class Node implements Counts {
      * @param k     Child configuration k
      * @param c     Class c
      */
-    protected void inc_Nijkc(String key, int j, int k, int c){
+    void inc_Nijkc(String key, int j, int k, int c){
         int[][][] aux = this.Nijkc.get(key);
         aux[j][k][c]++;
         this.Nijkc.put(key, aux);
@@ -320,7 +320,7 @@ public class Node implements Counts {
      * @param j     Parent configuration j
      * @param c     Class c
      */
-    protected void inc_NKijc(String key, int j, int c) {
+    void inc_NKijc(String key, int j, int c) {
         int[][] aux = this.NKijc.get(key);
         aux[j][c]++;
         this.NKijc.put(key, aux);
@@ -333,14 +333,14 @@ public class Node implements Counts {
      * @param k     Child configuration k
      * @param c     Class c
      */
-    protected void inc_NJikc(String key, int k, int c) {
+    void inc_NJikc(String key, int k, int c) {
         int[][] aux = this.NJikc.get(key);
         aux[k][c]++;
         this.NJikc.put(key, aux);
     }
 
     //TODO: remove print method
-    protected void print_Nijkc(String key) {
+    void print_Nijkc(String key) {
         int[][][] aux = this.Nijkc.get(key);
         for (int z = 0; z < aux[0][0].length; z++) {
             for (int x = 0; x < aux.length; x++) {
@@ -353,7 +353,7 @@ public class Node implements Counts {
         }
     }
     //TODO: remove print method
-    protected void print_NKijc(String key) {
+    void print_NKijc(String key) {
         int[][] aux = this.NKijc.get(key);
         for (int c = 0; c < aux[0].length; c++) {
             for (int j = 0; j < aux.length; j++) {
@@ -363,7 +363,7 @@ public class Node implements Counts {
         }
     }
     //TODO: remove print method
-    protected void print_NJikc(String key) {
+    void print_NJikc(String key) {
         int[][] aux = this.NJikc.get(key);
         for (int c = 0; c < aux[0].length; c++) {
             for (int k = 0; k < aux.length; k++) {

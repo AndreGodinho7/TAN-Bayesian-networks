@@ -2,6 +2,7 @@ package main;
 
 import classificationmodel.bayesiannetwork.BayesianNetwork;
 import classificationmodel.ClassificationModelInterface;
+import exceptions.IllegalNumberOfParametersException;
 import io.Input;
 import io.Output;
 
@@ -11,26 +12,35 @@ import io.Output;
 public class Main {
 
     public static void main(String[] args) {
+        try {
+            if (args.length != 3) throw new IllegalNumberOfParametersException();
+            Input input = new Input(args);
+            String trainFilename = input.getTrainFilename();
+            String testFilename = input.getTestFilename();
+            String score = input.getScore();
 
-        Input input = new Input(args);
+            ClassificationModelInterface model = new BayesianNetwork();
 
-        String trainFilename = input.getTrainFilename();
-        String testFilename = input.getTestFilename();
-        String score = input.getScore();
+            double startTimeTrain = System.nanoTime();
+            model.train(trainFilename, score);
+            double stopTimeTrain = System.nanoTime();
 
-        ClassificationModelInterface model = new BayesianNetwork();
+            double startTimeTest = System.nanoTime();
+            int[][] data2Measure = model.predict(testFilename);
+            double stopTimeTest = System.nanoTime();
 
-        double startTimeTrain = System.nanoTime();
-        model.train(trainFilename, score);
-        double stopTimeTrain = System.nanoTime();
+            double trainTime = stopTimeTrain - startTimeTrain;
+            double testTime = stopTimeTest - startTimeTest;
 
-        double startTimeTest = System.nanoTime();
-        int[][] data2Measure = model.predict(testFilename);
-        double stopTimeTest = System.nanoTime();
+            Output.print(model, data2Measure, trainTime, testTime);
 
-        double trainTime = stopTimeTrain - startTimeTrain;
-        double testTime = stopTimeTest - startTimeTest;
+        } catch (IllegalNumberOfParametersException e) {
+            e.printStackTrace();
+            System.exit(-1);
 
-        Output.print(model, data2Measure, trainTime, testTime);
+        }
+
+
+
     }
 }

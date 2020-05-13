@@ -32,7 +32,7 @@ public class BayesianNetwork extends ClassificationModel {
      *
      * @return  Root index
      */
-    protected int getRootIndex() { return rootIndex; }
+    int getRootIndex() { return rootIndex; }
 //    public int getNum_classes() { return num_classes; }
 
     /**
@@ -41,7 +41,7 @@ public class BayesianNetwork extends ClassificationModel {
      * @param index Index in the DAG list
      * @return      Element of type TreeNode from the DAG
      */
-    protected TreeNode getDAGNode(int index){ return this.DAG.get(index); }
+    TreeNode getDAGNode(int index){ return this.DAG.get(index); }
     // Setters
 
     /**

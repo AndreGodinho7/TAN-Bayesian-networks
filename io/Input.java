@@ -16,7 +16,7 @@ public class Input {
      * Saves input arguments from command line to specified strings.
      * @param args  command line input arguments (array of strings)
      */
-    public Input(String[] args) {
+    public Input(String[] args) throws IllegalNumberOfParametersException {
         this.trainFilename = args[0];
         this.testFilename = args[1];
         this.score = args[2];
