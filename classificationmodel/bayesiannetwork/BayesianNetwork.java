@@ -26,7 +26,7 @@ public class BayesianNetwork extends ClassificationModel {
 
     // Getters
 //    protected String[] getFeatures() { return features; }
-    
+
     /**
      * Returns the index (from the array of features) of the the feature defined as root in the tree structure.
      *
@@ -43,7 +43,7 @@ public class BayesianNetwork extends ClassificationModel {
      */
     protected TreeNode getDAGNode(int index){ return this.DAG.get(index); }
     // Setters
-    
+
     /**
      * Set the directed acyclic graph (DAG) list.
      *

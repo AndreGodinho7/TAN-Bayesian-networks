@@ -1,12 +1,28 @@
 package classificationmodel.bayesiannetwork.graph;
 
+/**
+ * Implements methods to calculate the log-likelihood (LL) score.
+ */
 public class LLScore implements Score {
 
+    /**
+     * Auxiliary method to compute logarithm of base 2.
+     *
+     * @param N number to perform the operation on
+     * @return  logarithm of base 2 of N
+     */
     private static double log2(double N) {
         double result = (double)(Math.log(N) / Math.log(2.0));
         return result;
     }
 
+    /**
+     * Calculate the LL score for an edge given the counts of the two nodes connected to that edge.
+     *
+     * @param father    Parent node
+     * @param son       Child node
+     * @return          LL score of the edge as a double
+     */
     @Override
     public double calculate_score(Counts father, Counts son) {
         // father is i' ; son is i

@@ -5,6 +5,9 @@ import classificationmodel.ClassificationModelInterface;
 import io.Input;
 import io.Output;
 
+/**
+ * Main class of the program.
+ */
 public class Main {
 
     public static void main(String[] args) {

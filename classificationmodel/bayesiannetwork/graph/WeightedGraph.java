@@ -21,9 +21,9 @@ public abstract class WeightedGraph implements Graph{
 
     /**
      * Sets the nodes in the graph.
-     */    
+     */
     public abstract void setNodes();
-    
+
     //TODO: remove print method
     public abstract void printNodes();
 
@@ -31,9 +31,9 @@ public abstract class WeightedGraph implements Graph{
      * Returns the number of nodes in the graph.
      *
      * @return  Number of nodes in the graph
-     */    
+     */
     public abstract int numNodes();
-    
+
     /**
      * Creates an edge linking two nodes (node 1 and node 2).
      *

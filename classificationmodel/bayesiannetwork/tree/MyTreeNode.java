@@ -12,21 +12,43 @@ public class MyTreeNode extends TreeNode {
     private double[] theta_c;
 
     // Constructor:
+
+    /**
+     * Initializes fields.
+     *
+     * @param n Node corresponding to the same feature as the present TreeNode
+     */
     protected MyTreeNode(Counts n) {
         super();
         this.n = n;
     }
 
+    /**
+     * Returns the node.
+     *
+     * @return Node
+     */
     public Counts getN() { return n; }
 
+    /**
+     * Returns theta_c counts.
+     *
+     * @return theta_c
+     */
     public double[] getTheta_c() { return theta_c; }
 
+    /**
+     * Returns theta_ijkc counts associated to a given key.
+     *
+     * @param key   Key in the Map
+     * @return      Data in the map corresponding to the key
+     */
     public double[][][] getThetaijkc(String key){
         return this.theta_ijkc.get(key);
     }
 
     /**
-     * Remove Nijkc counts from Node to all nodes that are not children.
+     * Removes Nijkc counts from Node to all nodes that are not the parent.
      */
     protected void setNijkc() {
         Map<String, int[][][]> map = ((Node)this.n).getNijkcMap();
@@ -47,7 +69,7 @@ public class MyTreeNode extends TreeNode {
     }
 
     /**
-     * Remove NKijc counts from Node to all nodes that are not children.
+     * Removes NKijc counts from Node to all nodes that are not the parent.
      */
     protected void setNKijc() {
         Map<String, int[][]> map = ((Node)this.n).getNKijcMap();
@@ -68,7 +90,7 @@ public class MyTreeNode extends TreeNode {
     }
 
     /**
-     * Calculate theta_ijkc
+     * Calculates theta_ijkc.
      */
     protected void setTheta_ijkc() {
         Map<String, double[][][]> map = new HashMap<>();
@@ -91,7 +113,7 @@ public class MyTreeNode extends TreeNode {
     }
 
     /**
-     * Calculate theta_c
+     * Calculates theta_c.
      */
     protected void setTheta_c() {
         double[] aux = new double[Node.getNc().length];
@@ -102,7 +124,7 @@ public class MyTreeNode extends TreeNode {
     }
 
     /**
-     * Calculate theta counts and remove extra Nijkc and NKijc counts
+     * Calculates theta counts and remove extra Nijkc and NKijc counts.
      */
     @Override
     public void setData() {

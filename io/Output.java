@@ -5,11 +5,23 @@ import classificationmodel.ClassificationModel;
 import classificationmodel.ClassificationModelInterface;
 import metrics.*;
 
+/**
+ * Generate and print the output: network structure, predictions, time to build and time to test, accuracy, specificity,
+ * sensitivity, and F1-score.
+ */
 public class Output {
-
+    /**
+     * Print the output according to demanded specifications.
+     * @param model             :   Model built and used for classification.
+     * @param target_predicted  :   2-column matrix where the first column corresponds to target classifications and the
+     *                              second column corresponds to classifications predicted by the model.
+     * @param trainTime         :   Time to build and train the model.
+     * @param testTime          :   Time to test the model.
+     */
     public static void print(ClassificationModelInterface model, int[][] target_predicted, double trainTime, double testTime) {
         int line = 1;
 
+        //TODO: remover esta string no fim
         System.out.println("\n\nFINAL OUTPUT (tirar esta string depois):");
 
         ((BayesianNetwork)model).printBayesianNodes();

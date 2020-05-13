@@ -7,6 +7,9 @@ import java.lang.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implements the Prim algorithm to obtain the maximum spanning tree.
+ */
 public class PrimAlgorithm  implements MaxSpanningTree{
 
     TreeNode root;
@@ -16,13 +19,19 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     private int rootIndex = 0;
 
     // Constructor
+
+    /**
+     * Initializes fields.
+     *
+     * @param _graph    Graph from which the MST is built
+     */
     public PrimAlgorithm(MyGraph _graph) {
         this.graph = _graph;
         this.treeNodes = new ArrayList<TreeNode>(_graph.getFile().getFeatures().length);
     }
 
     /**
-     * Create each tree node inside the array list of TreeNodes
+     * Creates each tree node inside the array list of TreeNodes
      */
     private void setTreeNodes() {
         for (int i = 0; i < this.graph.numNodes(); i++) {
@@ -33,10 +42,11 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     }
 
     /**
-     * Find the node with max key value, from the set of nodes not yet in the MST
-     * @param key : key value
-     * @param mstSet : set of Node in mst (true) or off the mst (false)
-     * @return return index of node whose edge has the biggest weight
+     * Finds the node with max key value, from the set of nodes not yet in the MST
+     *
+     * @param key       key value
+     * @param mstSet    set of Node in mst (true) or off the mst (false)
+     * @return          return index of node whose edge has the biggest weight
      */
     private int maxKey(double[] key, Boolean[] mstSet) {
         double max = -Double.MAX_VALUE;
@@ -51,7 +61,9 @@ public class PrimAlgorithm  implements MaxSpanningTree{
     }
 
     /**
-     * Compute maximum spanning tree from the graph's adjacency matrix
+     * Computes maximum spanning tree from the graph's adjacency matrix.
+     *
+     * @return  Data structure of the directed tree, which is a List of TreeNodes
      */
     @Override
     public List<TreeNode> computeMST() {
@@ -83,8 +95,7 @@ public class PrimAlgorithm  implements MaxSpanningTree{
                 }
             }
         }
-        /* este ciclo guarda os filhos de cada nó no nó respectivo. Não precisa de percorrer a raíz porque esta não tem
-           pai */
+
         for (int i = this.rootIndex + 1; i < this.graph.numNodes(); i++) {
             if (parent[i] != -1) {
                 this.treeNodes.get(parent[i]).addChild(this.treeNodes.get(i));
@@ -106,6 +117,10 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         return this.treeNodes;
     }
 
+    /**
+     * Returns the root of the tree.
+     * @return  Root of the tree of type TreeNode
+     */
     @Override
     public TreeNode getRoot() {
         return this.root;
