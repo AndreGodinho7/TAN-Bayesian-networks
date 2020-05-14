@@ -1,6 +1,7 @@
 package classificationmodel.bayesiannetwork.tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public abstract class TreeNode {
      * method.
      */
     public TreeNode() {
-        this.children = new ArrayList<TreeNode>();
+        this.children = new LinkedList<TreeNode>();
         this.isRoot = false;
     }
 

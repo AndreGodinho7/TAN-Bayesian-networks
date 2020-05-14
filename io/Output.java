@@ -86,9 +86,9 @@ public class Output {
 //            System.out.println(String.format("\t\t\tPositive class = %d: %.4f, %.4f, %.4f",
 //                    positiveClass, specificity.calculateMetric(), sensitivity.calculateMetric(), f1.calculateMetric()));
         }
-        ClassificationMetrics w_sensitivity = new weightedSensitivity(target_predicted, specificities, Nc);
-        ClassificationMetrics w_specificity = new weightedSpecificity(target_predicted, sensitivities, Nc);
-        ClassificationMetrics w_f1measure = new weightedF1measure(target_predicted, f1measures, Nc);
+        ClassificationMetrics w_sensitivity = new WeightedSensitivity(target_predicted, specificities, Nc);
+        ClassificationMetrics w_specificity = new WeightedSpecificity(target_predicted, sensitivities, Nc);
+        ClassificationMetrics w_f1measure = new WeightedF1measure(target_predicted, f1measures, Nc);
 
         System.out.print("[");
         for (int positiveClass = 0; positiveClass < ((ClassificationModel) model).getNum_classes(); positiveClass++) {

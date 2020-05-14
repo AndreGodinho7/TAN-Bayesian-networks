@@ -3,7 +3,7 @@ package metrics;
 /**
  * Implements methods to obtain the Weighted F1-measure for a given data set.
  */
-public class weightedF1measure extends ClassificationMetrics{
+public class WeightedF1measure extends ClassificationMetrics{
     private float weightedF1s;
     private float[] f1measures;
     private double[] Nc;
@@ -16,7 +16,7 @@ public class weightedF1measure extends ClassificationMetrics{
      * @param f1measures f1-measure values of classes
      * @param Nc value of instances per class
      */
-    public weightedF1measure(int[][] labels, float[] f1measures, double[] Nc) {
+    public WeightedF1measure(int[][] labels, float[] f1measures, double[] Nc) {
         super(labels);
         this.f1measures = f1measures;
         this.Nc = Nc;

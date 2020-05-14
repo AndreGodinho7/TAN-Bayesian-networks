@@ -3,7 +3,7 @@ package metrics;
 /**
  * Implements methods to obtain the Weighted sensitivity for a given data set.
  */
-public class weightedSensitivity extends  ClassificationMetrics{
+public class WeightedSensitivity extends  ClassificationMetrics{
     private float weightedSens;
     private float[] sensitivities;
     private double[] Nc;
@@ -16,7 +16,7 @@ public class weightedSensitivity extends  ClassificationMetrics{
      * @param sensitivities sensitivity values of classes
      * @param Nc value of instances per class
      */
-    public weightedSensitivity(int[][] labels, float[] sensitivities, double[] Nc) {
+    public WeightedSensitivity(int[][] labels, float[] sensitivities, double[] Nc) {
         super(labels);
         this.sensitivities = sensitivities;
         this.Nc = Nc;

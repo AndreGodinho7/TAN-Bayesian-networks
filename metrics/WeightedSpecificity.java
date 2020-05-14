@@ -3,7 +3,7 @@ package metrics;
 /**
  * Implements methods to obtain the Weighted specificity for a given data set.
  */
-public class weightedSpecificity extends  ClassificationMetrics{
+public class WeightedSpecificity extends  ClassificationMetrics{
     private float weightedSpec;
     private float[] specificities;
     private double[] Nc;
@@ -16,7 +16,7 @@ public class weightedSpecificity extends  ClassificationMetrics{
      * @param specificities specificity values of classes
      * @param Nc value of instances per class
      */
-    public weightedSpecificity(int[][] labels, float[] specificities, double[] Nc) {
+    public WeightedSpecificity(int[][] labels, float[] specificities, double[] Nc) {
         super(labels);
         this.specificities = specificities;
         this.Nc = Nc;
