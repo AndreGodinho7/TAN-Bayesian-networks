@@ -204,7 +204,6 @@ public class Node implements Counts {
                 map.put(features[i], new int[r_values[i]][this.r][classes]);
             }
         }
-        System.out.println();
         this.Nijkc = map;
     }
 

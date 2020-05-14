@@ -13,9 +13,7 @@ import java.util.List;
  */
 public class PrimAlgorithm  implements MaxSpanningTree{
 
-    TreeNode root;
     private List<TreeNode> treeNodes;
-
     private Graph graph;
     private int rootIndex = 0;
 
@@ -105,12 +103,4 @@ public class PrimAlgorithm  implements MaxSpanningTree{
         return this.treeNodes;
     }
 
-    /**
-     * Returns the root of the tree.
-     * @return  Root of the tree of type TreeNode
-     */
-    @Override
-    public TreeNode getRoot() {
-        return this.root;
-    }
 }

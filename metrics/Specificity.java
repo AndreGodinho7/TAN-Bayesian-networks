@@ -6,8 +6,8 @@ package metrics;
 public class Specificity extends ClassificationMetrics {
     private float specificity;
     private int positiveClass;
-    int tn;
-    int fp;
+    private int tn;
+    private int fp;
 
     /**
      * Initializes class fields.

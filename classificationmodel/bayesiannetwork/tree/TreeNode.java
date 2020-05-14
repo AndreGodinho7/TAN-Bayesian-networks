@@ -82,14 +82,5 @@ public abstract class TreeNode {
      * @param child     Child to be added to the list
      */
     void addChild(TreeNode child) { this.children.add(child); }
-
-    //TODO: remove print methods
-    public void printChildren() {
-        List<TreeNode> tns = this.children;
-        System.out.println("Father: " + this.getIdentifier());
-        System.out.print("Children: ");
-        for (TreeNode tn : tns) { System.out.print(tn.getIdentifier() + " "); }
-        System.out.println();
-    }
 }
 

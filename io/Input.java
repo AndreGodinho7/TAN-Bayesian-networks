@@ -18,6 +18,7 @@ public class Input {
      * @throws IllegalNumberOfParametersException Thrown exception
      */
     public Input(String[] args) throws IllegalNumberOfParametersException {
+        if (args.length != 3) throw new IllegalNumberOfParametersException();
         this.trainFilename = args[0];
         this.testFilename = args[1];
         this.score = args[2];

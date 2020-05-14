@@ -93,7 +93,7 @@ public class BayesianNetwork extends ClassificationModel {
      * @return          Chosen class
      */
     private int classifyInstance(int[] instance){
-        String[] features = getFeatures(); //TODO: need feature names
+        String[] features = getFeatures();
         Map<String, Integer> sample = new HashMap<String, Integer>();
         for (int i = 0; i < instance.length - 1; i++) {
             sample.put(features[i], instance[i]);
@@ -193,15 +193,6 @@ public class BayesianNetwork extends ClassificationModel {
             if (((TreeNode)node).getisRoot() == true) setRootIndex(i);
             i++;
         }
-
-        for(TreeNode node : tree){
-            System.out.println("Node: " + node.getIdentifier());
-            if (((TreeNode) node).getisRoot()) {
-                ((MyTreeNode)node).printTheta_ijkc(node.getIdentifier());
-            } else {
-                ((MyTreeNode)node).printTheta_ijkc(node.getParent().getIdentifier());
-            }
-        }
     }
 
     /**
@@ -230,7 +221,7 @@ public class BayesianNetwork extends ClassificationModel {
             predictions_truelabel[i][0] = sample[sample.length-1];
             int chosen = classifyInstance(sample);
             predictions_truelabel[i][1] = chosen;
-            System.out.println(String.format("True label: %d | Predicted label: %d", predictions_truelabel[i][0], predictions_truelabel[i][1]));
+//            System.out.println(String.format("True label: %d | Predicted label: %d", predictions_truelabel[i][0], predictions_truelabel[i][1]));
             i++;
         }
 
@@ -244,9 +235,9 @@ public class BayesianNetwork extends ClassificationModel {
         List<TreeNode> tree = this.DAG;
         for (TreeNode tn : tree) {
             if (tn.getisRoot()) {
-                System.out.println(String.format("Classifier:\t\t\t\t%s :  ", tn.getIdentifier()));
+                System.out.println(String.format("Classifier:\t\t%s :  ", tn.getIdentifier()));
             } else {
-                System.out.println(String.format("\t\t\t\t\t\t%s :  %s",
+                System.out.println(String.format("\t\t\t%s :  %s",
                         tn.getIdentifier(), tn.getParent().getIdentifier()));
             }
 

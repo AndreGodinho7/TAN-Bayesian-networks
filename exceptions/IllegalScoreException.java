@@ -5,6 +5,6 @@ package exceptions;
  */
 public class IllegalScoreException extends Exception {
     public IllegalScoreException() {
-        super("Score undefined in input command.");
+        super("Score undefined in input command. Please insert LL for LL criteria or MDL for MDL criteria.");
     }
 }

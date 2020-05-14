@@ -134,18 +134,4 @@ public class MyTreeNode extends TreeNode {
         setTheta_c();
     }
 
-    // TODO: remove print methods
-    public void printTheta_ijkc(String key) {
-        double[][][] aux = this.theta_ijkc.get(key);
-        for (int c = 0; c < aux[0][0].length; c++) {
-            for (int j = 0; j < aux.length; j++) {
-                for (int k = 0; k < aux[0].length; k++) {
-                    System.out.print(aux[j][k][c] + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
-        }
-    }
-
 }

@@ -12,7 +12,4 @@ public interface MaxSpanningTree {
      * @return  The tree structure composed of a List of TreeNodes
      */
     List<TreeNode> computeMST();
-
-    //TODO: check if it is ever used
-    TreeNode getRoot();
 }

@@ -6,8 +6,8 @@ package metrics;
 public class Sensitivity extends ClassificationMetrics {
     private float sensitivity;
     private int positiveClass;
-    int fn;
-    int tp;
+    private int fn;
+    private int tp;
 
     /**
      * Initializes class fields.

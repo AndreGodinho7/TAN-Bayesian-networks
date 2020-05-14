@@ -6,8 +6,8 @@ package metrics;
 public class Precision extends ClassificationMetrics {
     private float precision;
     private int positiveClass;
-    int fp;
-    int tp;
+    private int fp;
+    private int tp;
 
     /**
      * Initializes class fields.
