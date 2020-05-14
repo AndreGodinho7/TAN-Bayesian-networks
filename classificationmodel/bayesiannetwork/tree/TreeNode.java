@@ -7,10 +7,10 @@ import java.util.List;
  * Implements the methods necessary to define and manipulate nodes in the tree (TreeNodes).
  */
 public abstract class TreeNode {
-    List<TreeNode> children;
-    TreeNode parent;
-    boolean isRoot;
-    String identifier;
+    protected List<TreeNode> children;
+    protected TreeNode parent;
+    protected boolean isRoot;
+    protected String identifier;
 
     /**
      * Initializes fields. Nodes are set as not being the root by default. The root is set inside the PrimAlgorithm

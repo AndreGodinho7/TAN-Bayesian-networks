@@ -14,4 +14,7 @@ public abstract class ClassificationMetrics implements ClassificationMetricCalcu
     public ClassificationMetrics(int[][] labels) {
         this.labels = labels;
     }
+
+    @Override
+    public abstract float calculateMetric();
 }
