@@ -22,6 +22,14 @@ public class F1score extends ClassificationMetrics {
     }
 
     /**
+     * Returns f1-measure value
+     * @return
+     */
+    public float getF1score() {
+        return f1score;
+    }
+
+    /**
      * Implements generic interface method to calculate the desired metric, in this case, the F1-score.
      *
      * @return  F1-score as a float value
