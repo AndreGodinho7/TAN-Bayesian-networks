@@ -61,27 +61,27 @@ public abstract class TreeNode {
     /**
      * Sets the present node as root.
      */
-    void setAsRoot() {  this.isRoot = true; }
+    protected void setAsRoot() {  this.isRoot = true; }
 
     /**
      * Sets the identifier of the TreeNode given the name of the feature.
      *
      * @param i     Name of the feature
      */
-    void setIdentifier(String i) { this.identifier = i; }
+    protected void setIdentifier(String i) { this.identifier = i; }
 
     /**
      * Sets p as the parent of the present TreeNode.
      *
      * @param p     Parent
      */
-    void setParent(TreeNode p) { this.parent = p; }
+    protected void setParent(TreeNode p) { this.parent = p; }
 
     /**
      * Adds child to the List of children of the present TreeNode.
      *
      * @param child     Child to be added to the list
      */
-    void addChild(TreeNode child) { this.children.add(child); }
+    protected void addChild(TreeNode child) { this.children.add(child); }
 }
 
