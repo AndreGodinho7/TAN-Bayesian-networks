@@ -28,7 +28,7 @@ public class MyTreeNode extends TreeNode {
      *
      * @return Node
      */
-    public Counts getN() { return n; }
+    Counts getN() { return n; }
 
     /**
      * Returns theta_c counts.
@@ -50,7 +50,7 @@ public class MyTreeNode extends TreeNode {
     /**
      * Removes Nijkc counts from Node to all nodes that are not the parent.
      */
-    void setNijkc() {
+    private void setNijkc() {
         Map<String, int[][][]> map = ((Node)this.n).getNijkcMap();
         List<String> not_parents = new LinkedList<String>();
         String _parent;
@@ -71,7 +71,7 @@ public class MyTreeNode extends TreeNode {
     /**
      * Removes NKijc counts from Node to all nodes that are not the parent.
      */
-    void setNKijc() {
+    private void setNKijc() {
         Map<String, int[][]> map = ((Node)this.n).getNKijcMap();
         List<String> not_parents = new LinkedList<String>();
         String parent;
@@ -92,7 +92,7 @@ public class MyTreeNode extends TreeNode {
     /**
      * Calculates theta_ijkc.
      */
-    void setTheta_ijkc() {
+    private void setTheta_ijkc() {
         Map<String, double[][][]> map = new HashMap<>();
 
         for (String key : ((Node)this.n).getNijkcMap().keySet()) {
@@ -115,7 +115,7 @@ public class MyTreeNode extends TreeNode {
     /**
      * Calculates theta_c.
      */
-    void setTheta_c() {
+    private void setTheta_c() {
         double[] aux = new double[Node.getNc().length];
         for (int c = 0; c < Node.getNc().length; c++) {
             aux[c] = (Node.getNc()[c] + 0.5)/(Node.getN() + Node.getNc().length * 0.5);

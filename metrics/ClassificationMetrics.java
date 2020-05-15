@@ -17,7 +17,7 @@ public abstract class ClassificationMetrics implements ClassificationMetricCalcu
 
     /**
      * Overrides the interface calculateMetric method
-     * @return
+     * @return  float value of the metric
      */
     @Override
     public abstract float calculateMetric();
