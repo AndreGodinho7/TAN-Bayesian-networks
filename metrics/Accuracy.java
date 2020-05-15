@@ -5,8 +5,8 @@ package metrics;
  */
 public class Accuracy extends ClassificationMetrics {
     private float accuracy;
-    private int totalInstances;
-    private int correctPredictions;
+    int totalInstances;
+    int correctPredictions;
 
     /**
      * Initializes class fields and determines total number of instances based on the length of the target/predicted

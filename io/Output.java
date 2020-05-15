@@ -83,8 +83,6 @@ public class Output {
             f1.calculateMetric();
             f1measures[positiveClass] = ((F1score) f1).getF1score();
 
-//            System.out.println(String.format("\t\t\tPositive class = %d: %.4f, %.4f, %.4f",
-//                    positiveClass, specificity.calculateMetric(), sensitivity.calculateMetric(), f1.calculateMetric()));
         }
         ClassificationMetrics w_sensitivity = new WeightedSensitivity(target_predicted, specificities, Nc);
         ClassificationMetrics w_specificity = new WeightedSpecificity(target_predicted, sensitivities, Nc);

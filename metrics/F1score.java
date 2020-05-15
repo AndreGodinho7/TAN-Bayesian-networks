@@ -23,7 +23,7 @@ public class F1score extends ClassificationMetrics {
 
     /**
      * Returns f1-measure value
-     * @return
+     * @return  f1-measure float value
      */
     public float getF1score() {
         return f1score;

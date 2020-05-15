@@ -36,16 +36,17 @@ public class Specificity extends ClassificationMetrics {
      */
     public void setFP(int fp) { this.fp = fp; }
 
-    /**
-     * Calculates the specificity as a float.
-     */
+
 
     /**
      * returns specificity
-     * @return
+     * @return  specificity
      */
     public float getSpecificity(){return this.specificity;}
 
+    /**
+     * Calculates the specificity as a float.
+     */
     public void calcSpecificity() { this.specificity = (float) this.tn / (this.tn + this.fp); }
 
     /**
